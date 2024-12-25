@@ -1,0 +1,266 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: "Raleway", sans-serif;
+}
+
+:root {
+    --primary-color: #007474;
+    --white-color: #2ecc71;
+    --black-color: #333;
+    --light_primary-color: #007474;
+}
+
+header button {
+    margin: 0px;
+    background: transparent;
+    border: none;
+}
+
+header button i {
+    color: black;
+    font-size: 15px;
+}
+
+header button i:hover {
+    color: var(--primary-color);
+}
+
+.action {
+    display: flex !important;
+    border: none !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 33px;
+}
+
+.action span {
+    margin: 0px 9px;
+}
+
+
+
+
+/* header */
+header {
+    width: 100%;
+    display: flex;
+    background: linear-gradient(#007474,#fff);
+    align-items: center;
+    color: white;
+    position: sticky;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    height: 50px;
+}
+
+#navbar {
+    /* max-width: 80%; */
+    /* height: 100%; */
+    margin: 0 auto;
+    width: 100%;
+}
+
+#menu {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    padding: .2rem 0;
+    font-size: 1.1rem;
+    align-items: center;
+}
+
+#menu li,
+.sub-menu li {
+    list-style-type: none;
+}
+
+#menu li:first-child {
+    padding-top: .4rem;
+}
+
+#menu>li {
+    min-width: max-content;
+    position: relative;
+    text-transform: capitalize;
+
+    text-align: center;
+    border-radius: .2rem;
+    margin-right: .5rem;
+}
+
+.hdprofile_pic_img {
+    width: 51px;
+    height: 41px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #002b31;
+    color: white;
+    font-size: 1.2rem;
+    letter-spacing: 1px;
+    border-radius: 50%;
+}
+
+.profile {
+    display: flex;
+    align-items: center;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    margin-left: auto;
+    margin-right: 2%;
+}
+
+.sub-profile {
+    position: absolute;
+    z-index: 100000;
+    right: 2rem;
+    top: 2.5rem;
+    border-radius: 5px;
+    background-color: #002b31;
+    display: none;
+    box-shadow: 0px 6px 12px -2px rgba(50, 50, 93, 0.25), 0px 3px 7px -3px rgba(0, 0, 0, 0.3);
+    padding: 1.4rem;
+}
+
+.sub-profile .sub-profile-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: .2rem;
+    padding-bottom: .3rem;
+    border-bottom: 1px solid lightgray;
+}
+
+.sub-profile>div {
+    width: 9rem;
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.sub-profile>span {
+    width: 100%;
+    text-align: center;
+    margin-top: .5rem;
+    display: block;
+}
+
+header a {
+    text-decoration: none;
+    color: white;
+    padding: 5px 15px;
+    border-radius: 5px;
+}
+
+.log-out {
+    color: rgb(233, 83, 83);
+}
+
+.profile:hover .sub-profile {
+    display: block;
+}
+
+.sub-profile {
+    position: absolute;
+    z-index: 100000;
+    right: 2rem;
+    top: 2.5rem;
+    border-radius: 5px;
+    background-color: #002b31;
+    display: none;
+    box-shadow: 0px 6px 12px -2px rgba(50, 50, 93, 0.25), 0px 3px 7px -3px rgba(0, 0, 0, 0.3);
+    padding: 1.4rem;
+}
+
+#logo {
+    margin-left: 20px;
+    font-size: 15px;
+}
+
+#logo img {
+    height: 40px;
+    margin: 0px 10px;
+}
+
+.active_header_li {
+    background-color: #002b31;
+    padding: 5px 15px;
+    border-radius: 5px;
+}
+
+.tabs {
+    width: 97%;
+    margin-bottom: 1rem;
+    background-color: #e5e5e5;
+    padding-top: .5rem;
+    display: flex;
+    justify-content:end;
+    padding-left: 40px;
+    /* position: fixed; */
+    top: 50px;
+    left: 0;
+}
+
+.tabs .active {
+    border-top: 3px solid var(--primary-color);
+
+    position: relative;
+    background-color: #ffffff;
+    color: var(--primary-color);
+    transform: none;
+}
+
+header {
+    height: 50px;
+}
+
+.tabs button {
+    width: 9rem;
+    padding: .7rem .8rem;
+    border: none;
+    outline: none;
+    color: black;
+    background-color: transparent;
+    border-radius: .4rem .4rem 0 0;
+    box-shadow: none;
+}
+
+#navbar a:hover {
+    background-color: #002b31;
+    cursor: pointer;
+
+}
+
+.tabs button:hover {
+
+    cursor: pointer;
+}
+
+/* Back btn in AddClient page  */
+.tabs .back button {
+    background-color: #007474;
+    color: white;
+    /* padding: 10px 10px; */
+    width: 80px;
+    font-size: 12px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.3s;
+    margin-right: 40px;
+}
+
+.tabs .back {
+    grid-column: span 2;
+    text-align: center;
+}
+
+.tabs.back button:hover {
+    background-color:#007474c3;
+}

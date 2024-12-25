@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tag Input with Dropdown</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+
+    .tag-container {
+      margin: 20px;
+    }
+
+    .tags-input {
+      display: flex;
+      flex-wrap: wrap;
+      border: 1px solid #ccc;
+      padding: 5px;
+      border-radius: 4px;
+    }
+
+    .tags-input input {
+      border: none;
+      outline: none;
+      flex: 1;
+      padding: 5px;
+      min-width: 150px;
+    }
+
+    .tag {
+      background-color: #f1f1f1;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      padding: 5px;
+      margin: 5px;
+    }
+
+    .tag .remove-btn {
+      background: none;
+      border: none;
+      margin-left: 5px;
+      cursor: pointer;
+      color: #ff0000;
+    }
+
+    .dropdown {
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      margin-top: 5px;
+      max-height: 150px;
+      overflow-y: auto;
+      display: none;
+      position: absolute;
+      background-color: #fff;
+      z-index: 1000;
+      width: 200px;
+    }
+
+    .dropdown-item {
+      padding: 10px;
+      cursor: pointer;
+    }
+
+    .dropdown-item:hover {
+      background-color: #f1f1f1;
+    }
+  </style>
+</head>
+
+<body>
+
+  <form action="submit.php" method="post">
+    <div class="tag-container">
+      <label for="location-input">Applicable Location(s)</label>
+      <div class="tags-input">
+        <input type="text" id="location-input" placeholder="Type to search...">
+      </div>
+      <div class="dropdown" id="location-suggestions"></div>
+    </div>
+
+    <div class="tag-container">
+      <label for="role-input">Applicable Role(s)</label>
+      <div class="tags-input">
+        <input type="text" id="role-input" name="roles[]" placeholder="Type to search...">
+      </div>
+      <div class="dropdown" id="role-suggestions"></div>
+    </div>
+    <div class="form-input">
+      <input type="text" name="">
+    </div>
+
+    <button type="submit">Submit</button>
+  </form>
+
+  <script>
+    const locations = [
+      "Seattle", "San Jose", "California", "New York", "Los Angeles", "Chicago",
+      "Austin", "Miami", "Boston", "Houston", "Philadelphia", "Phoenix",
+      "San Antonio", "San Diego", "Dallas", "San Francisco", "Denver",
+      "Las Vegas", "Orlando", "Atlanta", "Portland", "Sacramento", "Charlotte",
+      "Indianapolis", "Columbus", "Baltimore", "Tampa", "Cleveland", "Kansas City",
+      "Salt Lake City", "Raleigh", "Nashville", "Minneapolis", "Detroit",
+      "Memphis", "Louisville", "Milwaukee", "Oklahoma City", "Albuquerque"
+    ];
+
+    const roles = [
+      "Software Engineer", "Data Scientist", "Product Manager", "Designer", "Sales",
+      "Marketing", "HR", "Finance", "Operations", "Support", "Engineering Manager",
+      "Director", "VP", "CTO", "CEO", "CFO", "COO"
+    ];
+
+    const locationInput = document.getElementById('location-input');
+    const locationSuggestionsBox = document.getElementById('location-suggestions');
+    const locationTagsInput = document.querySelector('.tag-container:first-of-type .tags-input');
+
+    const roleInput = document.getElementById('role-input');
+    const roleSuggestionsBox = document.getElementById('role-suggestions');
+    const roleTagsInput = document.querySelector('.tag-container:nth-of-type(2) .tags-input');
+
+    let selectedLocations = [];
+    let selectedRoles = [];
+
+    locationInput.addEventListener('input', function() {
+      const query = this.value.toLowerCase();
+      const filteredLocations = locations.filter(location => location.toLowerCase().includes(query));
+      showSuggestions(filteredLocations, locationSuggestionsBox, addLocationTag);
+    });
+
+    roleInput.addEventListener('input', function() {
+      const query = this.value.toLowerCase();
+      const filteredRoles = roles.filter(role => role.toLowerCase().includes(query));
+      showSuggestions(filteredRoles, roleSuggestionsBox, addRoleTag);
+    });
+
+    function showSuggestions(filteredItems, suggestionsBox, addTagFunction) {
+      if (filteredItems.length > 0) {
+        suggestionsBox.innerHTML = '';
+        filteredItems.forEach(item => {
+          const suggestionItem = document.createElement('div');
+          suggestionItem.className = 'dropdown-item';
+          suggestionItem.textContent = item;
+          suggestionsBox.appendChild(suggestionItem);
+
+          suggestionItem.addEventListener('click', function() {
+            addTagFunction(item);
+            suggestionsBox.previousElementSibling.querySelector('input').value = '';
+            suggestionsBox.style.display = 'none';
+          });
+        });
+        suggestionsBox.style.display = 'block';
+      } else {
+        suggestionsBox.style.display = 'none';
+      }
+    }
+
+    function addLocationTag(location) {
+      if (!selectedLocations.includes(location)) {
+        selectedLocations.push(location);
+
+        const tag = document.createElement('div');
+        tag.className = 'tag';
+        tag.innerHTML = `${location} <button class="remove-btn" onclick="removeTag('${location}', selectedLocations, locationTagsInput)">x</button>`;
+
+        locationTagsInput.insertBefore(tag, locationInput);
+        const hiddenInput = document.createElement('input');
+        hiddenInput.type = 'hidden';
+        hiddenInput.name = 'locations[]';
+        hiddenInput.value = location;
+        locationTagsInput.appendChild(hiddenInput);
+      }
+    }
+
+    function addRoleTag(role) {
+      if (!selectedRoles.includes(role)) {
+        selectedRoles.push(role);
+
+        const tag = document.createElement('div');
+        tag.className = 'tag';
+        tag.innerHTML = `${role} <button class="remove-btn" onclick="removeTag('${role}', selectedRoles, roleTagsInput)">x</button>`;
+
+        roleTagsInput.insertBefore(tag, roleInput);
+        const hiddenInput = document.createElement('input');
+        hiddenInput.type = 'hidden';
+        hiddenInput.name = 'roles[]';
+        hiddenInput.value = role;
+        roleTagsInput.appendChild(hiddenInput);
+      }
+    }
+
+    function removeTag(item, selectedArray, tagsInput) {
+      selectedArray.splice(selectedArray.indexOf(item), 1);
+      const tag = Array.from(tagsInput.children).find(tag => tag.textContent.trim().startsWith(item));
+      tagsInput.removeChild(tag);
+
+      // Remove the corresponding hidden input
+      const hiddenInput = Array.from(tagsInput.querySelectorAll('input[type="hidden"]')).find(input => input.value === item);
+      if (hiddenInput) {
+        tagsInput.removeChild(hiddenInput);
+      }
+    }
+
+    document.addEventListener('click', function(event) {
+      if (!locationTagsInput.contains(event.target) && !locationSuggestionsBox.contains(event.target)) {
+        locationSuggestionsBox.style.display = 'none';
+      }
+      if (!roleTagsInput.contains(event.target) && !roleSuggestionsBox.contains(event.target)) {
+        roleSuggestionsBox.style.display = 'none';
+      }
+    });
+  </script>
+</body>
+
+</html>

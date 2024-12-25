@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .form-input {
+      position: relative;
+      margin-bottom: 20px;
+    }
+
+
+
+    .form-input input::placeholder,
+    .form-input textarea::placeholder {
+      opacity: 0;
+    }
+
+    .form-input input,
+    .form-input textarea {
+      font-size: 16px;
+      box-sizing: border-box;
+      width: 100%;
+      padding: 5px 15px;
+      display: block;
+      border-radius: 4px;
+      height: 50px;
+      border: 1px solid #007474;
+      box-sizing: border-box;
+      transition: border-color 0.3s, box-shadow 0.3s;
+      outline: none;
+    }
+
+
+    .form-input textarea {
+      resize: vertical;
+    }
+
+
+
+
+    input:focus,
+    textarea:focus {
+      border-color: #007474;
+      box-shadow: 0 0 8px #007474;
+    }
+
+    .form-input input:focus+label,
+    .form-input input:not(:placeholder-shown)+label,
+    .form-input textarea:focus+label,
+    .form-input textarea:not(:placeholder-shown)+label {
+      top: 0;
+      color: #007474;
+      background: white;
+      padding: 0 5px;
+    }
+
+
+    .form-input label {
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 15px;
+      color: black;
+      letter-spacing: 1px;
+      transition: 0.3s;
+    }
+
+    .custom-select select:focus {
+      border-color: #007474;
+      box-shadow: 0 0 8px #007474;
+    }
+
+    .custom-select {
+      position: relative;
+      font-family: Arial;
+      font-size: 16px;
+      box-sizing: border-box;
+      width: 100%;
+      padding: 5px 15px;
+      display: block;
+      border-radius: 4px;
+      height: 50px;
+      border: 1px solid #007474;
+      box-sizing: border-box;
+      transition: border-color 0.3s, box-shadow 0.3s;
+      outline: none;
+      background: white;
+      margin: 15px 0px;
+    }
+
+    .custom-select select {
+      display: none;
+      /* hide original SELECT element: */
+    }
+
+    .select-selected {
+      background-color: white;
+    }
+
+    .select-selected:after {
+      position: absolute;
+      content: "";
+      top: 20px;
+      right: 10px;
+      width: 0;
+      height: 0;
+      color: #007474;
+      border: 6px solid red;
+      border-color: #007474 transparent transparent transparent;
+    }
+
+    .select-selected.select-arrow-active:after {
+      border-color: transparent transparent #007474 transparent;
+      top: 13px;
+    }
+
+    .select-items div,
+    .select-selected {
+      color: #000;
+      padding: 9px 0px;
+      cursor: pointer;
+    }
+
+    .select-items div {
+      padding-left: 10px;
+      margin: 0px 5px;
+      border-radius: 5px;
+    }
+
+    .select-items {
+      position: absolute;
+      background-color: #e1e1e1;
+      top: 100%;
+      left: 0;
+      right: 0;
+      z-index: 99;
+      padding: 7px 0px;
+      border-radius: 7px;
+      max-height: 200px;
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+
+    .select-hide {
+      display: none;
+    }
+
+    .select-items div:hover,
+    .same-as-selected {
+      background-color: #007474;
+      color: white;
+    }
+
+    .same-as-selected {
+      color: white !important;
+      border-radius: 5px;
+      margin: 0px 5px;
+    }
+
+    .custom-d-flex .custom-select {
+      margin: 0px 5px !important;
+    }
+
+    .custom-select {
+      margin: 20px 0px;
+    }
+
+    .custom-select label {
+      position: absolute;
+      top: -10px;
+      background: white;
+      color: #007474;
+      left: 9px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="form-input">
+    <input type="email" name="email" id="email">
+    <label for="email">Email</label>
+  </div>
+  <div class="custom-select">
+    <select name="" id="">
+      <option value="">Option 1</option>
+      <option value="">Option 1</option>
+      <option value="">Option 1</option>
+      <option value="">Option 1</option>
+    </select>
+  </div>
+</body>
+<script>
+  var x, i, j, l, ll, selElmnt, a, b, c;
+  x = document.getElementsByClassName("custom-select");
+  l = x.length;
+  for (i = 0; i < l; i++) {
+    selElmnt = x[i].getElementsByTagName("select")[0];
+    ll = selElmnt.length;
+
+    // Create the selected item DIV
+    a = document.createElement("DIV");
+    a.setAttribute("class", "select-selected");
+    a.innerHTML = selElmnt.options[selElmnt.selectedIndex].innerHTML;
+    x[i].appendChild(a);
+
+    // Create the options container DIV
+    b = document.createElement("DIV");
+    b.setAttribute("class", "select-items select-hide");
+
+    // Add a search input to the dropdown
+    var searchInput = document.createElement("INPUT");
+    searchInput.setAttribute("type", "text");
+    searchInput.setAttribute("placeholder", "Search...");
+    searchInput.setAttribute("class", "search-input");
+    b.appendChild(searchInput);
+
+    // Event listener for filtering options
+    searchInput.addEventListener("input", function(e) {
+      var filter = e.target.value.toUpperCase();
+      var divs = this.parentNode.getElementsByTagName("DIV");
+      for (var k = 1; k < divs.length; k++) { // Skip the search input
+        txtValue = divs[k].textContent || divs[k].innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          divs[k].style.display = "";
+        } else {
+          divs[k].style.display = "none";
+        }
+      }
+    });
+
+    // Prevent dropdown from closing when interacting with the search input
+    searchInput.addEventListener("click", function(e) {
+      e.stopPropagation(); // Prevent the dropdown from closing
+    });
+
+    // Loop through all options in the original select element
+    for (j = 0; j < ll; j++) {
+      c = document.createElement("DIV");
+      c.innerHTML = selElmnt.options[j].innerHTML;
+
+      if (selElmnt.options[j].disabled) {
+        c.classList.add("disabled-option");
+        c.style.color = "#aaa";
+        c.style.pointerEvents = "none";
+      }
+
+      // Add click event to each option
+      c.addEventListener("click", function(e) {
+        var y, i, k, s, h, sl, yl;
+        s = this.parentNode.parentNode.getElementsByTagName("select")[0];
+        sl = s.length;
+        h = this.parentNode.previousSibling;
+        for (i = 0; i < sl; i++) {
+          if (s.options[i].innerHTML == this.innerHTML) {
+            s.selectedIndex = i;
+            h.innerHTML = this.innerHTML;
+            y = this.parentNode.getElementsByClassName("same-as-selected");
+            yl = y.length;
+            for (k = 0; k < yl; k++) {
+              y[k].removeAttribute("class");
+            }
+            this.setAttribute("class", "same-as-selected");
+            break;
+          }
+        }
+        h.click();
+      });
+      b.appendChild(c);
+    }
+    x[i].appendChild(b);
+
+    // Add event listener to toggle dropdown
+    a.addEventListener("click", function(e) {
+      e.stopPropagation();
+      closeAllSelect(this);
+      this.nextSibling.classList.toggle("select-hide");
+      this.classList.toggle("select-arrow-active");
+    });
+  }
+
+  // Function to close all dropdowns
+  function closeAllSelect(elmnt) {
+    var x, y, i, xl, yl, arrNo = [];
+    x = document.getElementsByClassName("select-items");
+    y = document.getElementsByClassName("select-selected");
+    xl = x.length;
+    yl = y.length;
+    for (i = 0; i < yl; i++) {
+      if (elmnt == y[i]) {
+        arrNo.push(i)
+      } else {
+        y[i].classList.remove("select-arrow-active");
+      }
+    }
+    for (i = 0; i < xl; i++) {
+      if (arrNo.indexOf(i)) {
+        x[i].classList.add("select-hide");
+      }
+    }
+  }
+
+  document.addEventListener("click", closeAllSelect);
+</script>
+
+</html>
