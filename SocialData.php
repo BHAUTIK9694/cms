@@ -33,27 +33,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $errors['youtube'] = "YouTube URL is required.";
     }
 
-    // // If there are no errors, proceed with the insertion
-    // if (empty($errors)) {
-    //     // Prepare the SQL statement to insert data into the clientlink table
-    //     $stmt = $conn->prepare("INSERT INTO clientlink (facebook, twitter, instagram, linkedin, youtube) VALUES (?, ?, ?, ?, ?)");
-    //     $stmt->bind_param("sssss", $facebook, $twitter, $instagram, $linkedin, $youtube);
-
-    //     // Execute the query and check for errors
-    //     if ($stmt->execute()) {
-    //         // Redirect to a success page or display a success message
-    //         $_SESSION['success'] = "Social media links have been successfully submitted!";
-    //         header("Location: success.php"); // Redirect to success page (create a success.php)
-    //         exit();
-    //     } else {
-    //         $errors['db'] = "Error: ";
-    //     }
-    // }
+   
     if(empty($errors)){
         $query="insert into  clientlink (facebook, twitter, instagram, linkedin, youtube) values ('{$facebook}','{$twitter}','{$linkedin}','{$youtube}','{$instagram}') ";
 
         if(mysqli_query($conn,$query)){
-            $_SESSION['success'] = "Social media links have been successfully submitted!";
+            $_SESSION['success'] ="Social media links have been successfully submitted!";
             header("Location: Social.php"); // Redirect to success page (create a success.php)
             exit();
         }else{

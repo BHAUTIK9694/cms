@@ -1,5 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
+<?php
+// Start the session before anything else
+session_start();
+?>
 
 <head>
     <meta charset="UTF-8">
@@ -116,6 +120,16 @@
         .save-btn button:hover {
             background-color: #007474c3;
         }
+
+        .session{
+            background-color:#E5E5E5;
+            color:#007474;
+            padding: 5px;
+            border-radius: 7px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight:bold;
+        }
     </style>
 </head>
 
@@ -125,6 +139,15 @@
     ?>
 
     <div class="container">
+        <?php 
+        //    session_start();
+           if(isset($_SESSION['success'])){
+            echo  "
+                <h1 class='session'>".$_SESSION['success']."</h1>
+            ";
+            unset($_SESSION['success']);
+           }
+        ?>
         <!-- Social Media Links Form -->
         <div class="social-links-form">
             <h2>Enter Your Social Media Links</h2>
