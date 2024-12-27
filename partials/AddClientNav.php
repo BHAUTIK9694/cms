@@ -57,16 +57,26 @@ $name = isset($_GET['tab']) ? $_GET['tab'] : 'PrimaryInfo'; // Default to 'Prima
     </form>
 
     <form action="Hosting.php?tab=Hosting" method="post">
-        <button class=<?php echo ($name === 'Hosting') ? 'active' : ''; ?>>Hosting</button>
+        <button class=<?php echo ($name === 'Hosting') ? 'active' : ''; ?>>Hosting & Domain</button>
     </form>
 
     <form action="Domain.php?tab=Domain" method="post">
-        <button class=<?php echo ($name === 'Domain') ? 'active' : ''; ?>>Domain</button>
+        <button class=<?php echo ($name === 'Domain') ? 'active' : ''; ?>> Subscription</button>
+    </form>
+
+    <form action="Domain.php?tab=Domain" method="post">
+        <button class=<?php echo ($name === 'Domain') ? 'active' : ''; ?>> Images</button>
+    </form>
+
+    <form action="Domain.php?tab=Domain" method="post">
+        <button class=<?php echo ($name === 'Domain') ? 'active' : ''; ?>> Documents</button>
     </form>
 
     <form class="back" action="Clients.php">
         <button><i class="fas fa-arrow-left"></i></button>
     </form>
+
+    
 </div>
 
 <div>
@@ -80,7 +90,7 @@ $name = isset($_GET['tab']) ? $_GET['tab'] : 'PrimaryInfo'; // Default to 'Prima
     } elseif ($name === 'Hosting') {
         echo "Hosting Content"; // Display hosting form/content here
     } elseif ($name === 'Domain') {
-        echo "Domain Content"; // Display domain form/content here
+        echo "Subscription"; // Display domain form/content here
     }
     ?>
 </div>

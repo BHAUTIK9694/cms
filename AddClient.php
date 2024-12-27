@@ -23,11 +23,11 @@
 
            
             <form action="AddClientData.php" method="POST">
-            <h1>Client Details</h1>
+            <!-- <h1>Client Details</h1> -->
                 <div class="container">
                     <!-- Primary Information -->
                     <div class="box" id="box1">
-                        <h2>Primary Information</h2>
+                        <h2>Primary Details</h2>
                         <div class="form-group">
                             <!-- <label for="client-id">Client ID:</label> -->
                             <input  type="hidden" id="client-id" name="client_id" placeholder="Enter client ID" required>
