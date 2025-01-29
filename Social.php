@@ -23,8 +23,8 @@ session_start();
             padding: 20px;
         }
 
-        h2{
-            text-decoration:underline;
+        h2 {
+            text-decoration: underline;
         }
 
         .social-links-form {
@@ -121,32 +121,33 @@ session_start();
             background-color: #007474c3;
         }
 
-        .session{
-            background-color:#E5E5E5;
-            color:#007474;
+        .session {
+            background-color: #E5E5E5;
+            color: #007474;
             padding: 5px;
             border-radius: 7px;
             margin-bottom: 20px;
             text-align: center;
-            font-weight:bold;
+            font-weight: bold;
         }
     </style>
 </head>
 
 <body>
     <?php
+    include 'partials/navbar.php';
     include 'partials/AddClientNav.php';
     ?>
 
     <div class="container">
-        <?php 
+        <?php
         //    session_start();
-           if(isset($_SESSION['success'])){
+        if (isset($_SESSION['success'])) {
             echo  "
-                <h1 class='session'>".$_SESSION['success']."</h1>
+                <h1 class='session'>" . $_SESSION['success'] . "</h1>
             ";
             unset($_SESSION['success']);
-           }
+        }
         ?>
         <!-- Social Media Links Form -->
         <div class="social-links-form">
@@ -154,7 +155,7 @@ session_start();
 
             <form action="SocialData.php" method="post">
                 <!-- Facebook Input -->
-                
+
                 <label for="facebook">Facebook:</label>
                 <input type="url" id="facebook" name="facebook" placeholder="Enter Facebook Link" required />
                 <div class="error-message" id="facebookError"></div>
@@ -181,7 +182,7 @@ session_start();
 
                 <!-- Submit Button -->
                 <div class="save-btn">
-                   <button type="submit">Submit Links</button>
+                    <button type="submit">Submit Links</button>
                 </div>
             </form>
         </div>
