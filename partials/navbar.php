@@ -26,7 +26,7 @@ $base_path = strpos($current_path, '/CMS/') === 0 ? '/CMS' : '';
             </li>
             <li>
                 <a href="Profile.php"
-                    class="<?= ($current_path == "$base_path/Profile.php") ? 'active_header_li' : '' ?>">Clients</a>
+                    class="<?= ($current_path == "$base_path/Profile.php") ? 'active_header_li' : '' ?>">Projects</a>
             </li>
             <li>
                 <a href="Services.php?tab=Services"
@@ -34,7 +34,7 @@ $base_path = strpos($current_path, '/CMS/') === 0 ? '/CMS' : '';
             </li>
             <li>
                 <a href="Clients.php"
-                    class="<?= ($current_path == "$base_path/Clients.php") ? 'active_header_li' : '' ?>">Projects</a>
+                    class="<?= ($current_path == "$base_path/Clients.php") ? 'active_header_li' : '' ?>">Clients</a>
             </li>
             <li>
                 <a href="Clients.php"

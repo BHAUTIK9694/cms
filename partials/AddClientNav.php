@@ -64,8 +64,8 @@
             <button class=<?php echo ($name === 'Subcription') ? 'active' : ''; ?>> Subscription</button>
         </form>
 
-        <form action="Domain.php?tab=Domain" method="post">
-            <button class=<?php echo ($name === 'Domain') ? 'active' : ''; ?>> Images</button>
+        <form action="Images.php?tab=Images" method="post">
+            <button class=<?php echo ($name === 'Images') ? 'active' : ''; ?>> Images</button>
         </form>
 
         <form action="Domain.php?tab=Domain" method="post">

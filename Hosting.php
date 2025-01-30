@@ -123,6 +123,33 @@
                         <input type="text" id="payment_method" name="payment_method" placeholder="Enter Payment Method" required>
                     </div>
                 </div>
+                <div class="box" id="box3">
+                    <h2>Billing</h2>
+                    <div class="form-group">
+                        <!-- <label for="client-id">Client ID:</label> -->
+                        <input type="hidden" id="client-id" name="client_id" placeholder="Enter Client ID" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="billing_frequency">Billing Frequency:</label>
+                        <input type="text" id="billing_frequency" name="billing_frequency" placeholder="Enter Billing Frequency" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="last-payment-date">Last Payment Date:</label>
+                        <input type="date" id="last_payment_date" name="last_payment_date" placeholder="Enter Last Payment Date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="next-billing-date">Next Billing Date:</label>
+                        <input type="date" id="next_billing_date" name="next_billing_date" placeholder="Enter Next Billing Date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="total-amount-due">Total Amount Due:</label>
+                        <input type="number" id="total_amount_due" name="total_amount_due" placeholder="Enter Total Amount Due" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="payment-method">Payment Method:</label>
+                        <input type="text" id="payment_method" name="payment_method" placeholder="Enter Payment Method" required>
+                    </div>
+                </div>
                 <!-- Save Button -->
                 <div class="save-btn">
                     <button name="btn" type="submit">Save</button>

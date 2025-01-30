@@ -235,7 +235,7 @@
                 if (mysqli_num_rows($result) > 0) {
                     while ($client = mysqli_fetch_assoc($result)) {
                         echo "<tr>";
-                        echo "<td>" . (!empty($client['business_name']) ? $client['business_name'] : '--') . "</td>";
+                        echo "<td><a href='ClientOverview.php'>" . (!empty($client['business_name']) ? $client['business_name'] : '--') . "</a></td>";
                         echo "<td>" . (!empty($client['Id']) ? $client['Id'] : '--') . "</td>";
                         echo "<td>" . (!empty($client['phone']) ? $client['phone'] : '--') . "</td>";
                         echo "<td>" . (!empty($client['address']) ? $client['address'] : '--') . "</td>";
@@ -259,23 +259,6 @@
                 }
 
                 mysqli_close($conn);
-                ?>
-                <?php
-                include "partials/sql-connction.php";
-
-                if (isset($_GET['delete_id'])) {
-                    $client_id = intval($_GET['delete_id']); // Sanitize input
-
-                    // Delete query
-                    $query = "DELETE FROM clients WHERE Id = $client_id";
-
-                    if (mysqli_query($conn, $query)) {
-                        echo "<script>alert('Client deleted successfully!'); window.location.href='Clients.php';</script>";
-                        exit; // Ensure script stops after redirection
-                    } else {
-                        echo "<script>alert('Error deleting client: " . mysqli_error($conn) . "'); window.history.back();</script>";
-                    }
-                }
                 ?>
 
             </tbody>
@@ -316,3 +299,4 @@
 </html>
 
 <!-- then if you click save button so add data in clients table  write php script -->
+<!-- //Billing Frequency,Last Payment Date,Next Billing Date,Total Amount Due,Payment Method, -->
