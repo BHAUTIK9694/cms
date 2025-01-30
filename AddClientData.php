@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // Input validation
     $errors = [];
-    
+
     // Validate required fields
     $required_fields = ['business_name', 'website', 'short_description', 'long_description', 'mobile', 'country', 'address', 'city', 'state', 'zip', 'time_zone', 'booking_link'];
 
@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $errors[] = "Mobile number is not valid.";
     }
 
-  
+
 
     // If errors exist, display them and stop processing
     if (!empty($errors)) {
@@ -54,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         exit;
     }
 
-  
+
 
     // Insert data into the database
     $query = "INSERT INTO clients 
@@ -62,15 +62,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
               VALUES ('$business_name', '$website', '$short_description', '$long_description', '$phone', '$mobile', '$fax', '$toll_free', '$country', '$address', '$city', '$state', '$zip', '$time_zone', '$map', '$booking_link', '$business_category', '$services_offered', '$brands_carried')";
 
     echo "$query";
-    // if (mysqli_query($conn, $query)) {
-    //     echo "Data has been successfully saved.";
-    //     echo "$query";
-    //     // header('location:Clients.php');
-    // } else {
-    //     echo "Error: " . mysqli_error($conn);
-    // }
+    if (mysqli_query($conn, $query)) {
+        echo "Data has been successfully saved.";
+        echo "<script>alert('Client added successfully!'); window.location.href='Clients.php';</script>";
+    } else {
+        echo "<script>alert('Error: " . mysqli_error($conn) . "'); window.history.back();</script>";
+    }
 }
 
 // Close database connection
 mysqli_close($conn);
-?>

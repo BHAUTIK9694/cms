@@ -17,9 +17,11 @@
 </head>
 
 <body>
-        <?php
-             include 'partials/AddClientNav.php';
-        ?>
+    <?php include 'partials/navbar.php'; ?>
+    <?php
+
+    include 'partials/AddClientNav.php';
+    ?>
 </body>
 
 </html>

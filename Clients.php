@@ -225,6 +225,60 @@
                 }
                 ?>
             </tbody>
+            <tbody>
+                <?php
+                include "partials/sql-connction.php";
+
+                $query = "SELECT * FROM clients";
+                $result = mysqli_query($conn, $query);
+
+                if (mysqli_num_rows($result) > 0) {
+                    while ($client = mysqli_fetch_assoc($result)) {
+                        echo "<tr>";
+                        echo "<td>" . (!empty($client['business_name']) ? $client['business_name'] : '--') . "</td>";
+                        echo "<td>" . (!empty($client['Id']) ? $client['Id'] : '--') . "</td>";
+                        echo "<td>" . (!empty($client['phone']) ? $client['phone'] : '--') . "</td>";
+                        echo "<td>" . (!empty($client['address']) ? $client['address'] : '--') . "</td>";
+                        echo "<td>" . (!empty($client['status']) ? $client['status'] : '--') . "</td>";
+                        echo "<td>" . (!empty($client['date_added']) ? $client['date_added'] : '--') . "</td>";
+                        echo "<td>" . (!empty($client['sales_person']) ? $client['sales_person'] : '--') . "</td>";
+                        echo "<td>" . (!empty($client['manager']) ? $client['manager'] : '--') . "</td>";
+                        echo "<td>" . (!empty($client['tag']) ? $client['tag'] : '--') . "</td>";
+                        echo "<td>" . (!empty($client['team_members']) ? $client['team_members'] : '--') . "</td>";
+                        echo "<td>
+                    <a href='EditClient.php?Id=" . $client['Id'] . "'><i class='fas fa-user-edit'></i></a>
+                    &nbsp;&nbsp;|&nbsp;&nbsp;
+                    <a href='DeleteClient.php?Id=" . $client['Id'] . "' onclick=\"return confirm('Are you sure you want to delete this client?');\">
+                        <i class='fas fa-trash-alt'></i>
+                    </a>
+                  </td>";
+                        echo "</tr>";
+                    }
+                } else {
+                    echo "<tr><td colspan='11'>No clients found</td></tr>";
+                }
+
+                mysqli_close($conn);
+                ?>
+                <?php
+                include "partials/sql-connction.php";
+
+                if (isset($_GET['delete_id'])) {
+                    $client_id = intval($_GET['delete_id']); // Sanitize input
+
+                    // Delete query
+                    $query = "DELETE FROM clients WHERE Id = $client_id";
+
+                    if (mysqli_query($conn, $query)) {
+                        echo "<script>alert('Client deleted successfully!'); window.location.href='Clients.php';</script>";
+                        exit; // Ensure script stops after redirection
+                    } else {
+                        echo "<script>alert('Error deleting client: " . mysqli_error($conn) . "'); window.history.back();</script>";
+                    }
+                }
+                ?>
+
+            </tbody>
         </table>
     </div>
 
