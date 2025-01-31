@@ -33,20 +33,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $errors['youtube'] = "YouTube URL is required.";
     }
 
-   
-    if(empty($errors)){
-        $query="insert into  clientlink (facebook, twitter, instagram, linkedin, youtube) values ('{$facebook}','{$twitter}','{$linkedin}','{$youtube}','{$instagram}') ";
 
-        if(mysqli_query($conn,$query)){
-            $_SESSION['success'] ="Social media links have been successfully submitted!";
+    if (empty($errors)) {
+        $query = "INSERT INTO clients (facebook, twitter, instagram, linkedin, youtube) 
+        VALUES ('{$facebook}', '{$twitter}', '{$instagram}', '{$linkedin}', '{$youtube}')";
+
+
+        if (mysqli_query($conn, $query)) {
+            $_SESSION['success'] = "Social media links have been successfully submitted!";
             header("Location: Social.php"); // Redirect to success page (create a success.php)
             exit();
-        }else{
-            $errors['db'] = "Error: ".mysqli_error($conn);
+        } else {
+            $errors['db'] = "Error: " . mysqli_error($conn);
         }
     }
 }
 
 // Close the database connection
 $conn->close();
-?>

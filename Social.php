@@ -8,7 +8,7 @@ session_start();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Social</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -179,6 +179,14 @@ session_start();
                 <label for="youtube">YouTube:</label>
                 <input type="url" id="youtube" name="youtube" placeholder="Enter YouTube Link" required />
                 <div class="error-message" id="youtubeError"></div>
+
+                <!-- Custom Link -->
+                <label for="custom_name">Custom Link Name:</label>
+                <input type="text" id="custom_name" name="custom_name" placeholder="Enter Link Name (Optional)" />
+
+                <label for="custom_link">Custom Link URL:</label>
+                <input type="url" id="custom_link" name="custom_link" placeholder="Enter Custom Link (Optional)" />
+                <div class="error-message" id="customLinkError"></div>
 
                 <!-- Submit Button -->
                 <div class="save-btn">

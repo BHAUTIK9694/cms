@@ -91,6 +91,8 @@
             echo "Hosting Content"; // Display hosting form/content here
         } elseif ($name === 'Domain') {
             echo "Subscription"; // Display domain form/content here
+        } else if ($name === 'Subscription') {
+            echo "Subscription";
         }
         ?>
     </div>

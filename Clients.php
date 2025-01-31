@@ -235,7 +235,7 @@
                 if (mysqli_num_rows($result) > 0) {
                     while ($client = mysqli_fetch_assoc($result)) {
                         echo "<tr>";
-                        echo "<td><a href='ClientOverview.php'>" . (!empty($client['business_name']) ? $client['business_name'] : '--') . "</a></td>";
+                        echo "<td><a href='ClientOverview.php?Id=" . $client['Id'] . "'>" . (!empty($client['business_name']) ? $client['business_name'] : '--') . "</a></td>";
                         echo "<td>" . (!empty($client['Id']) ? $client['Id'] : '--') . "</td>";
                         echo "<td>" . (!empty($client['phone']) ? $client['phone'] : '--') . "</td>";
                         echo "<td>" . (!empty($client['address']) ? $client['address'] : '--') . "</td>";
@@ -246,9 +246,9 @@
                         echo "<td>" . (!empty($client['tag']) ? $client['tag'] : '--') . "</td>";
                         echo "<td>" . (!empty($client['team_members']) ? $client['team_members'] : '--') . "</td>";
                         echo "<td>
-                    <a href='EditClient.php?Id=" . $client['Id'] . "'><i class='fas fa-user-edit'></i></a>
+                    <a href='AddClient.php?Id=" . $client['Id'] . "'><i class='fas fa-user-edit'></i></a>
                     &nbsp;&nbsp;|&nbsp;&nbsp;
-                    <a href='DeleteClient.php?Id=" . $client['Id'] . "' onclick=\"return confirm('Are you sure you want to delete this client?');\">
+                    <a href='DeleteClients.php?Id=" . $client['Id'] . "' onclick=\"return confirm('Are you sure you want to delete this client?');\">
                         <i class='fas fa-trash-alt'></i>
                     </a>
                   </td>";
