@@ -13,8 +13,6 @@ $clientId = isset($_SESSION['clientId']) ? $_SESSION['clientId'] : '';
 $name = isset($_GET['tab']) ? $_GET['tab'] : 'PrimaryInfo';
 ?>
 <?php
-include 'partials/navbar.php';
-include 'partials/AddClientNav.php';
 include "partials/sql-connction.php";
 
 // Handle form submission (Insert or Update Subscription)

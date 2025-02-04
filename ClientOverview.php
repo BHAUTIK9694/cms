@@ -10,15 +10,20 @@ if ($client_id > 0) {
     // Fetch client details from the clients table
     $sql = "SELECT * FROM clients WHERE Id = $client_id";
     $result = mysqli_query($conn, $sql);
+
+    if (!$result) {
+        die("Error fetching client details: " . mysqli_error($conn));
+    }
+
     $client = mysqli_fetch_assoc($result);
 
-    // Check if client exists
     if (!$client) {
         echo "Client ID not found!";
         exit();
     }
 
-    $sql_tasks = "SELECT * FROM Clients WHERE Id = $client_id";
+    // Fetch tasks related to the client
+    $sql_tasks = "SELECT * FROM clients WHERE Id = $client_id";
     $tasks = mysqli_query($conn, $sql_tasks);
 } else {
     echo "Client ID not found!";
@@ -41,12 +46,12 @@ if ($client_id > 0) {
         }
 
         .container {
-            background: #fff;
+            width: 90%;
+            margin: auto;
+            background: white;
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 80%;
-            margin: auto;
         }
 
         .header {
@@ -55,8 +60,10 @@ if ($client_id > 0) {
             gap: 10px;
         }
 
-        .client-name {
-            font-size: 20px;
+        .back-btn {
+            text-decoration: none;
+            font-size: 18px;
+            color: black;
             font-weight: bold;
         }
 
@@ -64,47 +71,55 @@ if ($client_id > 0) {
             display: flex;
             gap: 15px;
             margin: 20px 0;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 10px;
         }
 
         .tabs a {
             text-decoration: none;
             color: #333;
             font-weight: bold;
+            padding: 10px;
         }
 
-        .business-details,
-        .tasks {
+        .tabs a:hover {
+            color: #007bff;
+        }
+
+        .details-section {
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
             margin-top: 20px;
+        }
+
+        .details-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .details-grid p {
+            margin: 0;
+            padding: 5px;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 15px;
+            margin-top: 10px;
         }
 
         th,
         td {
             border: 1px solid #ddd;
-            padding: 12px;
+            padding: 8px;
             text-align: left;
         }
 
         th {
             background-color: #f0f0f0;
-        }
-
-        tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-
-        tr:hover {
-            background-color: #f1f1f1;
-        }
-
-        .overdue {
-            color: red;
-            font-weight: bold;
         }
 
         .overdue {
@@ -118,59 +133,57 @@ if ($client_id > 0) {
 
     <div class="container">
         <header class="header">
-            <a href="clients_list.php">⬅ Back</a>
-            <span class="client-name"><?php echo $client['business_name']; ?></span>
+            <a href="clients_list.php" class="back-btn">⬅ Back</a>
+            <input type="text" placeholder="Client Name" value="<?php echo htmlspecialchars($client['business_name']); ?>" readonly>
         </header>
 
-        <section class="business-details">
-            <h2>Business Details</h2>
-            <p><strong>Address:</strong> <?php echo $client['address']; ?></p>
-            <p><strong>Website:</strong> <a href="<?php echo $client['website']; ?>" target="_blank"><?php echo $client['website']; ?></a></p>
-            <p><strong>Phone:</strong> <?php echo $client['phone']; ?></p>
-            <p><strong>Short Description:</strong> <?php echo $client['short_description']; ?></p>
+        <nav class="tabs">
+            <a href="#">Overview</a>
+            <a href="#">Hosting & Domain</a>
+            <a href="#">Hours</a>
+            <a href="#">Images</a>
+            <a href="#">Social</a>
+        </nav>
+
+        <!-- Business Details -->
+        <section class="details-section">
+            <h3>Business Details</h3>
+            <div class="details-grid">
+                <?php foreach ($client as $key => $value) {
+                    if (!empty($value)) { ?>
+                        <p><strong><?php echo ucfirst(str_replace('_', ' ', $key)); ?>:</strong> <?php echo htmlspecialchars($value); ?></p>
+                <?php }
+                } ?>
+            </div>
         </section>
 
-        <section class="tasks">
-            <h2>Tasks</h2>
+        <!-- Tasks Section -->
+        <section class="details-section">
+            <h3>Tasks</h3>
             <table>
                 <tr>
                     <th>Task Name</th>
-                    <th>Details</th>
+                    <th>Assignee</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Status</th>
                 </tr>
                 <?php while ($task = mysqli_fetch_assoc($tasks)) { ?>
                     <tr>
-                        <td>Task Name</td>
-                        <td><?php echo $task['task_name']; ?></td>
-                    </tr>
-                    <tr>
-                        <td>Assignee</td>
-                        <td><?php echo $task['assignee']; ?></td>
-                    </tr>
-                    <tr>
-                        <td>Start Date</td>
-                        <td><?php echo $task['start_date']; ?></td>
-                    </tr>
-                    <tr>
-                        <td>End Date</td>
+                        <td><?php echo htmlspecialchars($task['task_name']); ?></td>
+                        <td><?php echo htmlspecialchars($task['assignee']); ?></td>
+                        <td><?php echo htmlspecialchars($task['start_date']); ?></td>
                         <td>
                             <?php
                             $task_end_date = $task['end_date'];
-                            echo $task_end_date;
+                            echo htmlspecialchars($task_end_date);
                             if (strtotime($task_end_date) < time()) {
                                 echo ' <span class="overdue">OVERDUE</span>';
                             }
                             ?>
                         </td>
+                        <td><?php echo htmlspecialchars($task['status']); ?></td>
                     </tr>
-                    <tr>
-                        <td>Status</td>
-                        <td><?php echo $task['status']; ?></td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">
-                            <hr>
-                        </td>
-                    </tr> <!-- Add a separator between tasks -->
                 <?php } ?>
             </table>
         </section>
