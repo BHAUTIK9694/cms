@@ -1,3 +1,73 @@
+<?php
+session_start(); // Start the session
+
+include "partials/sql-connction.php";
+
+
+// If 'Id' is provided in the URL, update session
+if (isset($_GET['Id'])) {
+    $_SESSION['clientId'] = $_GET['Id'];
+}
+
+// Retrieve clientId from session
+$clientId = isset($_SESSION['clientId']) ? $_SESSION['clientId'] : '';
+
+// Default tab
+$name = isset($_GET['tab']) ? $_GET['tab'] : 'Hours';
+
+// Handle form submission to update working hours
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $monday_active = isset($_POST['monday_active']) ? 1 : 0;
+    $monday_start = mysqli_real_escape_string($conn, $_POST['monday_start']);
+    $monday_end = mysqli_real_escape_string($conn, $_POST['monday_end']);
+    $tuesday_active = isset($_POST['tuesday_active']) ? 1 : 0;
+    $tuesday_start = mysqli_real_escape_string($conn, $_POST['tuesday_start']);
+    $tuesday_end = mysqli_real_escape_string($conn, $_POST['tuesday_end']);
+    $wednesday_active = isset($_POST['wednesday_active']) ? 1 : 0;
+    $wednesday_start = mysqli_real_escape_string($conn, $_POST['wednesday_start']);
+    $wednesday_end = mysqli_real_escape_string($conn, $_POST['wednesday_end']);
+    $thursday_active = isset($_POST['thursday_active']) ? 1 : 0;
+    $thursday_start = mysqli_real_escape_string($conn, $_POST['thursday_start']);
+    $thursday_end = mysqli_real_escape_string($conn, $_POST['thursday_end']);
+    $friday_active = isset($_POST['friday_active']) ? 1 : 0;
+    $friday_start = mysqli_real_escape_string($conn, $_POST['friday_start']);
+    $friday_end = mysqli_real_escape_string($conn, $_POST['friday_end']);
+    $saturday_active = isset($_POST['saturday_active']) ? 1 : 0;
+    $saturday_start = mysqli_real_escape_string($conn, $_POST['saturday_start']);
+    $saturday_end = mysqli_real_escape_string($conn, $_POST['saturday_end']);
+    $sunday_active = isset($_POST['sunday_active']) ? 1 : 0;
+    $sunday_start = mysqli_real_escape_string($conn, $_POST['sunday_start']);
+    $sunday_end = mysqli_real_escape_string($conn, $_POST['sunday_end']);
+
+    // Update working hours in the database
+    $query = "
+        UPDATE clients SET 
+            monday_active = '$monday_active', monday_start = '$monday_start', monday_end = '$monday_end',
+            tuesday_active = '$tuesday_active', tuesday_start = '$tuesday_start', tuesday_end = '$tuesday_end',
+            wednesday_active = '$wednesday_active', wednesday_start = '$wednesday_start', wednesday_end = '$wednesday_end',
+            thursday_active = '$thursday_active', thursday_start = '$thursday_start', thursday_end = '$thursday_end',
+            friday_active = '$friday_active', friday_start = '$friday_start', friday_end = '$friday_end',
+            saturday_active = '$saturday_active', saturday_start = '$saturday_start', saturday_end = '$saturday_end',
+            sunday_active = '$sunday_active', sunday_start = '$sunday_start', sunday_end = '$sunday_end'
+        WHERE Id = '$clientId'
+    ";
+
+    if (mysqli_query($conn, $query)) {
+        echo "<script>alert('Working hours updated successfully!'); window.location.href = 'hours.php?Id=$clientId';</script>";
+    } else {
+        echo "<script>alert('Error updating working hours: " . mysqli_error($conn) . "');</script>";
+    }
+}
+
+// Fetch the existing working hours for the client from the database
+$query = "SELECT * FROM clients WHERE Id = '$clientId'";
+$result = mysqli_query($conn, $query);
+$client_data = mysqli_fetch_assoc($result);
+
+// Close the database connection
+mysqli_close($conn);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -80,124 +150,38 @@
     include 'partials/navbar.php';
     include 'partials/AddClientNav.php';
     ?>
-    <section class="working-hour-section">
+    <h1><?php echo $clientId ?></h1>
+    <form method="POST" action="hours.php?Id=<?php echo $clientId; ?>">
+        <section class="working-hour-section">
+            <input type="hidden" id="client-id" name="client_id" value="<?php echo $clientId; ?>" required>
+            <table>
+                <tr>
+                    <th>Day</th>
+                    <th>Enable</th>
+                    <th>Start Time</th>
+                    <th>End Time</th>
+                    <th>Actions</th>
+                </tr>
 
-        <table>
-            <tr>
-                <th>Day</th>
-                <th>Enable</th>
-                <th>Start Time</th>
-                <th>End Time</th>
-                <th>Actions</th>
-            </tr>
-            <tr>
-                <td>Monday</td>
-                <td>
-                    <input type="checkbox" id="monday_active" name="monday_active" onclick="toggleDay('monday')">
-                </td>
-                <td>
-                    <input type="time" id="monday_start" name="monday_start" value="09:00" disabled>
-                </td>
-                <td>
-                    <input type="time" id="monday_end" name="monday_end" value="18:00" disabled>
-                </td>
-                <td>
-                    <button type="button" class="app-all" onclick="applyTimesToAll('monday')">Apply to All</button>
-                </td>
-            </tr>
-            <tr>
-                <td>Tuesday</td>
-                <td>
-                    <input type="checkbox" id="tuesday_active" name="tuesday_active" onclick="toggleDay('tuesday')">
-                </td>
-                <td>
-                    <input type="time" id="tuesday_start" name="tuesday_start" value="09:00" disabled>
-                </td>
-                <td>
-                    <input type="time" id="tuesday_end" name="tuesday_end" value="18:00" disabled>
-                </td>
-                <td>
-                    <button class="app-all" type="button" onclick="applyTimesToAll('tuesday')">Apply to All</button>
-                </td>
-            </tr>
-            <tr>
-                <td>Wednesday</td>
-                <td>
-                    <input type="checkbox" id="wednesday_active" name="wednesday_active" onclick="toggleDay('wednesday')">
-                </td>
-                <td>
-                    <input type="time" id="wednesday_start" name="wednesday_start" value="09:00" disabled>
-                </td>
-                <td>
-                    <input type="time" id="wednesday_end" name="wednesday_end" value="18:00" disabled>
-                </td>
-                <td>
-                    <button class="app-all" type="button" onclick="applyTimesToAll('wednesday')">Apply to All</button>
-                </td>
-            </tr>
-            <tr>
-                <td>Thursday</td>
-                <td>
-                    <input type="checkbox" id="thursday_active" name="thursday_active" onclick="toggleDay('thursday')">
-                </td>
-                <td>
-                    <input type="time" id="thursday_start" name="thursday_start" value="09:00" disabled>
-                </td>
-                <td>
-                    <input type="time" id="thursday_end" name="thursday_end" value="18:00" disabled>
-                </td>
-                <td>
-                    <button class="app-all" type="button" onclick="applyTimesToAll('thursday')">Apply to All</button>
-                </td>
-            </tr>
-            <tr>
-                <td>Friday</td>
-                <td>
-                    <input type="checkbox" id="friday_active" name="friday_active" onclick="toggleDay('friday')">
-                </td>
-                <td>
-                    <input type="time" id="friday_start" name="friday_start" value="09:00" disabled>
-                </td>
-                <td>
-                    <input type="time" id="friday_end" name="friday_end" value="18:00" disabled>
-                </td>
-                <td>
-                    <button class="app-all" type="button" onclick="applyTimesToAll('friday')">Apply to All</button>
-                </td>
-            </tr>
-            <tr>
-                <td>Saturday</td>
-                <td>
-                    <input type="checkbox" id="saturday_active" name="saturday_active" onclick="toggleDay('saturday')">
-                </td>
-                <td>
-                    <input type="time" id="saturday_start" name="saturday_start" value="09:00" disabled>
-                </td>
-                <td>
-                    <input type="time" id="saturday_end" name="saturday_end" value="18:00" disabled>
-                </td>
-                <td>
-                    <button class="app-all" type="button" onclick="applyTimesToAll('saturday')">Apply to All</button>
-                </td>
-            </tr>
-            <tr>
-                <td>Sunday</td>
-                <td>
-                    <input type="checkbox" id="sunday_active" name="sunday_active" onclick="toggleDay('sunday')">
-                </td>
-                <td>
-                    <input type="time" id="sunday_start" name="sunday_start" value="09:00" disabled>
-                </td>
-                <td>
-                    <input type="time" id="sunday_end" name="sunday_end" value="18:00" disabled>
-                </td>
-                <td>
-                    <button class="app-all" type="button" onclick="applyTimesToAll('sunday')">Apply to All</button>
-                </td>
-            </tr>
-        </table>
-    </section>
+                <?php
+                $days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
+                foreach ($days as $day) {
+                    echo "<tr>
+                        <td>" . ucfirst($day) . "</td>
+                        <td><input type='checkbox' name='{$day}_active' " . ($client_data[$day . '_active'] ? 'checked' : '') . "></td>
+                        <td><input type='time' name='{$day}_start' value='" . $client_data[$day . '_start'] . "'></td>
+                        <td><input type='time' name='{$day}_end' value='" . $client_data[$day . '_end'] . "'></td>
+                        <td><button type='button' class='app-all' onclick='applyTimesToAll(\"$day\")'>Apply to All</button></td>
+                    </tr>";
+                }
+                ?>
+
+            </table>
+            <button type="submit" class="app-all">Save Working Hours</button>
+        </section>
+    </form>
 </body>
+
 <script>
     // Function to toggle day inputs based on checkbox state
     function toggleDay(day) {
@@ -233,16 +217,6 @@
             }
         });
     }
-
-    // Tooltip on hover to display start and end times
-    document.querySelectorAll('input[type="time"]').forEach((input) => {
-        input.addEventListener('mouseover', function() {
-            const day = this.id.split('_')[0];
-            const startInput = document.getElementById(day + '_start').value;
-            const endInput = document.getElementById(day + '_end').value;
-            this.title = `Start: ${startInput} - End: ${endInput}`;
-        });
-    });
 </script>
 
 </html>

@@ -1,3 +1,18 @@
+<?php
+session_start(); // Start the session
+
+// If 'Id' is provided in the URL, update session
+if (isset($_GET['Id'])) {
+    $_SESSION['clientId'] = $_GET['Id'];
+}
+
+// Retrieve clientId from session
+$clientId = isset($_SESSION['clientId']) ? $_SESSION['clientId'] : '';
+
+// Default tab
+$name = isset($_GET['tab']) ? $_GET['tab'] : 'PrimaryInfo';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -21,7 +36,7 @@
     include 'partials/AddClientNav.php';
     ?>
     <div>
-
+        <h1><?php echo $clientId ?></h1>
 
         <form action="AddClientData.php" method="POST">
             <!-- <h1>Client Details</h1> -->
@@ -31,7 +46,7 @@
                     <h2>Primary Details</h2>
                     <div class="form-group">
                         <!-- <label for="client-id">Client ID:</label> -->
-                        <input type="hidden" id="client-id" name="client_id" placeholder="Enter client ID" required>
+                        <input type="hidden" id="client-id" name="client_id" value="<?php echo $clientId; ?>" required>
                     </div>
                     <div class="form-group">
                         <label for="business-name">Business Name:</label>

@@ -1,3 +1,29 @@
+<?php
+session_start(); // Start the session
+
+// If 'Id' is provided in the URL, update session
+if (isset($_GET['Id'])) {
+    $_SESSION['clientId'] = $_GET['Id'];
+}
+
+// Retrieve clientId from session
+$clientId = isset($_SESSION['clientId']) ? $_SESSION['clientId'] : '';
+
+// Default tab
+$name = isset($_GET['tab']) ? $_GET['tab'] : 'PrimaryInfo';
+?>
+<?php
+if (isset($_SESSION['success'])) {
+    echo "<div class='success-message'>" . $_SESSION['success'] . "</div>";
+    unset($_SESSION['success']);
+}
+
+if (isset($_SESSION['error'])) {
+    echo "<div class='error-message'>" . $_SESSION['error'] . "</div>";
+    unset($_SESSION['error']);
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -18,9 +44,8 @@
     include 'partials/AddClientNav.php';
     ?>
     <div>
-
-
-        <form action="AddDomainAndHostingData.php" method="POST">
+        <h1><?php echo $clientId ?></h1>
+        <form action="DomainDB.php" method="POST">
             <!-- Hosting Information -->
             <div class="container">
                 <!-- Primary Information -->
@@ -28,7 +53,7 @@
                     <h2>Hosting Registrar</h2>
                     <div class="form-group">
                         <!-- <label for="client-id">Client ID:</label> -->
-                        <input type="hidden" id="client-id" name="client_id" placeholder="Enter client ID" required>
+                        <input type="hidden" id="client-id" name="client_id" value="<?php echo $clientId; ?>" required>
                     </div>
                     <div class="form-group">
                         <label for="hosting-provider">Hosting Provider:</label>
@@ -64,7 +89,7 @@
                     <h2>Domain Registrar</h2>
                     <div class="form-group">
                         <!-- <label for="client-id">Client ID:</label> -->
-                        <input type="hidden" id="client-id" name="client_id" placeholder="Enter client ID" required>
+                        <input type="hidden" id="client" name="client" placeholder="Enter client ID" required>
                     </div>
                     <div class="form-group">
                         <label for="domain-name">Domain Name:</label>
@@ -80,7 +105,7 @@
                     </div>
                     <div class="form-group">
                         <label for="domain-cost">Domain Cost:</label>
-                        <input type="number" id="doman_cost" name="doman_cost" placeholder="Enter Domain Cost" required>
+                        <input type="number" id="domain_cost" name="doman_cost" placeholder="Enter Domain Cost" required>
                     </div>
                 </div>
                 <!-- SSL Registration form -->
@@ -88,7 +113,7 @@
                     <h2>SSL Registrar</h2>
                     <div class="form-group">
                         <!-- <label for="client-id">Client ID:</label> -->
-                        <input type="hidden" id="client-id" name="client_id" placeholder="Enter Client ID" required>
+                        <input type="hidden" id="client" name="client" placeholder="Enter Client ID" required>
                     </div>
                     <div class="form-group">
                         <label for="ssl-provider">SSL Provider:</label>
@@ -127,7 +152,7 @@
                     <h2>Billing</h2>
                     <div class="form-group">
                         <!-- <label for="client-id">Client ID:</label> -->
-                        <input type="hidden" id="client-id" name="client_id" placeholder="Enter Client ID" required>
+                        <input type="hidden" id="client" name="client" placeholder="Enter Client ID" required>
                     </div>
                     <div class="form-group">
                         <label for="billing_frequency">Billing Frequency:</label>

@@ -1,4 +1,18 @@
 <?php
+session_start(); // Start the session
+
+// If 'Id' is provided in the URL, update session
+if (isset($_GET['Id'])) {
+    $_SESSION['clientId'] = $_GET['Id'];
+}
+
+// Retrieve clientId from session
+$clientId = isset($_SESSION['clientId']) ? $_SESSION['clientId'] : '';
+
+// Default tab
+$name = isset($_GET['tab']) ? $_GET['tab'] : 'PrimaryInfo';
+?>
+<?php
 include 'partials/navbar.php';
 include 'partials/AddClientNav.php';
 include "partials/sql-connction.php";
@@ -52,8 +66,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manage Subscriptions</title>
-    <link rel="shortcut icon" href="./public/images/favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <style>
         body {
             background-color: #f4f4f9;
@@ -76,6 +89,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             text-align: center;
         }
 
+        /* Subscription Table */
         .subscription-table {
             width: 100%;
             margin-top: 20px;
@@ -98,16 +112,51 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             background-color: #f2f2f2;
         }
 
-        .form-group {
-            margin-bottom: 15px;
+        /* Button */
+        .popup-btn {
+            background-color: #007474;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            display: block;
+            margin: 20px auto;
         }
 
-        label {
-            font-weight: bold;
+        .popup-btn:hover {
+            background-color: #005f5f;
         }
 
-        input,
-        select {
+        /* Popup Overlay */
+        .popup-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+
+        /* Popup Form */
+        .popup-form {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            z-index: 1000;
+            width: 400px;
+        }
+
+        .popup-form input,
+        .popup-form select {
             width: 100%;
             padding: 8px;
             margin-top: 5px;
@@ -115,76 +164,41 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             border-radius: 5px;
         }
 
-        #submit-btn {
-            background-color: #28a745;
+        .popup-form button {
+            background-color: #007474;
             color: white;
-            padding: 10px 15px;
+            padding: 8px 12px;
             border: none;
-            cursor: pointer;
-            font-size: 16px;
-            width: 100%;
             border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
         }
 
-        #submit-btn:hover {
-            background-color: #218838;
+        .popup-form button:hover {
+            background-color: #005f5f;
         }
 
-        .delete-btn {
-            color: red;
-            text-decoration: none;
+        .cancel-btn {
+            background-color: red;
         }
 
-        .delete-btn:hover {
-            color: darkred;
+        .cancel-btn:hover {
+            background-color: darkred;
         }
     </style>
 </head>
 
 <body>
+    <?php
+    include 'partials/navbar.php';
+    include 'partials/AddClientNav.php';
+    ?>
+    <h1><?php echo $clientId ?></h1>
     <div class="container">
         <h2>Manage Subscriptions</h2>
 
-        <!-- Subscription Form -->
-        <form method="POST">
-            <div class="form-group">
-                <label for="client_id">Client ID:</label>
-                <input type="number" name="client_id" required>
-            </div>
-
-            <div class="form-group">
-                <label for="subscription_plan">Subscription Plan:</label>
-                <input type="text" name="subscription_plan" required>
-            </div>
-
-            <div class="form-group">
-                <label for="subscription_status">Status:</label>
-                <select name="subscription_status" required>
-                    <option value="Active">Active</option>
-                    <option value="Expired">Expired</option>
-                    <option value="Cancelled">Cancelled</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label for="subscription_start_date">Start Date:</label>
-                <input type="date" name="subscription_start_date" required>
-            </div>
-
-            <div class="form-group">
-                <label for="subscription_end_date">End Date:</label>
-                <input type="date" name="subscription_end_date" required>
-            </div>
-
-            <div class="form-group">
-                <label for="subscription_price">Price ($):</label>
-                <input type="number" step="0.01" name="subscription_price" required>
-            </div>
-
-            <button type="submit" id="submit-btn">Add Subscription</button>
-        </form>
-
-        <hr>
+        <!-- Manage Subscription Button -->
+        <button class="popup-btn" onclick="openPopup()">Manage Subscription</button>
 
         <!-- Subscription List -->
         <table class="subscription-table">
@@ -201,6 +215,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </thead>
             <tbody>
                 <?php
+                include "partials/sql-connction.php";
                 $query = "SELECT Id, subscription_plan, subscription_status, subscription_start_date, subscription_end_date, subscription_price FROM clients";
                 $result = $conn->query($query);
 
@@ -225,6 +240,48 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </tbody>
         </table>
     </div>
+
+    <!-- Popup Form for Subscription -->
+    <div class="popup-overlay" onclick="closePopup()"></div>
+    <div class="popup-form">
+        <h2>Add Subscription</h2>
+        <form action="Subscription.php" method="POST">
+            <input type="hidden" id="client-id" name="client_id" value="<?php echo $clientId; ?>" required>
+            <label for="subscription_plan">Subscription Plan:</label>
+            <input type="text" name="subscription_plan" required>
+
+            <label for="subscription_status">Status:</label>
+            <select name="subscription_status" required>
+                <option value="Active">Active</option>
+                <option value="Expired">Expired</option>
+                <option value="Cancelled">Cancelled</option>
+            </select>
+
+            <label for="subscription_start_date">Start Date:</label>
+            <input type="date" name="subscription_start_date" required>
+
+            <label for="subscription_end_date">End Date:</label>
+            <input type="date" name="subscription_end_date" required>
+
+            <label for="subscription_price">Price ($):</label>
+            <input type="number" step="0.01" name="subscription_price" required>
+
+            <button type="submit">Save</button>
+            <button type="button" class="cancel-btn" onclick="closePopup()">Cancel</button>
+        </form>
+    </div>
+
+    <script>
+        function openPopup() {
+            document.querySelector('.popup-overlay').style.display = 'block';
+            document.querySelector('.popup-form').style.display = 'block';
+        }
+
+        function closePopup() {
+            document.querySelector('.popup-overlay').style.display = 'none';
+            document.querySelector('.popup-form').style.display = 'none';
+        }
+    </script>
 </body>
 
 </html>

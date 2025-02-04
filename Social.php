@@ -1,3 +1,18 @@
+<?php
+session_start(); // Start the session
+
+// If 'Id' is provided in the URL, update session
+if (isset($_GET['Id'])) {
+    $_SESSION['clientId'] = $_GET['Id'];
+}
+
+// Retrieve clientId from session
+$clientId = isset($_SESSION['clientId']) ? $_SESSION['clientId'] : '';
+
+// Default tab
+$name = isset($_GET['tab']) ? $_GET['tab'] : 'PrimaryInfo';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <?php
@@ -138,7 +153,8 @@ session_start();
     include 'partials/navbar.php';
     include 'partials/AddClientNav.php';
     ?>
-
+    <h1><?php echo $clientId ?></h1>
+    <input type="hidden" id="client-id" name="client_id" value="<?php echo $clientId; ?>" required>
     <div class="container">
         <?php
         //    session_start();
