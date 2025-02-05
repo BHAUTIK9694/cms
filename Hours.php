@@ -40,20 +40,39 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $sunday_end = mysqli_real_escape_string($conn, $_POST['sunday_end']);
 
     // Update working hours in the database
+    // Update working hours in the database (Insert if not exists, otherwise update)
     $query = "
-        UPDATE clients SET 
-            monday_active = '$monday_active', monday_start = '$monday_start', monday_end = '$monday_end',
-            tuesday_active = '$tuesday_active', tuesday_start = '$tuesday_start', tuesday_end = '$tuesday_end',
-            wednesday_active = '$wednesday_active', wednesday_start = '$wednesday_start', wednesday_end = '$wednesday_end',
-            thursday_active = '$thursday_active', thursday_start = '$thursday_start', thursday_end = '$thursday_end',
-            friday_active = '$friday_active', friday_start = '$friday_start', friday_end = '$friday_end',
-            saturday_active = '$saturday_active', saturday_start = '$saturday_start', saturday_end = '$saturday_end',
-            sunday_active = '$sunday_active', sunday_start = '$sunday_start', sunday_end = '$sunday_end'
-        WHERE Id = '$clientId'
-    ";
+INSERT INTO clients (Id, monday_active, monday_start, monday_end, 
+                     tuesday_active, tuesday_start, tuesday_end, 
+                     wednesday_active, wednesday_start, wednesday_end, 
+                     thursday_active, thursday_start, thursday_end, 
+                     friday_active, friday_start, friday_end, 
+                     saturday_active, saturday_start, saturday_end, 
+                     sunday_active, sunday_start, sunday_end)
+VALUES ('$clientId', '$monday_active', '$monday_start', '$monday_end',
+        '$tuesday_active', '$tuesday_start', '$tuesday_end',
+        '$wednesday_active', '$wednesday_start', '$wednesday_end',
+        '$thursday_active', '$thursday_start', '$thursday_end',
+        '$friday_active', '$friday_start', '$friday_end',
+        '$saturday_active', '$saturday_start', '$saturday_end',
+        '$sunday_active', '$sunday_start', '$sunday_end')
+ON DUPLICATE KEY UPDATE 
+    monday_active = VALUES(monday_active), monday_start = VALUES(monday_start), monday_end = VALUES(monday_end),
+    tuesday_active = VALUES(tuesday_active), tuesday_start = VALUES(tuesday_start), tuesday_end = VALUES(tuesday_end),
+    wednesday_active = VALUES(wednesday_active), wednesday_start = VALUES(wednesday_start), wednesday_end = VALUES(wednesday_end),
+    thursday_active = VALUES(thursday_active), thursday_start = VALUES(thursday_start), thursday_end = VALUES(thursday_end),
+    friday_active = VALUES(friday_active), friday_start = VALUES(friday_start), friday_end = VALUES(friday_end),
+    saturday_active = VALUES(saturday_active), saturday_start = VALUES(saturday_start), saturday_end = VALUES(saturday_end),
+    sunday_active = VALUES(sunday_active), sunday_start = VALUES(sunday_start), sunday_end = VALUES(sunday_end);
+";
 
     if (mysqli_query($conn, $query)) {
-        echo "<script>alert('Working hours updated successfully!'); window.location.href = 'hours.php?Id=$clientId';</script>";
+        $_SESSION['success_message'] = "Working hours updated successfully!";
+        echo "<script>
+    localStorage.setItem('successMessage', '" . $_SESSION['success_message'] . "');
+    window.location.href = 'hours.php?Id=$clientId';
+</script>";
+        exit();
     } else {
         echo "<script>alert('Error updating working hours: " . mysqli_error($conn) . "');</script>";
     }
@@ -151,7 +170,7 @@ mysqli_close($conn);
     include 'partials/AddClientNav.php';
     ?>
     <h1><?php echo $clientId ?></h1>
-    <form method="POST" action="hours.php?Id=<?php echo $clientId; ?>">
+    <form method="POST">
         <section class="working-hour-section">
             <input type="hidden" id="client-id" name="client_id" value="<?php echo $clientId; ?>" required>
             <table>
@@ -168,12 +187,13 @@ mysqli_close($conn);
                 foreach ($days as $day) {
                     echo "<tr>
                         <td>" . ucfirst($day) . "</td>
-                        <td><input type='checkbox' name='{$day}_active' " . ($client_data[$day . '_active'] ? 'checked' : '') . "></td>
-                        <td><input type='time' name='{$day}_start' value='" . $client_data[$day . '_start'] . "'></td>
-                        <td><input type='time' name='{$day}_end' value='" . $client_data[$day . '_end'] . "'></td>
+                        <td><input type='checkbox' id='{$day}_active' name='{$day}_active' " . ($client_data[$day . '_active'] ? 'checked' : '') . "></td>
+                        <td><input type='time' id='{$day}_start' name='{$day}_start' value='" . $client_data[$day . '_start'] . "'></td>
+                        <td><input type='time' id='{$day}_end' name='{$day}_end' value='" . $client_data[$day . '_end'] . "'></td>
                         <td><button type='button' class='app-all' onclick='applyTimesToAll(\"$day\")'>Apply to All</button></td>
                     </tr>";
                 }
+
                 ?>
 
             </table>
@@ -207,14 +227,11 @@ mysqli_close($conn);
         const days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
 
         days.forEach(function(currentDay) {
-            if (currentDay !== day) {
-                document.getElementById(currentDay + '_start').value = startTime;
-                document.getElementById(currentDay + '_end').value = endTime;
+            document.getElementById(currentDay + '_start').value = startTime;
+            document.getElementById(currentDay + '_end').value = endTime;
 
-                const checkbox = document.getElementById(currentDay + '_active');
-                checkbox.checked = isChecked;
-                toggleDay(currentDay);
-            }
+            const checkbox = document.getElementById(currentDay + '_active');
+            checkbox.checked = isChecked;
         });
     }
 </script>

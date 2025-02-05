@@ -214,7 +214,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <tbody>
                 <?php
                 include "partials/sql-connction.php";
-                $query = "SELECT Id, subscription_plan, subscription_status, subscription_start_date, subscription_end_date, subscription_price FROM clients";
+                $query = "SELECT Id, subscription_plan, subscription_status, subscription_start_date, subscription_end_date, subscription_price FROM clients Where Id='$clientId'";
                 $result = $conn->query($query);
 
                 if ($result->num_rows > 0) {
