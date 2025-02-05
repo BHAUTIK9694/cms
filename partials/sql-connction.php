@@ -2,7 +2,7 @@
 $servername = "localhost"; // or "127.0.0.1"
 $username = "root";        // your MySQL username
 $password = "";            // your MySQL password
-$dbname = "client_manager"; // your database name
+$dbname = "appointment_booking"; // your database name
 $port = "3307"; // your MySQL server port
 
 // Create connection
@@ -12,3 +12,4 @@ $conn = new mysqli($servername, $username, $password, $dbname, $port);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
+?>
