@@ -1,160 +1,158 @@
-
 /* General Styles */
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #F1F1EC;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f1f1ec;
 }
 
 h1 {
-    text-align: center;
-    color: #333;
+  text-align: center;   
+  color: #333;
 }
 
-h2{ 
-  color: #007474;  
+h2 {
+  color: #007474;
 }
+
+
+
 
 .container {
-    width: 90%;
-    margin: 20px auto;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto auto auto;
-    gap: 30px;
+  width: 90%;
+  margin: 30px auto;
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  gap: 30px;
+}
+
+.outer-box-1,
+.outer-box-2 {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
 }
 
 .box {
-    background: #fff;
-    padding: 20px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
+  background: #fff;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
 }
 
-#box1,#box2,#box3,#box4{
-    height: fit-content;
+#box1,
+#box2,
+#box3,
+#box4 {
+  height: fit-content;
 }
-
-
 
 .form-group {
-    margin-bottom: 15px;
-}
-
-label {
-    display: block;
-    font-weight: bold;
-    margin-bottom: 5px;
-}
-
-input,
-textarea {
-    width: 95%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 14px;
-}
-
-textarea {
-    resize: vertical;
+  margin-bottom: 15px;
 }
 
 /* contact inf0 */
 .box .add-btn {
-    background-color:#007474;
-    color: white;
-    padding: 10px 15px;
-    font-size: 14px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 10px;
-    margin-bottom: 20px;
+  background-color: #007474;
+  color: white;
+  padding: 10px 15px;
+  font-size: 14px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+  margin-bottom: 20px;
 }
 
 .add-btn:hover {
-    background-color: #007474c3;
+  background-color: #007474c3;
 }
 
 .remove-btn {
-    background-color: #dc3545;
-    color: white;
-    padding: 5px 10px;
-    margin-top: 10px;
-    font-size: 12px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-left: 10px;
+  background-color: #dc3545;
+  color: white;
+  padding: 5px 10px;
+  margin-top: 10px;
+  font-size: 12px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
 .remove-btn:hover {
-    background-color: #a71d2a;
+  background-color: #a71d2a;
 }
-
 
 /* Tag Input Styles */
 .tag-input {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 5px;
-    padding: 5px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background: #fafafa;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  /* padding: 5px; */
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background: #fafafa;
 }
 
 .tag-input input {
-    flex: 1;
-    border: none;
-    outline: none;
-    padding: 5px;
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: 5px;
 }
 
-.tag {
-    display: inline-block;
-    background: #007bff;
-    color: white;
-    padding: 5px 10px;
-    border-radius: 5px;
-    font-size: 12px;
-    position: relative;
-}
 
 .tag .remove-tag {
-    margin-left: 8px;
-    cursor: pointer;
-    font-weight: bold;
-    color: white;
+  margin-left: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  color: white;
 }
-
-
 
 /* button  */
 .save-btn button {
-    background-color:#007474;
-    color: white;
-    padding: 15px 30px;
-    font-size: 18px;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: background 0.3s;
+  width: 5rem;
+  padding: 6px 3px;
+  border-radius: 6px;
+  font-size: large;
+  background: #007474;
+  color: white;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s;
 }
 
 .save-btn {
-    grid-column: span 2;
-    text-align: center;
+  width: 100%;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  text-align: center;
+  /* margin: 20px 50px 50px 70px; */
+}
+.save-btn-container-6475i {
+  padding: 20px 2rem;
 }
 
 .save-btn button:hover {
-    background-color: #007474c3;
+  background-color: #007474c3;
 }
-
-
-
 
 /* client css */
 
+.phone-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
+  margin: 20px 0;
+}
+
+.newBusinessNumber {
+  width: 100%;
+  
+}

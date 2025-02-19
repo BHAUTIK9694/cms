@@ -1,32 +1,27 @@
+<?php
+// session_start(); // Start the session
+
+// If 'Id' is provided in the URL, update session
+if (isset($_GET['Id'])) {
+    $_SESSION['clientId'] = $_GET['Id'];
+}
+
+// Retrieve clientId from session
+$clientId = isset($_SESSION['clientId']) ? $_SESSION['clientId'] : '';
+
+// Default tab
+$name = isset($_GET['tab']) ? $_GET['tab'] : 'PrimaryInfo';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <?php
 // Start the session before anything else
-session_start();
+// session_start();
 ?>
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
-            margin: 0;
-            padding: 0;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        h2{
-            text-decoration:underline;
-        }
-
         .social-links-form {
             background-color: #fff;
             padding: 20px;
@@ -40,151 +35,103 @@ session_start();
             margin-bottom: 20px;
         }
 
-        .social-links-form label {
-            display: block;
-            font-size: 16px;
-            margin-bottom: 5px;
+        .subscribe-btn-456yrt {
+            width: 7rem !important;
         }
 
-        .social-links-form input {
-            width: 96%;
-            padding: 10px;
-            margin: 10px 0 20px 0;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
-
-        .social-links-form button {
-            background-color: #0077ff;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            width: 100%;
-        }
-
-        .social-links-form button:hover {
-            background-color: #005bb5;
-        }
-
-        .error-message {
-            color: red;
-            font-size: 14px;
-            margin-top: -15px;
-            margin-bottom: 20px;
-        }
-
-        /* Platform-specific background color */
-        .facebook {
-            background-color: #3b5998;
-            color: white;
-        }
-
-        .twitter {
-            background-color: #00acee;
-            color: white;
-        }
-
-        .instagram {
-            background-color: #e1306c;
-            color: white;
-        }
-
-        .linkedin {
-            background-color: #0e76a8;
-            color: white;
-        }
-
-        .youtube {
-            background-color: #ff0000;
-            color: white;
-        }
-
-        .save-btn button {
-            background-color: #007474;
-            color: white;
-            padding: 15px 30px;
-            font-size: 18px;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-
-        .save-btn {
-            grid-column: span 2;
-            text-align: center;
-        }
-
-        .save-btn button:hover {
-            background-color: #007474c3;
-        }
-
-        .session{
-            background-color:#E5E5E5;
-            color:#007474;
+        .session {
+            background-color: #E5E5E5;
+            color: #007474;
             padding: 5px;
             border-radius: 7px;
             margin-bottom: 20px;
             text-align: center;
-            font-weight:bold;
+            font-weight: bold;
         }
+
+        .social-container-989ojk {
+            width: 50%;
+        }
+
+        /* .subscribe-btn-div {
+            width: 100% !important;
+        } */
     </style>
 </head>
 
 <body>
+
     <?php
-    include 'partials/AddClientNav.php';
+    // echo "<pre>";
+    // print_r($clientData);
+    // echo "</pre>";
+
     ?>
+    <div class="client-container-outer-674pl">
+        <div class="social-container-989ojk">
+            <!-- Social Media Links Form -->
+            <div class="social-links-form">
+                <h2>Enter Your Social Media Links</h2>
 
-    <div class="container">
-        <?php 
-        //    session_start();
-           if(isset($_SESSION['success'])){
-            echo  "
-                <h1 class='session'>".$_SESSION['success']."</h1>
-            ";
-            unset($_SESSION['success']);
-           }
-        ?>
-        <!-- Social Media Links Form -->
-        <div class="social-links-form">
-            <h2>Enter Your Social Media Links</h2>
+                <form action="updateClientInfo.php" method="post" id="client_social_links">
+                    <!-- Facebook Input -->
+                    <input type="hidden" name="client_id" value="<?php echo $_GET['Id']; ?>">
 
-            <form action="SocialData.php" method="post">
-                <!-- Facebook Input -->
-                
-                <label for="facebook">Facebook:</label>
-                <input type="url" id="facebook" name="facebook" placeholder="Enter Facebook Link" required />
-                <div class="error-message" id="facebookError"></div>
+                    <div class="form-input">
 
-                <!-- Twitter Input -->
-                <label for="twitter">Twitter:</label>
-                <input type="url" id="twitter" name="twitter" placeholder="Enter Twitter Link" required />
-                <div class="error-message" id="twitterError"></div>
+                        <input type="url" id="facebook" name="facebook" placeholder="Enter Facebook Link" value="<?php echo $clientData['facebook']?>"  />
+                        <label for="facebook">Facebook:</label>
+                    </div>
+                    <!-- <div class="error-message" id="facebookError"></div> -->
 
-                <!-- Instagram Input -->
-                <label for="instagram">Instagram:</label>
-                <input type="url" id="instagram" name="instagram" placeholder="Enter Instagram Link" required />
-                <div class="error-message" id="instagramError"></div>
+                    <!-- Twitter Input -->
+                    <div class="form-input">
 
-                <!-- LinkedIn Input -->
-                <label for="linkedin">LinkedIn:</label>
-                <input type="url" id="linkedin" name="linkedin" placeholder="Enter LinkedIn Link" required />
-                <div class="error-message" id="linkedinError"></div>
+                        <input type="url" id="twitter" name="twitter" placeholder="Enter Twitter Link" value="<?php echo $clientData['twitter']?>"  />
+                        <label for="twitter">Twitter:</label>
+                    </div>
+                    <!-- <div class="error-message" id="twitterError"></div> -->
 
-                <!-- YouTube Input -->
-                <label for="youtube">YouTube:</label>
-                <input type="url" id="youtube" name="youtube" placeholder="Enter YouTube Link" required />
-                <div class="error-message" id="youtubeError"></div>
+                    <!-- Instagram Input -->
+                    <div class="form-input">
 
-                <!-- Submit Button -->
-                <div class="save-btn">
-                   <button type="submit">Submit Links</button>
-                </div>
-            </form>
+                        <input type="url" id="instagram" name="instagram" placeholder="Enter Instagram Link" value="<?php echo $clientData['instagram']?>"  />
+                        <label for="instagram">Instagram:</label>
+                    </div>
+                    <!-- <div class="error-message" id="instagramError"></div> -->
+
+                    <!-- LinkedIn Input -->
+                    <div class="form-input">
+
+                        <input type="url" id="linkedin" name="linkedin" placeholder="Enter LinkedIn Link" value="<?php echo $clientData['linkedin']?>" />
+                        <label for="linkedin">LinkedIn:</label>
+                    </div>
+                    <!-- <div class="error-message" id="linkedinError"></div> -->
+
+                    <!-- YouTube Input -->
+                    <div class="form-input">
+
+                        <input type="url" id="youtube" name="youtube" placeholder="Enter YouTube Link" value="<?php echo $clientData['youtube']?>" />
+                        <label for="youtube">YouTube:</label>
+                    </div>
+
+                    <div class="form-input">
+
+                        <input type="url" id="custom_link" name="custom_link"
+                            placeholder="Enter Custom Link (Optional)" value="<?php echo $clientData['custom_link']?>" />
+                        <label for="custom_link">Custom Link URL:</label>
+                    </div>
+                    <!-- <div class="error-message" id="customLinkError"></div> -->
+
+                    <!-- Submit Button -->
+                    <div class="save-btn subscribe-btn-div">
+                        <button type="button" class="subscribe-btn-456yrt" id="subscribe-btn-456yrt">Submit
+                            Links</button>
+                    </div>
+                </form>
+            </div>
         </div>
+
     </div>
 
 </body>

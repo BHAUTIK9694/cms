@@ -1,0 +1,154 @@
+.form-input {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.form-input input::placeholder,
+.form-input textarea::placeholder {
+  opacity: 0;
+}
+
+.form-input input,
+.form-input textarea {
+  font-size: 14px;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 5px 15px;
+  display: block;
+  border-radius: 4px;
+  height: 50px;
+  border: 1px solid #007474;
+  box-sizing: border-box;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  outline: none;
+}
+
+.form-input textarea {
+  resize: vertical;
+}
+
+input:focus,
+textarea:focus {
+  border-color: #007474;
+  box-shadow: 0 0 8px #007474;
+}
+
+.form-input input:focus + label,
+.form-input input:not(:placeholder-shown) + label,
+.form-input textarea:focus + label,
+.form-input textarea:not(:placeholder-shown) + label {
+  top: 0;
+  color: #007474;
+  background: white;
+  padding: 0 5px;
+}
+
+.form-input label {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 15px;
+  color: black;
+  letter-spacing: 1px;
+  transition: 0.3s;
+}
+
+.custom-select {
+  position: relative;
+  font-family: Arial;
+  font-size: 16px;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 5px 15px;
+  display: block;
+  border-radius: 4px;
+  height: 50px;
+  border: 1px solid #007474;
+  box-sizing: border-box;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  outline: none;
+  background: white;
+  margin-bottom: 20px;
+}
+
+.custom-select select {
+  display: none;
+  /* hide original SELECT element: */
+}
+
+.select-selected {
+  background-color: white;
+}
+
+.select-selected:after {
+  position: absolute;
+  content: "";
+  top: 20px;
+  right: 10px;
+  width: 0;
+  height: 0;
+  color: #007474;
+  border: 6px solid red;
+  border-color: #007474 transparent transparent transparent;
+}
+
+.select-selected.select-arrow-active:after {
+  border-color: transparent transparent #007474 transparent;
+  top: 13px;
+}
+
+.select-items div,
+.select-selected {
+  color: #000;
+  padding: 9px 0px;
+  cursor: pointer;
+}
+
+.select-items div {
+  padding-left: 10px;
+  margin: 0px 5px;
+  border-radius: 5px;
+}
+
+.select-items {
+  position: absolute;
+  background-color: #e1e1e1;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 99;
+  padding: 7px 0px;
+  border-radius: 7px;
+  max-height: 200px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.select-hide {
+  display: none;
+}
+
+.select-items div:hover,
+.same-as-selected {
+  background-color: #007474;
+  color: white;
+}
+
+.same-as-selected {
+  color: white !important;
+  border-radius: 5px;
+  margin: 0px 5px;
+}
+
+.custom-d-flex .custom-select {
+  margin: 0px 5px !important;
+}
+
+.custom-select label {
+  position: absolute;
+  top: -10px;
+  background: white;
+  color: #007474;
+  left: 9px;
+}

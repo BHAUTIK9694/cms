@@ -1,0 +1,271 @@
+body {
+  font-family: "Raleway", sans-serif;
+}
+
+.template-header-container {
+  width: 100%;
+  padding: 12px 14px;
+  display: flex;
+  justify-content: start;
+}
+
+.btnBox {
+  width: 98%;
+  padding: 1rem 0;
+  border-bottom: 2px solid #007474;
+}
+
+.createTemplateBtn {
+  padding: 0.5rem;
+  border-radius: 6px;
+  background: #007474;
+  color: white;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.createTemplateBtn:hover {
+  background: white;
+  color: #007474;
+}
+
+/* .project-details-container h4 {
+  margin-bottom: 1rem;
+} */
+
+.grid-container {
+  display: flex;
+  flex-direction: column;
+  /* grid-template-columns: auto auto auto;
+    column-gap: 30px; */
+}
+
+/* .item4 {
+    grid-column: 1;
+}
+.item5 {
+    grid-column: 2 / span 3;
+}
+.item6 {
+    grid-column: 1 / span 3;
+} */
+
+/* Tags Container Css */
+.project-tags-input,
+.task-tags-input {
+  border: 1px solid #b5c8ce;
+  border-radius: 10px;
+  background: #fff;
+}
+.project-tags-input ul,
+.task-tags-input ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+}
+.project-tags-input li,
+.task-tags-input li {
+  padding: 5px;
+  margin: 0 5px 5px 0;
+  border: 1px solid black;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+}
+.project-tags-input li .remove,
+.task-tags-input li .remove {
+  width: 12px;
+  height: 12px;
+  color: rgb(2, 2, 2);
+  background: url("remove.svg");
+  background-size: cover;
+  margin-left: 10px;
+}
+.project-tags-input #inputTags,
+.task-tags-input #inputTags {
+  order: 1;
+  width: 200px;
+  padding: 5px;
+  margin: 0 5px 5px 0;
+}
+
+/* End of Tags Container Css */
+
+.project-template-container {
+  width: 100%;
+  margin: 0 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.project-template-list {
+  display: flex;
+  gap: 1rem;
+  
+}
+
+.project-template-list .template-container {
+  width: fit-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.disp-flx {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.tem-row {
+  width: 24rem;
+  border: 2px solid #007474;
+  border-radius: 12px;
+  cursor: pointer;
+}
+.tem-row:hover {
+  background: #005f5f;
+  color: #e1e1e1;
+}
+
+.template-container .card {
+  padding: 12px;
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.card-title {
+  font-size: 1.5rem;
+}
+.card-text {
+  font-size: large;
+}
+
+/* Editor Css */
+#code-editor {
+  border: 1px solid #d1d1d1;
+  max-width: 700px;
+  margin: 0px auto;
+}
+
+.editor-block-controls {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  padding: 5px;
+  background: #fff;
+}
+
+.editor-block-controls > div > button.command {
+  outline: none;
+  background-color: none;
+  background: transparent;
+  color: black;
+  cursor: pointer;
+  border: 1px solid #e1e1e1;
+  transition: 0.2s;
+  border-radius: 3px;
+  padding: 5px 10px;
+}
+
+.editor-block-controls > div > button.command:hover {
+  color: #007474;
+}
+
+#editor-block-content {
+  max-width: 700px;
+  min-height: 150px;
+  /* width: 100%; */
+  height: auto;
+  padding: 12px;
+  resize: vertical;
+  overflow: auto;
+  font-family: Helvetica, sans-serif;
+  font-size: 12px;
+  border: 2px solid #e1e1e1;
+  border-radius: 0 0 3px 3px;
+  background: #f2f4f6;
+  outline: none;
+}
+
+#editor-block-content > blockquote {
+  border-left: 2px solid black;
+  padding: 5px;
+  background: #1111;
+  font-style: italic;
+}
+
+.wsy-command {
+  padding: 3px;
+  border-radius: 3px;
+  font-weight: bold;
+  outline: none;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.command:hover {
+  color: #007474 !important;
+}
+/* End of Editor css */
+
+/* Start of Tag css */
+
+.tag-container {
+  /* display: flex; */
+  flex-wrap: wrap;
+  align-items: center;
+  /* border: 1px solid #ccc; */
+  background: white;
+  /* border-radius: 4px; */
+  /* padding: 8px; */
+  /* width: 400px; */
+  /* margin: 20px; */
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 12px 0;
+}
+
+.tag {
+  width: fit-content;
+  min-width: 4rem;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  border-radius: 8px;
+  padding: 4px 8px;
+  font-size: large;
+  background-color: #007474;
+  color: white;
+}
+
+.tag span {
+  margin-right: 4px;
+}
+
+.tag-close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 1;
+  color: white;
+}
+
+.tag-color {
+  background-color: #007474;
+  color: rgb(255, 255, 255);
+}
+
+/* End of tag css */

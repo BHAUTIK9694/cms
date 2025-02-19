@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Tab Functionality</title>
+<style>
+/* Basic styling for the tabs */
+.tabs {
+  display: flex; /* Arrange tabs horizontally */
+  list-style: none; /* Remove bullet points */
+  padding: 0;
+  margin: 0;
+}
+
+.tab {
+  padding: 10px 15px;
+  cursor: pointer;
+  border: 1px solid #ccc; /* Add borders */
+  border-bottom: none; /* Remove bottom border */
+  background-color: #f0f0f0; /* Light gray background */
+  margin-right: -1px; /* Overlap borders slightly */
+}
+
+.tab.active {
+  background-color: #fff; /* White background for active tab */
+  border-bottom: 1px solid #fff; /* White bottom border */
+}
+
+/* Style for the tab content */
+.tab-content {
+  border: 1px solid #ccc;
+  padding: 20px;
+}
+
+.tab-pane {
+  display: none; /* Hide all tab content by default */
+}
+
+.tab-pane.active {
+  display: block; /* Show content for the active tab */
+}
+</style>
+</head>
+<body>
+
+<ul class="tabs">
+  <li class="tab active" data-tab="tab1">Tab 1</li>
+  <li class="tab" data-tab="tab2">Tab 2</li>
+  <li class="tab" data-tab="tab3">Tab 3</li>
+</ul>
+
+<div class="tab-content">
+  <div id="tab1" class="tab-pane active">
+    <h2>Tab 1 Content</h2>
+    <p>This is the content for Tab 1.  It is visible by default.</p>
+  </div>
+  <div id="tab2" class="tab-pane">
+    <h2>Tab 2 Content</h2>
+    <p>This is the content for Tab 2.</p>
+  </div>
+  <div id="tab3" class="tab-pane">
+    <h2>Tab 3 Content</h2>
+    <p>This is the content for Tab 3.</p>
+  </div>
+</div>
+
+<script>
+const tabs = document.querySelectorAll('.tab');
+const tabPanes = document.querySelectorAll('.tab-pane');
+
+tabs.forEach(tab => {
+  tab.addEventListener('click', () => {
+    // 1. Remove active class from all tabs and panes
+    tabs.forEach(t => t.classList.remove('active'));
+    tabPanes.forEach(pane => pane.classList.remove('active'));
+
+    // 2. Add active class to the clicked tab and corresponding pane
+    const targetPaneId = tab.dataset.tab;
+    const targetPane = document.getElementById(targetPaneId);
+
+    tab.classList.add('active');
+    targetPane.classList.add('active');
+  });
+});
+
+</script>
+
+</body>
+</html>
+
+
+<div class="table-container">
+    <!-- Projects -->
+    <section class="table-wrapper">
+        <h3>Projects</h3>
+        <table>
+            <tr>
+                <th>Project Name</th>
+                <th>Team Member</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Status</th>
+            </tr>
+            <?php while ($project = mysqli_fetch_assoc($projects)) { ?>
+                <tr>
+                    <td><?php echo htmlspecialchars($project['project_name']); ?></td>
+                    <td><?php echo htmlspecialchars($project['team_member']); ?></td>
+                    <td><?php echo htmlspecialchars($project['start_date']); ?></td>
+                    <td><?php echo htmlspecialchars($project['end_date']); ?></td>
+                    <td><?php echo htmlspecialchars($project['status']); ?></td>
+                </tr>
+            <?php } ?>
+        </table>
+    </section>
+
+    <!-- Tasks -->
+    <section class="table-wrapper">
+        <h3>Tasks</h3>
+        <table>
+            <tr>
+                <th>Task Name</th>
+                <th>Assignee</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Status</th>
+            </tr>
+            <?php while ($task = mysqli_fetch_assoc($tasks)) { ?>
+                <tr>
+                    <td><?php echo htmlspecialchars($task['task_name']); ?></td>
+                    <td><?php echo htmlspecialchars($task['assignee']); ?></td>
+                    <td><?php echo htmlspecialchars($task['start_date']); ?></td>
+                    <td>
+                        <?php
+                        $task_end_date = $task['end_date'];
+                        echo htmlspecialchars($task_end_date);
+                        if (strtotime($task_end_date) < time()) {
+                            echo ' <span class="overdue">OVERDUE</span>';
+                        }
+                        ?>
+                    </td>
+                    <td><?php echo htmlspecialchars($task['status']); ?></td>
+                </tr>
+            <?php } ?>
+        </table>
+    </section>
+</div>

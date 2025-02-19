@@ -194,7 +194,7 @@ header a {
     border-radius: 5px;
 }
 
-.tabs {
+/* .tabs {
     width: 97%;
     margin-bottom: 1rem;
     background-color: #e5e5e5;
@@ -202,25 +202,23 @@ header a {
     display: flex;
     justify-content:end;
     padding-left: 40px;
-    /* position: fixed; */
     top: 50px;
     left: 0;
-}
+} */
 
-.tabs .active {
+/* .tabs .active {
     border-top: 3px solid var(--primary-color);
-
     position: relative;
     background-color: #ffffff;
     color: var(--primary-color);
     transform: none;
-}
+} */
 
 header {
     height: 50px;
 }
 
-.tabs button {
+/* .tabs button {
     width: 9rem;
     padding: .7rem .8rem;
     border: none;
@@ -229,7 +227,7 @@ header {
     background-color: transparent;
     border-radius: .4rem .4rem 0 0;
     box-shadow: none;
-}
+} */
 
 #navbar a:hover {
     background-color: #002b31;
@@ -237,16 +235,14 @@ header {
 
 }
 
-.tabs button:hover {
-
+/* .tabs button:hover {
     cursor: pointer;
-}
+} */
 
 /* Back btn in AddClient page  */
-.tabs .back button {
+/* .tabs .back button {
     background-color: #007474;
     color: white;
-    /* padding: 10px 10px; */
     width: 80px;
     font-size: 12px;
     border: none;
@@ -254,13 +250,13 @@ header {
     cursor: pointer;
     transition: background 0.3s;
     margin-right: 40px;
-}
+} */
 
-.tabs .back {
+/* .tabs .back {
     grid-column: span 2;
     text-align: center;
-}
+} */
 
-.tabs.back button:hover {
+/* .tabs.back button:hover {
     background-color:#007474c3;
-}
+} */

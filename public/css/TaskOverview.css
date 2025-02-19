@@ -1,0 +1,90 @@
+/* Main Container */
+.task-container {
+    max-width: 1200px;
+    background: #ffffff;
+    margin: 30px auto;
+    padding: 20px;
+    border: 2px solid #0a4c60;
+    border-radius: 8px;
+    font-family: Arial, sans-serif;
+}
+
+/* Task Header */
+.task-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #0a4c60;
+    margin-bottom: 20px;
+}
+
+.task-header h2 {
+    margin: 0;
+    font-size: 22px;
+    color: #0a4c60;
+    font-weight: bold;
+}
+
+.task-header h2 span {
+    color: #008080;
+}
+
+/* Back Button */
+.back-btn {
+    background-color: #003d4d;
+    color: #ffffff;
+    text-decoration: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: background 0.3s ease-in-out;
+}
+
+.back-btn:hover {
+    background-color: #005a6c;
+}
+
+/* Task Details Grid */
+.task-details-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+/* Grid Items */
+.task-details-grid div {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+.task-details-grid label {
+    font-weight: bold;
+    color: #0a4c60;
+}
+
+.task-details-grid span {
+    color: #333;
+    font-size: 16px;
+}
+
+/* Status Styling */
+.task-status {
+    color: red;
+}
+
+/* Assigned To & Dates */
+.task-assigned, .task-date {
+    font-size: 16px;
+}
+
+/* Attachment Link */
+.task-attachment a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.task-attachment a:hover {
+    text-decoration: underline;
+}

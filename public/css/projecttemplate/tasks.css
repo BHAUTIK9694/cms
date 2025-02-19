@@ -1,0 +1,53 @@
+/* Common Classes for task form */
+.none-mb {
+  margin-bottom: 0;
+}
+
+.task-form-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.task-item {
+  background: #f4f4f9;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+.task-item .initial-task-info {
+  padding: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* margin-bottom: 20px; */
+}
+.task-item .detailed-task-info {
+  padding: 8px;
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  border-top: 2px solid #007474;
+}
+.task-item .detailed-task-info li {
+  list-style: none;
+  font-size: smaller;
+}
+
+.add-task-btn-container {
+    display: flex;
+    justify-content: end;
+    margin-bottom: 20px;
+}
+.add-another-task-btn {
+  background-color: #f4f4f9 !important;
+  color: #007474 !important;
+  font-weight: 800;
+}
+
+.task-form-container {
+  margin-bottom: 20px;
+}

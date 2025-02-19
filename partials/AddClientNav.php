@@ -39,61 +39,47 @@
 </head>
 
 <body>
-<?php
-$name = isset($_GET['tab']) ? $_GET['tab'] : 'PrimaryInfo'; // Default to 'PrimaryInfo' if no tab is specified
-?>
+    <?php
+    $name = isset($_GET['tab']) ? $_GET['tab'] : 'PrimaryInfo'; // Default to 'PrimaryInfo' if no tab is specified
+    ?>
 
-<div class="tabs">
-    <form action="AddClient.php?tab=PrimaryInfo" method="post">
-        <button class=<?php echo ($name === 'PrimaryInfo') ? 'active' : ''; ?>>Primary Info</button>
-    </form>
+    <div class="tabs">
+        <form action="AddClient.php?tab=PrimaryInfo" method="post">
+            <button class=<?php echo ($name === 'PrimaryInfo') ? 'active' : ''; ?>>Primary Info</button>
+        </form>
 
-    <form action="Hours.php?tab=Hours" method="post">
-        <button class=<?php echo ($name === 'Hours') ? 'active' : ''; ?>>Hours</button>
-    </form>
+        <form action="Hours.php?tab=Hours" method="get">
+            <button class=<?php echo ($name === 'Hours') ? 'active' : ''; ?>>Hours</button>
+        </form>
 
-    <form action="Social.php?tab=Social" method="post">
-        <button class=<?php echo ($name === 'Social') ? 'active' : ''; ?>>Social</button>
-    </form>
+        <form action="Social.php?tab=Social" method="post">
+            <button class=<?php echo ($name === 'Social') ? 'active' : ''; ?>>Social</button>
+        </form>
 
-    <form action="Hosting.php?tab=Hosting" method="post">
-        <button class=<?php echo ($name === 'Hosting') ? 'active' : ''; ?>>Hosting & Domain</button>
-    </form>
+        <form action="Hosting.php?tab=Hosting" method="post">
+            <button class=<?php echo ($name === 'Hosting') ? 'active' : ''; ?>>Hosting & Domain</button>
+        </form>
 
-    <form action="Domain.php?tab=Domain" method="post">
-        <button class=<?php echo ($name === 'Domain') ? 'active' : ''; ?>> Subscription</button>
-    </form>
+        <form action="Subscription.php?tab=Subscription" method="get">
+            <button class=<?php echo ($name === 'Subcription') ? 'active' : ''; ?>> Subscription</button>
+        </form>
 
-    <form action="Domain.php?tab=Domain" method="post">
-        <button class=<?php echo ($name === 'Domain') ? 'active' : ''; ?>> Images</button>
-    </form>
+        <form action="Images.php?tab=Images" method="get">
+            <button class=<?php echo ($name === 'Images') ? 'active' : ''; ?>> Images</button>
+        </form>
 
-    <form action="Domain.php?tab=Domain" method="post">
-        <button class=<?php echo ($name === 'Domain') ? 'active' : ''; ?>> Documents</button>
-    </form>
+        <form action="Domain.php?tab=Domain" method="get">
+            <button class=<?php echo ($name === 'Domain') ? 'active' : ''; ?>> Documents</button>
+        </form>
 
-    <form class="back" action="Clients.php">
-        <button><i class="fas fa-arrow-left"></i></button>
-    </form>
+        <form class="back" action="Clients.php">
+            <button><i class="fas fa-arrow-left"></i></button>
+        </form>
+
+
+    </div>
 
     
-</div>
-
-<div>
-    <?php
-    if ($name === 'PrimaryInfo') {
-        echo "Primary Info Content"; // Display primary info form/content here
-    } elseif ($name === 'Hours') {
-        echo "Hours Content"; // Display hours form/content here
-    } elseif ($name === 'Social') {
-        echo "Social Content"; // Display social form/content here
-    } elseif ($name === 'Hosting') {
-        echo "Hosting Content"; // Display hosting form/content here
-    } elseif ($name === 'Domain') {
-        echo "Subscription"; // Display domain form/content here
-    }
-    ?>
-</div>
 
 </body>
 
