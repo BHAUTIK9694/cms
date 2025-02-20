@@ -1,15 +1,80 @@
 <?php
 include 'partials/navbar.php';
 include "partials/sql-connction.php";
-include "core/clientFunctions.php";
 
 // Get Client ID from URL
 $client_id = isset($_GET['Id']) ? intval($_GET['Id']) : 0;
-// echo $client_id;
 
-$clientData = getAllClientDetails($client_id);
-$clientHostingData = getClientHostingAndDomain($client_id);
-// echo $client_id;
+// Get the client primary information from client_primaryinfo table
+try {
+    $stmt = $conn->prepare("
+        SELECT *
+        FROM client_primaryinfo
+        WHERE client_id = ?;
+    ");
+
+    if (!$stmt) {
+        throw new Exception($conn->error); // Handle prepare errors
+    }
+
+    $stmt->bind_param("i", $client_id); // "i" indicates integer
+    $stmt->execute();
+
+    $result = $stmt->get_result(); // Get the result set
+    $clientDetails = $result->fetch_assoc(); // Fetch a single row as an associative array
+
+    $stmt->close();
+    $clientData = $clientDetails;
+
+} catch (Exception $e) {
+    echo "Error retrieving client details: " . $e->getMessage();
+    return false;
+}
+
+// Get the client hosting and domain information from client_domain_hosting table
+try {
+    $stmt = $conn->prepare("SELECT * FROM client_domain_hosting WHERE client_id = ?");
+    if (!$stmt) {
+        throw new Exception($conn->error);
+    }
+
+    $stmt->bind_param("i", $client_id);
+    $stmt->execute();
+
+    $result = $stmt->get_result();
+    $data = $result->fetch_assoc(); // Fetch the first row as an associative array
+
+    $stmt->close();
+
+    $clientHostingData = $data; // Return the fetched data (or null if not found)
+
+} catch (Exception $e) {
+    echo "Error getting domain/hosting info: " . $e->getMessage();
+    return null;
+}
+
+// Get the client images from client_uploads table
+try {
+    $upload_dir = "uploads/";
+
+    $logo = $favicon = $primary = "";
+    $gallery = [];
+
+    $result = $conn->query("SELECT * FROM client_uploads WHERE client_id = $client_id");
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $logo = $row['logo'];
+        $favicon = $row['favicon'];
+        $primary = $row['primary_image'];
+        $gallery = json_decode($row['gallery'], true) ?? [];
+    }
+
+    $conn->close();
+} catch (Exception $e) {
+    echo "Error getting domain/hosting info: " . $e->getMessage();
+    return null;
+}
+
 // echo "<pre>";
 // print_r($clientData);
 // echo "</pre>";
@@ -24,94 +89,30 @@ $clientHostingData = getClientHostingAndDomain($client_id);
     <title>Client Overview</title>
     <link rel="stylesheet" href="public/css/navbar.css">
     <link rel="stylesheet" href="public/css/tabs.css">
-    <!-- <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f5f5f5;
-            margin: 0;
-            padding: 0;
-        }
-
-        .container {
-            width: 95%;
-            margin: auto;
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .header {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .back-btn {
-            text-decoration: none;
-            font-size: 18px;
-            color: black;
-            font-weight: bold;
-        }
-
-
-        /* Business Details */
-        .details-section {
-            padding: 15px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            margin-top: 20px;
-            background: #f9f9f9;
-        }
-
-        .details-section h3 {
-            margin: 0 0 10px;
-        }
-
-        .details-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-        }
-
-        .details-grid p {
-            margin: 0;
-            padding: 5px;
-            font-weight: bold;
-        }
-
-        .details-grid span {
-            font-weight: normal;
-            color: #555;
-        }
-
-        /* Projects & Tasks */
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 10px;
-        }
-
-        th,
-        td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
-        }
-
-        th {
-            background-color: #f0f0f0;
-        }
-
-        .overdue {
-            color: red;
-            font-weight: bold;
-        }
-
-    </style> -->
-
     <style>
+        .preview,
+        .preview-multiple {
+            margin-top: 10px;
+            min-height: 150px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            border: 2px dashed #ccc;
+            color: #999;
+            font-size: 14px;
+            padding: 10px;
+        }
+
+        .preview-img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            margin: 5px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+
         .client-details-09po {
             position: relative;
             background-color: #f1f1ec;
@@ -211,17 +212,17 @@ $clientHostingData = getClientHostingAndDomain($client_id);
 
     <div class="container">
 
-        <div class="tabs-container-pl09">
+        <!-- <div class="tabs-container-pl09">
             <a href="Clients.php" class="back-btn">Back</a>
-            <ul class="tabs">
-                <li class="tab active" data-tab="tab1">Overview</li>
-                <li class="tab" data-tab="tab2">Hosting & Domain</li>
-                <li class="tab" data-tab="tab3">Hours</li>
-                <li class="tab" data-tab="tab4">Images</li>
-                <li class="tab" data-tab="tab5">Social</li>
-            </ul>
-
-        </div>
+            
+        </div> -->
+        <ul class="tabs">
+            <li class="tab active" data-tab="tab1">Overview</li>
+            <li class="tab" data-tab="tab2">Hosting & Domain</li>
+            <li class="tab" data-tab="tab3">Hours</li>
+            <li class="tab" data-tab="tab4">Images</li>
+            <li class="tab" data-tab="tab5">Social</li>
+        </ul>
 
         <div class="tab-content">
             <div id="tab1" class="tab-pane active">
@@ -311,10 +312,6 @@ $clientHostingData = getClientHostingAndDomain($client_id);
                         <div class='client-detail-item'>
                             <label class='client-detail-label'>Time Zone:</label>
                             <span class='client-detail-value'><?php echo $clientData["time_zone"]; ?></span>
-                        </div>
-                        <div class='client-detail-item'>
-                            <label class='client-detail-label'>Map Link:</label>
-                            <span class='client-detail-value'><?php echo $clientData["map_link"]; ?></span>
                         </div>
                     </div>
                 </div>
@@ -410,16 +407,67 @@ $clientHostingData = getClientHostingAndDomain($client_id);
                     </div>
                 </div>
 
-                <!-- <h2>Tab 2 Content</h2>
-                <p>This is the content for Tab 2.</p> -->
             </div>
             <div id="tab3" class="tab-pane">
                 <h2>Tab 3 Content</h2>
                 <p>This is the content for Tab 3.</p>
             </div>
             <div id="tab4" class="tab-pane">
-                <h2>Tab 4 Content</h2>
-                <p>This is the content for Tab 3.</p>
+                <div class="client-details-container">
+
+                    <div class="client-header">
+                        <h2 class="client-title">
+                            <span class="client-title-prefix">IMAGES :</span>
+                        </h2>
+                    </div>
+
+                    <div class="client-details-grid">
+                        <!-- Images Details -->
+                        <div class="client-detail-item">
+                            <label class='client-detail-label'>Logo: </label>
+                            <div class="preview" id="logo-preview">
+                                <?php if ($logo)
+                                    echo "<img src='$upload_dir$logo' width='100'>";
+                                else
+                                    echo "No Image"; ?>
+                            </div>
+                        </div>
+                        <div class="client-detail-item">
+                            <label class='client-detail-label'>Favicon: </label>
+                            <div class="preview" id="logo-preview">
+                                <?php if ($favicon)
+                                    echo "<img src='$upload_dir$favicon' width='100'>";
+                                else
+                                    echo "No Image"; ?>
+                            </div>
+                        </div>
+                        <div class="client-detail-item">
+                            <label class='client-detail-label'>Primary: </label>
+                            <div class="preview" id="logo-preview">
+                                <?php if ($primary)
+                                    echo "<img src='$upload_dir$primary' width='100'>";
+                                else
+                                    echo "No Image"; ?>
+                            </div>
+                        </div>
+
+                        <div class="client-detail-item">
+                        <label class='client-detail-label'>Gallery: </label>
+                            <div class="preview-multiple" id="gallery-preview">
+                                <?php
+                                if (!empty($gallery)) {
+                                    foreach ($gallery as $img) {
+                                        echo "<img src='$upload_dir$img' width='100' style='margin-right:10px;'>";
+                                    }
+                                } else {
+                                    echo "No Images";
+                                }
+                                ?>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
             </div>
             <div id="tab5" class="tab-pane">
                 <div class="client-details-container">
@@ -434,35 +482,29 @@ $clientHostingData = getClientHostingAndDomain($client_id);
                         <!-- Hosting Details -->
                         <div class='client-detail-item'>
                             <label class='client-detail-label'>Facebook: </label>
-                            <span
-                                class="client-detail-value"><?php echo $clientData['facebook']; ?></span>
+                            <span class="client-detail-value"><?php echo $clientData['facebook']; ?></span>
                         </div>
                         <div class='client-detail-item'>
                             <label class='client-detail-label'>Twitter: </label>
-                            <span
-                                class="client-detail-value"><?php echo $clientData['twitter'] ?: 'N/A'; ?></span>
+                            <span class="client-detail-value"><?php echo $clientData['twitter'] ?: 'N/A'; ?></span>
                         </div>
                         <div class='client-detail-item'>
                             <label class='client-detail-label'>Instagram: </label>
-                            <span
-                                class="client-detail-value"><?php echo $clientData['instagram']; ?></span>
+                            <span class="client-detail-value"><?php echo $clientData['instagram']; ?></span>
                         </div>
                         <div class='client-detail-item'>
                             <label class='client-detail-label'>Linked In: </label>
-                            <span
-                                class="client-detail-value"><?php echo $clientData['linkedin']; ?></span>
+                            <span class="client-detail-value"><?php echo $clientData['linkedin']; ?></span>
                         </div>
                         <div class='client-detail-item'>
                             <label class='client-detail-label'>Youtube: </label>
-                            <span
-                                class="client-detail-value"><?php echo $clientData['youtube']; ?></span>
+                            <span class="client-detail-value"><?php echo $clientData['youtube']; ?></span>
                         </div>
                         <div class='client-detail-item'>
                             <label class='client-detail-label'>Custom Link: </label>
-                            <span
-                                class="client-detail-value"><?php echo $clientData['custom_link']; ?></span>
+                            <span class="client-detail-value"><?php echo $clientData['custom_link']; ?></span>
                         </div>
-                        
+
                     </div>
                 </div>
             </div>

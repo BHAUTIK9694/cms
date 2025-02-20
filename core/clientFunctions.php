@@ -2,148 +2,149 @@
  include './partials/sql-connction.php';
 
 
-function getClientDataForTable()
-{
-    global $conn;
+// function getClientDataForTable()
+// {
+//     global $conn;
 
-    try {
-        $sql = "
-            SELECT 
-                client_id,
-                client_name,  
-                business_name,
-                website, 
-                state,
-                country,
-                time_zone,  
-                business_category 
-            FROM client_primaryinfo; 
-        ";
+//     try {
+//         $sql = "
+//             SELECT 
+//                 client_id,
+//                 client_name,  
+//                 business_name,
+//                 website, 
+//                 state,
+//                 country,
+//                 time_zone,  
+//                 business_category 
+//             FROM client_primaryinfo; 
+//         ";
 
-        $result = $conn->query($sql);
+//         $result = $conn->query($sql);
 
-        if ($result) {
-            $results = [];
-            while ($row = $result->fetch_assoc()) {
-                $results[] = $row;
-            }
-            $result->free_result();
-            return $results;
-        } else {
-            echo "Error retrieving client data: " . $conn->error;
-            return false;
-        }
+//         if ($result) {
+//             $results = [];
+//             while ($row = $result->fetch_assoc()) {
+//                 $results[] = $row;
+//             }
+//             $result->free_result();
+//             return $results;
+//         } else {
+//             echo "Error retrieving client data: " . $conn->error;
+//             return false;
+//         }
 
-    } catch (Exception $e) {
-        echo "Error retrieving client data: " . $e->getMessage();
-        return false;
-    }
-}
+//     } catch (Exception $e) {
+//         echo "Error retrieving client data: " . $e->getMessage();
+//         return false;
+//     }
+// }
 
-function getAllClientDetails($clientId)
-{
-    global $conn; // Assuming $conn is your MySQLi connection object
+// function getAllClientDetails($clientId)
+// {
+//     global $conn; // Assuming $conn is your MySQLi connection object
 
-    try {
-        $stmt = $conn->prepare("
-            SELECT *
-            FROM client_primaryinfo
-            WHERE client_id = ?;
-        ");
+//     try {
+//         $stmt = $conn->prepare("
+//             SELECT *
+//             FROM client_primaryinfo
+//             WHERE client_id = ?;
+//         ");
 
-        if (!$stmt) {
-            throw new Exception($conn->error); // Handle prepare errors
-        }
+//         if (!$stmt) {
+//             throw new Exception($conn->error); // Handle prepare errors
+//         }
 
-        $stmt->bind_param("i", $clientId); // "i" indicates integer
-        $stmt->execute();
+//         $stmt->bind_param("i", $clientId); // "i" indicates integer
+//         $stmt->execute();
 
-        $result = $stmt->get_result(); // Get the result set
-        $clientDetails = $result->fetch_assoc(); // Fetch a single row as an associative array
+//         $result = $stmt->get_result(); // Get the result set
+//         $clientDetails = $result->fetch_assoc(); // Fetch a single row as an associative array
 
-        $stmt->close();
-        return $clientDetails;
+//         $stmt->close();
+//         return $clientDetails;
 
-    } catch (Exception $e) {
-        echo "Error retrieving client details: " . $e->getMessage();
-        return false;
-    }
-}
+//     } catch (Exception $e) {
+//         echo "Error retrieving client details: " . $e->getMessage();
+//         return false;
+//     }
+// }
 
-function getClientsPrimaryInfo($clientId)
-{
-    global $conn;
+// function getClientsPrimaryInfo($clientId)
+// {
+//     global $conn;
 
-    try {
-        $stmt = $conn->prepare("
-            SELECT *
-            FROM client_primaryinfo
-            WHERE client_id = ?; 
-        ");
+//     try {
+//         $stmt = $conn->prepare("
+//             SELECT *
+//             FROM client_primaryinfo
+//             WHERE client_id = ?; 
+//         ");
 
-        if (!$stmt) {
-            throw new Exception($conn->error); // Handle prepare error
-        }
+//         if (!$stmt) {
+//             throw new Exception($conn->error); // Handle prepare error
+//         }
 
-        $stmt->bind_param("i", $clientId); // "i" for integer client_id
-        $stmt->execute();
+//         $stmt->bind_param("i", $clientId); // "i" for integer client_id
+//         $stmt->execute();
 
-        $result = $stmt->get_result(); // Get the result set
+//         $result = $stmt->get_result(); // Get the result set
 
-        if ($result) {
-            $clientDetails = $result->fetch_assoc(); // Fetch a single row
-            $result->free_result(); // Free result set
-            $stmt->close();
-            return $clientDetails;
-        } else {
-            echo "Error retrieving client details: " . $conn->error;
-            $stmt->close();
-            return false;
-        }
+//         if ($result) {
+//             $clientDetails = $result->fetch_assoc(); // Fetch a single row
+//             $result->free_result(); // Free result set
+//             $stmt->close();
+//             return $clientDetails;
+//         } else {
+//             echo "Error retrieving client details: " . $conn->error;
+//             $stmt->close();
+//             return false;
+//         }
 
-    } catch (Exception $e) {
-        echo "Error retrieving client details: " . $e->getMessage();
-        return false;
-    }
-}
+//     } catch (Exception $e) {
+//         echo "Error retrieving client details: " . $e->getMessage();
+//         return false;
+//     }
+// }
 
-function getClientHostingAndDomain($clientId)
-{
-    $servername = "localhost"; // or "127.0.0.1"
-    $username = "root";        // your MySQL username
-    $password = "";            // your MySQL password
-    $dbname = "client_manager"; // your database name
-    $port = "3306"; // your MySQL server port
+// function getClientHostingAndDomain($clientId)
+// {
+//     // this function is no longer in used
+//     // $servername = "localhost"; // or "127.0.0.1"
+//     // $username = "root";        // your MySQL username
+//     // $password = "";            // your MySQL password
+//     // $dbname = "client_manager"; // your database name
+//     // $port = "3306"; // your MySQL server port
 
-    // Create connection
-    $conn = new mysqli($servername, $username, $password, $dbname, $port);
+//     // // Create connection
+//     // $conn = new mysqli($servername, $username, $password, $dbname, $port);
 
-    // Check connection
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
+//     // // Check connection
+//     // if ($conn->connect_error) {
+//     //     die("Connection failed: " . $conn->connect_error);
+//     // }
 
-    try {
-        $stmt = $conn->prepare("SELECT * FROM client_domain_hosting WHERE client_id = ?");
-        if (!$stmt) {
-            throw new Exception($conn->error);
-        }
+//     // try {
+//     //     $stmt = $conn->prepare("SELECT * FROM client_domain_hosting WHERE client_id = ?");
+//     //     if (!$stmt) {
+//     //         throw new Exception($conn->error);
+//     //     }
 
-        $stmt->bind_param("i", $clientId);
-        $stmt->execute();
+//     //     $stmt->bind_param("i", $clientId);
+//     //     $stmt->execute();
 
-        $result = $stmt->get_result();
-        $data = $result->fetch_assoc(); // Fetch the first row as an associative array
+//     //     $result = $stmt->get_result();
+//     //     $data = $result->fetch_assoc(); // Fetch the first row as an associative array
 
-        $stmt->close();
+//     //     $stmt->close();
 
-        return $data; // Return the fetched data (or null if not found)
+//     //     return $data; // Return the fetched data (or null if not found)
 
-    } catch (Exception $e) {
-        echo "Error getting domain/hosting info: " . $e->getMessage();
-        return null;
-    }
-}
+//     // } catch (Exception $e) {
+//     //     echo "Error getting domain/hosting info: " . $e->getMessage();
+//     //     return null;
+//     // }
+// }
 
 
 function addClient($client_name, $business_name, $website_url)

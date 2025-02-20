@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 18, 2025 at 09:42 AM
+-- Generation Time: Feb 20, 2025 at 12:04 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -165,7 +165,8 @@ CREATE TABLE `client_domain_hosting` (
 INSERT INTO `client_domain_hosting` (`id`, `client_id`, `hosting_provider`, `hosting_plan`, `hosting_start_date`, `hosting_renewal_date`, `hosting_cost`, `ip_address`, `hosting_billing_frequency`, `hosting_last_payment_date`, `hosting_next_billing_date`, `hosting_total_amount_due`, `hosting_payment_method`, `ssl_provider`, `ssl_expiry_date`, `ssl_installation_date`, `ssl_billing_frequency`, `ssl_last_payment_date`, `ssl_next_billing_date`, `ssl_total_amount_due`, `ssl_payment_method`, `domain_name`, `domain_registration_date`, `domain_expiry_date`, `domain_cost`, `domain_billing_frequency`, `domain_last_payment_date`, `domain_next_billing_date`, `domain_total_amount_due`, `domain_payment_method`, `created_at`, `updated_at`) VALUES
 (1, 1, 'Go Daddy', '', '2025-02-13', '2025-02-15', 1000.00, '192.0.0.1', '', '0000-00-00', '0000-00-00', 0.00, '', '', '0000-00-00', '0000-00-00', '', '0000-00-00', '0000-00-00', 400.00, 'CARD', 'mksolution.com', '2025-02-03', '2025-02-04', 200.00, '', '0000-00-00', '0000-00-00', 0.00, '', '2025-02-12 08:55:24', '2025-02-12 10:44:38'),
 (2, 2, 'Hostinger', 'Standard', '0000-00-00', '0000-00-00', 200.00, '192.0.20.1', '', '0000-00-00', '0000-00-00', 0.00, '', '', '0000-00-00', '0000-00-00', 'Never', '0000-00-00', '0000-00-00', 0.00, '', '', '0000-00-00', '0000-00-00', 0.00, '', '0000-00-00', '0000-00-00', 0.00, '', '2025-02-12 13:19:16', '2025-02-12 15:28:17'),
-(3, 3, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-02-12 14:39:16', '2025-02-12 14:39:16');
+(3, 3, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-02-12 14:39:16', '2025-02-12 14:39:16'),
+(4, 4, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-02-20 09:23:06', '2025-02-20 09:23:06');
 
 -- --------------------------------------------------------
 
@@ -210,9 +211,49 @@ CREATE TABLE `client_primaryinfo` (
 --
 
 INSERT INTO `client_primaryinfo` (`client_id`, `client_name`, `created_at`, `business_name`, `website`, `business_category`, `short_description`, `long_description`, `business_number`, `other_business_number`, `mobile`, `fax`, `toll_free`, `country`, `address`, `city`, `state`, `zip_code`, `time_zone`, `map_link`, `booking_link`, `services_offered`, `brands_carried`, `facebook`, `twitter`, `instagram`, `linkedin`, `youtube`, `custom_link`) VALUES
-(1, 'Mike Rose', '2025-02-11 17:47:20', 'MK Solution', 'https://www.mksolution.com', 'Steel,IT', 'This is the short desc', 'this is long', '9800789089', '7899098909', '', '', '', 'China', '203 Avanta complex', 'Surat', 'Gujarat', '890098', 'Channei', 'https://www.mkmap.com', 'https://www.mkbooking.com', 'Banking,Web', 'Zoho', 'https://www.mksolution.facebook.com', 'https://www.mksolution.twitter.com', 'https://www.mksolution.instagram.com', 'https://www.mksolution.linkedin.com', 'https://www.mksolution.youtube.com', ''),
+(1, 'Mike Rose', '2025-02-11 17:47:20', 'MK Solution', 'https://www.mksolution.com', 'Steel,IT,Media', 'This is the short desc', 'this is long', '9800789089', '7899098909', '', '', '', 'China', '203 Avanta complex', 'Surat', 'Gujarat', '890098', 'Channei', 'https://www.mkmap.com', 'https://www.mkbooking.com', 'Banking,Web', 'Zoho', 'https://www.mksolution.facebook.com', 'https://www.mksolution.twitter.com', 'https://www.mksolution.instagram.com', 'https://www.mksolution.linkedin.com', 'https://www.mksolution.youtube.com', ''),
 (2, 'Jack Sully', '2025-02-12 13:19:16', 'Hedge Fund', 'https://jk.fund.org', 'Finance', '', '', '0999998880', '0987890654', '', '', '', 'USA', '', 'New York', '', '', '', '', '', '', '', 'https://jk.fund.facebook.com', '', '', '', '', ''),
-(3, 'Client 3', '2025-02-12 14:39:16', 'Cl Cement', 'https://google.com', 'Steel Plant', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL);
+(3, 'Client 3', '2025-02-12 14:39:16', 'Cl Cement', 'https://google.com', 'Steel Plant', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL),
+(4, 'Client 4', '2025-02-20 09:23:06', 'Media House', 'https://jk.fund.org', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `client_subscriptions`
+--
+
+CREATE TABLE `client_subscriptions` (
+  `id` int(11) NOT NULL,
+  `client_id` int(11) NOT NULL,
+  `subscription_plan` varchar(255) NOT NULL,
+  `subscription_status` varchar(50) NOT NULL,
+  `subscription_start_date` date NOT NULL,
+  `subscription_end_date` date NOT NULL,
+  `subscription_price` decimal(10,2) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `client_subscriptions`
+--
+
+INSERT INTO `client_subscriptions` (`id`, `client_id`, `subscription_plan`, `subscription_status`, `subscription_start_date`, `subscription_end_date`, `subscription_price`, `created_at`, `updated_at`) VALUES
+(1, 1, 'Test', 'Active', '2025-02-13', '2025-02-28', 100.00, '2025-02-20 10:24:10', '2025-02-20 10:24:10'),
+(2, 1, 'Test', 'Active', '2025-02-13', '2025-02-28', 100.00, '2025-02-20 10:24:37', '2025-02-20 10:24:37'),
+(3, 1, 'Test', 'Active', '2025-02-13', '2025-02-28', 100.00, '2025-02-20 10:24:56', '2025-02-20 10:24:56'),
+(4, 1, 'Test', 'Active', '2025-02-13', '2025-02-28', 100.00, '2025-02-20 10:25:25', '2025-02-20 10:25:25'),
+(5, 1, 'Test', 'Active', '2025-02-13', '2025-02-28', 100.00, '2025-02-20 10:25:44', '2025-02-20 10:25:44'),
+(6, 1, 'Test', 'Active', '2025-02-13', '2025-02-28', 100.00, '2025-02-20 10:25:47', '2025-02-20 10:25:47'),
+(7, 1, 'Test', 'Active', '2025-02-13', '2025-02-28', 100.00, '2025-02-20 10:28:22', '2025-02-20 10:28:22'),
+(8, 1, 'Test', 'Active', '2025-02-13', '2025-02-28', 100.00, '2025-02-20 10:29:17', '2025-02-20 10:29:17'),
+(9, 1, 'Test', 'Active', '2025-02-13', '2025-02-28', 100.00, '2025-02-20 10:29:52', '2025-02-20 10:29:52'),
+(10, 2, 'demo', 'Expired', '2025-02-12', '2025-02-21', 12.00, '2025-02-20 10:31:01', '2025-02-20 10:31:01'),
+(11, 2, 'demo', 'Expired', '2025-02-12', '2025-02-21', 12.00, '2025-02-20 10:32:21', '2025-02-20 10:32:21'),
+(12, 2, 'Test', 'Cancelled', '2025-02-06', '2025-02-15', 34.00, '2025-02-20 10:32:42', '2025-02-20 10:32:42'),
+(13, 2, 'Test', 'Expired', '2025-02-06', '2025-02-14', 34.00, '2025-02-20 10:34:12', '2025-02-20 10:34:12'),
+(14, 3, 'New Subscription', 'Expired', '2025-02-01', '2025-02-19', 100.00, '2025-02-20 10:35:40', '2025-02-20 10:35:40'),
+(15, 4, 'New Subscription', 'Active', '2025-02-13', '2025-02-21', 345.00, '2025-02-20 10:47:44', '2025-02-20 10:47:44');
 
 -- --------------------------------------------------------
 
@@ -237,7 +278,8 @@ CREATE TABLE `client_uploads` (
 INSERT INTO `client_uploads` (`id`, `client_id`, `logo`, `favicon`, `primary_image`, `gallery`, `created_at`) VALUES
 (1, 1, '67ac9531af287.jpg', '67ac96c9c9343.png', NULL, '[\"67ac92eac96c2.jpg\",\"67ac92eac9821.jpg\"]', '2025-02-12 12:22:51'),
 (2, 2, NULL, '67aca08f72709.jpg', NULL, '[]', '2025-02-12 13:19:16'),
-(3, 3, NULL, '67b3325c2db2e.jpg', NULL, '[]', '2025-02-12 14:39:16');
+(3, 3, NULL, '67b3325c2db2e.jpg', NULL, '[]', '2025-02-12 14:39:16'),
+(4, 4, NULL, NULL, NULL, NULL, '2025-02-20 09:23:06');
 
 -- --------------------------------------------------------
 
@@ -342,13 +384,6 @@ CREATE TABLE `project_tasks` (
   `notes` text DEFAULT NULL,
   `attachment` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `project_tasks`
---
-
-INSERT INTO `project_tasks` (`task_id`, `project_id`, `task_name`, `description`, `category`, `status`, `priority`, `start_date`, `due_date`, `assigned_to`, `notes`, `attachment`) VALUES
-(47, 12, 'new task', 'Ths  is he njkc', 'Design', 'In Progress', 'High', '2025-02-05', '2025-02-20', 'Jack', 'this is the notes', 'Uploads/1738756484_modasaIcon.jpg');
 
 -- --------------------------------------------------------
 
@@ -507,6 +542,13 @@ ALTER TABLE `client_primaryinfo`
   ADD PRIMARY KEY (`client_id`);
 
 --
+-- Indexes for table `client_subscriptions`
+--
+ALTER TABLE `client_subscriptions`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `client_id` (`client_id`);
+
+--
 -- Indexes for table `client_uploads`
 --
 ALTER TABLE `client_uploads`
@@ -569,19 +611,25 @@ ALTER TABLE `clients`
 -- AUTO_INCREMENT for table `client_domain_hosting`
 --
 ALTER TABLE `client_domain_hosting`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `client_primaryinfo`
 --
 ALTER TABLE `client_primaryinfo`
-  MODIFY `client_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `client_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `client_subscriptions`
+--
+ALTER TABLE `client_subscriptions`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `client_uploads`
 --
 ALTER TABLE `client_uploads`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `project_tasks`
@@ -622,6 +670,12 @@ ALTER TABLE `tickets`
 --
 ALTER TABLE `client_domain_hosting`
   ADD CONSTRAINT `client_domain_hosting_ibfk_1` FOREIGN KEY (`client_id`) REFERENCES `client_primaryinfo` (`client_id`);
+
+--
+-- Constraints for table `client_subscriptions`
+--
+ALTER TABLE `client_subscriptions`
+  ADD CONSTRAINT `client_subscriptions_ibfk_1` FOREIGN KEY (`client_id`) REFERENCES `client_primaryinfo` (`client_id`);
 
 --
 -- Constraints for table `client_uploads`

@@ -1,9 +1,30 @@
 <?php
 // Initialize $clientHostingData as an empty array in case no client ID is provided or data is not found
 $clientHostingData = [];
+include "partials/sql-connction.php";
 
+try {
+    $stmt = $conn->prepare("SELECT * FROM client_domain_hosting WHERE client_id = ?");
+    if (!$stmt) {
+        throw new Exception($conn->error);
+    }
 
-$clientHostingData = getClientHostingAndDomain($clientId);
+    $stmt->bind_param("i", $clientId);
+    $stmt->execute();
+
+    $result = $stmt->get_result();
+    $data = $result->fetch_assoc(); // Fetch the first row as an associative array
+
+    $stmt->close();
+
+    $clientHostingData = $data; // Return the fetched data (or null if not found)
+
+} catch (Exception $e) {
+    echo "Error getting domain/hosting info: " . $e->getMessage();
+    
+}
+
+// $clientHostingData = getClientHostingAndDomain($clientId);
 if ($clientHostingData === false) { // Handle database error
     $clientHostingData = []; // Treat as no data if there's an error
     echo "Error retrieving client data. Displaying empty form.";

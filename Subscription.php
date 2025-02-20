@@ -1,72 +1,101 @@
 <?php
-//session_start(); // Start the session
-
-// If 'Id' is provided in the URL, update session
-if (isset($_GET['Id'])) {
-    $_SESSION['clientId'] = $_GET['Id'];
-}
-
-// Retrieve clientId from session
-$clientId = isset($_SESSION['clientId']) ? $_SESSION['clientId'] : '';
-
-// Default tab
-$name = isset($_GET['tab']) ? $_GET['tab'] : 'PrimaryInfo';
-?>
-<?php
 include "partials/sql-connction.php";
 
-// Handle form submission (Insert or Update Subscription)
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $client_id = $_POST['client_id'];
-    $subscription_plan = $_POST['subscription_plan'];
-    $subscription_status = $_POST['subscription_status'];
-    $subscription_start_date = $_POST['subscription_start_date'];
-    $subscription_end_date = $_POST['subscription_end_date'];
-    $subscription_price = $_POST['subscription_price'];
+    // Sanitize and validate input
+    $clientId = isset($_POST['client_id']) ? intval($_POST['client_id']) : 0;
+    $subscriptionPlan = htmlspecialchars(strip_tags($_POST['subscription_plan']));
+    $subscriptionStatus = htmlspecialchars(strip_tags($_POST['subscription_status']));
+    $startDate = $_POST['subscription_start_date'];
+    $endDate = $_POST['subscription_end_date'];
+    $price = isset($_POST['subscription_price']) ? floatval($_POST['subscription_price']) : 0;
 
-    // Check if the client already has a subscription
-    $check_query = "SELECT Id FROM clients WHERE Id = '$client_id'";
-    $check_result = $conn->query($check_query);
-
-    if ($check_result->num_rows > 0) {
-        // Client exists, perform UPDATE
-        $query = "UPDATE clients SET 
-                    subscription_plan = '$subscription_plan',
-                    subscription_status = '$subscription_status',
-                    subscription_start_date = '$subscription_start_date',
-                    subscription_end_date = '$subscription_end_date',
-                    subscription_price = '$subscription_price'
-                  WHERE Id = '$client_id'";
-
-        if ($conn->query($query) === TRUE) {
-            echo "<script>alert('Subscription updated successfully!'); window.location.href='Subscription.php';</script>";
-        } else {
-            echo "<script>alert('Error updating subscription: " . $conn->error . "');</script>";
-        }
-    } else {
-        // Client does not exist, perform INSERT
-        $query = "INSERT INTO clients (Id, subscription_plan, subscription_status, subscription_start_date, subscription_end_date, subscription_price) 
-                  VALUES ('$client_id', '$subscription_plan', '$subscription_status', '$subscription_start_date', '$subscription_end_date', '$subscription_price')";
-
-        if ($conn->query($query) === TRUE) {
-            echo "<script>alert('Subscription added successfully!'); window.location.href='Subscription.php';</script>";
-        } else {
-            echo "<script>alert('Error adding subscription: " . $conn->error . "');</script>";
-        }
+    // Basic Validation
+    if ($clientId <= 0 || empty($subscriptionPlan) || empty($subscriptionStatus) || empty($startDate) || empty($endDate) || $price <= 0) {
+        echo json_encode(['status' => 'error', 'message' => 'All fields are required and must be valid.']);
+        $conn->close();
+        exit;
     }
+
+    // Prepare and execute the SQL query
+    $stmt = $conn->prepare("INSERT INTO client_subscriptions (client_id, subscription_plan, subscription_status, subscription_start_date, subscription_end_date, subscription_price) VALUES (?, ?, ?, ?, ?, ?)");
+
+    if ($stmt) {
+        $stmt->bind_param("issssd", $clientId, $subscriptionPlan, $subscriptionStatus, $startDate, $endDate, $price);
+
+        if ($stmt->execute()) {
+            echo "<script>alert('Subscription details added successfully.'); </script>";
+            // echo json_encode(['status' => 'success', 'message' => 'Subscription details added successfully.']);
+            header("Location: AddClient.php?Id=" . $clientId);
+        } else {
+            echo "<script>alert('Error adding subscription details.'); </script>";
+            echo json_encode(['status' => 'error', 'message' => 'Error adding subscription details: ' . $stmt->error]);
+        }
+
+        $stmt->close();
+    } else {
+        echo json_encode(['status' => 'error', 'message' => 'Error preparing statement: ' . $conn->error]);
+    }
+
+    
+} else {
+
 }
+
+
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
+    <link rel="stylesheet" href="./public/css/input.css">
     <style>
-        body {
-            background-color: #f4f4f9;
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
+        .active-status {
+            color: white;
+            font-weight: bold;
+            background-color: green;
+            /* Light green background */
+            padding: 3px 8px;
+            /* Add some padding for better appearance */
+            border-radius: 5px;
+            /* Optional: Rounded corners */
+        }
+
+        .expired-status {
+            color: white;
+            font-weight: bold;
+            background-color: red;
+            /* Light red background */
+            padding: 3px 8px;
+            border-radius: 5px;
+        }
+
+        .cancelled-status {
+            color: white;
+            font-weight: bold;
+            background-color: gray;
+            /* Light gray background */
+            padding: 3px 8px;
+            border-radius: 5px;
+        }
+
+        .unknown-status {
+            /* Optional: For unexpected statuses */
+            color: white;
+            font-weight: bold;
+            background-color: orange;
+            /* Light orange background */
+            padding: 3px 8px;
+            border-radius: 5px;
+        }
+
+        .subscription-btn-container {
+            width: 100%;
+            display: flex;
+            justify-content: end;
+            gap: 1rem;
         }
 
         .container {
@@ -161,7 +190,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             width: 400px;
         }
 
-        .popup-form input,
         .popup-form select {
             width: 100%;
             padding: 8px;
@@ -170,18 +198,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             border-radius: 5px;
         }
 
-        .popup-form button {
+        .popup-form .save-btn-902wer {
+            width: 5rem;
             background-color: #007474;
             color: white;
             padding: 8px 12px;
             border: none;
-            border-radius: 5px;
+            /* border-radius: 5px; */
             cursor: pointer;
             margin-top: 10px;
         }
 
-        .popup-form button:hover {
+        .popup-form .cancel-btn-980plok {
+            width: 6rem;
+            font-weight: bold;
+            background-color: white;
+            color: #007474;
+            padding: 8px 12px;
+            border: 1 px solid #007474;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .popup-form .save-btn-902wer:hover {
             background-color: #005f5f;
+        }
+
+        .popup-form .cancel-btn-980plok:hover {
+            background-color: #f1f1ec;
         }
 
         .cancel-btn {
@@ -221,20 +265,38 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <tbody>
                     <?php
                     include "partials/sql-connction.php";
-                    $query = "SELECT Id, subscription_plan, subscription_status, subscription_start_date, subscription_end_date, subscription_price FROM clients Where Id='$clientId'";
+                    $query = "SELECT id, client_id, subscription_plan, subscription_status, subscription_start_date, subscription_end_date, subscription_price FROM client_subscriptions WHERE client_id ='$clientId'";
                     $result = $conn->query($query);
 
                     if ($result->num_rows > 0) {
                         while ($row = $result->fetch_assoc()) {
+                            $status = $row['subscription_status'];
+                            $statusClass = '';
+
+                            switch ($status) {
+                                case 'Active':
+                                    $statusClass = 'active-status';
+                                    break;
+                                case 'Expired':
+                                    $statusClass = 'expired-status';
+                                    break;
+                                case 'Cancelled':
+                                    $statusClass = 'cancelled-status';
+                                    break;
+                                default:
+                                    $statusClass = 'unknown-status';
+                                    break;
+                            }
+
                             echo "<tr>
-                                <td>{$row['Id']}</td>
+                                <td>{$row['client_id']}</td>
                                 <td>{$row['subscription_plan']}</td>
-                                <td>{$row['subscription_status']}</td>
+                                <td><span class='{$statusClass}'>{$status}</span></td>
                                 <td>{$row['subscription_start_date']}</td>
                                 <td>{$row['subscription_end_date']}</td>
                                 <td>\${$row['subscription_price']}</td>
-                                <td><a class='delete-btn' href='delete_subscription.php?Id={$row['Id']}'><i class='fas fa-trash-alt'></i></a></td>
-                              </tr>";
+                                <td><a class='delete-btn' href='delete_subscription.php?id={$row['id']}'><i class='fas fa-trash-alt'></i></a></td>
+                            </tr>";
                         }
                     } else {
                         echo "<tr><td colspan='7'>No subscriptions found.</td></tr>";
@@ -242,6 +304,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                     $conn->close();
                     ?>
+
+                    
                 </tbody>
             </table>
         </div>
@@ -252,28 +316,44 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="popup-form">
         <h2>Add Subscription</h2>
         <form action="Subscription.php" method="POST">
-            <input type="hidden" id="client-id" name="client_id" value="<?php echo $clientId; ?>" required>
-            <label for="subscription_plan">Subscription Plan:</label>
-            <input type="text" name="subscription_plan" required>
+            <input type="hidden" id="client-id" name="client_id" value="<?php echo $_GET["Id"]; ?>" required>
+            <div class="form-input">
+                <input type="text" name="subscription_plan" placeholder="Subscription Plan" required>
+                <label for="subscription_plan">Subscription Plan:</label>
+            </div>
 
-            <label for="subscription_status">Status:</label>
-            <select name="subscription_status" required>
-                <option value="Active">Active</option>
-                <option value="Expired">Expired</option>
-                <option value="Cancelled">Cancelled</option>
-            </select>
+            <div class="form-input">
+                <!-- <label for="subscription_status">Status:</label> -->
+                <select name="subscription_status" required>
+                    <option value="Active">Active</option>
+                    <option value="Expired">Expired</option>
+                    <option value="Cancelled">Cancelled</option>
+                </select>
+            </div>
 
-            <label for="subscription_start_date">Start Date:</label>
-            <input type="date" name="subscription_start_date" required>
 
-            <label for="subscription_end_date">End Date:</label>
-            <input type="date" name="subscription_end_date" required>
+            <div class="form-input">
 
-            <label for="subscription_price">Price ($):</label>
-            <input type="number" step="0.01" name="subscription_price" required>
+                <input type="date" name="subscription_start_date" required>
+                <label for="subscription_start_date">Start Date:</label>
+            </div>
 
-            <button type="submit">Save</button>
-            <button type="button" class="cancel-btn" onclick="closePopup()">Cancel</button>
+            <div class="form-input">
+
+                <input type="date" name="subscription_end_date" required>
+                <label for="subscription_end_date">End Date:</label>
+            </div>
+
+            <div class="form-input">
+
+                <input type="number" step="0.01" name="subscription_price" placeholder="Price ($)" required>
+                <label for="subscription_price">Price ($):</label>
+            </div>
+
+            <div class="subscription-btn-container">
+                <button type="button" class="cancel-btn-980plok" onclick="closePopup()">Cancel</button>
+                <button type="submit" class="save-btn-902wer">Save</button>
+            </div>
         </form>
     </div>
 

@@ -44,9 +44,10 @@ include "core/clientFunctions.php";
     <?php
     include 'partials/navbar.php';
     ?>
-    <div>
-        <div class="tabs-container-pl09">
-            <a href="Clients.php" class="back-btn">Back</a>
+    <div style="width: 100%;">
+        <div class="">
+            <!-- <a href="Clients.php" class="back-btn">Back</a> -->
+            
             <ul class="tabs">
                 <li class="tab active" data-tab="tab1">Primary Info</li>
                 <li class="tab" data-tab="tab2">Hours</li>
@@ -55,7 +56,6 @@ include "core/clientFunctions.php";
                 <li class="tab" data-tab="tab5">Subscription</li>
                 <li class="tab" data-tab="tab6">Images</li>
             </ul>
-
         </div>
 
         <div class="tab-content">

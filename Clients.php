@@ -1,3 +1,41 @@
+<?php
+include "./partials/sql-connction.php";
+
+// get all clients data from client_primaryinfo table to show in table view
+try {
+    $sql = "
+        SELECT 
+            client_id,
+            client_name,  
+            business_name,
+            website, 
+            state,
+            country,
+            time_zone,  
+            business_category 
+        FROM client_primaryinfo; 
+    ";
+
+    $result = $conn->query($sql);
+
+    if ($result) {
+        $results = [];
+        while ($row = $result->fetch_assoc()) {
+            $results[] = $row;
+        }
+        $result->free_result();
+        $clientData = $results;
+    } else {
+        echo "Error retrieving client data: " . $conn->error;
+    }
+
+} catch (Exception $e) {
+    echo "Error retrieving client data: " . $e->getMessage();
+}
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,7 +46,7 @@
     <link rel="shortcut icon" href="./public/images/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="public/css/navbar.css">
     <link rel="stylesheet" href="public/css/input.css">
-    <link rel="stylesheet" href="public/css/project.css">
+    <!-- <link rel="stylesheet" href="public/css/project.css"> -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
         integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
@@ -44,34 +82,35 @@
             background-color: #007474c3;
         }
 
-        .client-table {
+        .table-container {
+            width: 97%;
+            overflow-x: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        table {
             width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-
-        }
-
-        .client-table th,
-        .client-table td {
-            padding: 12px 18px;
-            text-align: center;
-            ;
-
-        }
-
-        .client-table table {
-            margin-top: 20px;
             border-collapse: collapse;
-
         }
 
-
-
-        .client-table th {
-            background-color: #007474;
+        th {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
             color: white;
-            font-weight: bold;
+        }
+
+        td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #007474;
         }
 
         .search-bar {
@@ -149,18 +188,40 @@
             border-radius: 5px;
         }
 
-        .popup-form button {
+        .popup-form .popup-form-btn-oklij78 {
+            display: flex;
+            justify-content: end;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .popup-form .save-btn-902wer {
+            width: 5rem;
             background-color: #007474;
             color: white;
             padding: 8px 12px;
             border: none;
-            border-radius: 5px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            margin-top: 10px;
         }
 
-        .popup-form button:hover {
+        .popup-form .cancel-btn-980plok {
+            width: 6rem;
+            font-weight: bold;
+            background-color: white;
+            color: #007474;
+            padding: 8px 12px;
+            border: 1 px solid #007474;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .popup-form .save-btn-902wer:hover {
             background-color: #005f5f;
+        }
+
+        .popup-form .cancel-btn-980plok:hover {
+            background-color: #f1f1ec;
         }
 
         .popup-overlay {
@@ -192,19 +253,6 @@
         <button class="add-client-btn" onclick="openPopup(event)">Add Client</button>
     </div>
 
-    <!-- <div class="client-table">
-        <h1>This is Client Page</h1>
-        <table border="2">
-            <thead>
-                <tr>
-                    <td>Name</td>
-                    <td>Age</td>
-                    <td>Mobile</td>
-                </tr>
-            </thead>
-        </table>
-    </div> -->
-
     <!-- New Table -->
     <div class="table-container">
         <table>
@@ -221,8 +269,8 @@
             </thead>
             <tbody>
                 <?php
-                include 'core/clientFunctions.php';
-                $clientData = getClientDataForTable();
+                // include 'core/clientFunctions.php';
+                // $clientData = getClientDataForTable();
                 // echo "<pre>";
                 // print_r($clientData);
                 // echo "</pre>";
@@ -251,7 +299,7 @@
                     echo "No client data found or error occurred.";
                 }
 
-                
+
                 ?>
 
             </tbody>
@@ -277,8 +325,11 @@
                 <label for="website">Website URL</label>
             </div>
 
-            <button type="submit">Save</button>
-            <button type="button" onclick="closePopup()">Cancel</button>
+            <div class="popup-form-btn-oklij78">
+                <button type="button" class="cancel-btn-980plok" onclick="closePopup()">Cancel</button>
+                <button type="submit" class="save-btn-902wer">Save</button>
+
+            </div>
         </form>
     </div>
 

@@ -6,8 +6,39 @@ $clientId = $_GET['Id'] ?? null;
 // Initialize $clientData as an empty array in case no client ID is provided or data is not found
 $clientData = [];
 
+try {
+    $stmt = $conn->prepare("
+        SELECT *
+        FROM client_primaryinfo
+        WHERE client_id = ?; 
+    ");
+
+    if (!$stmt) {
+        throw new Exception($conn->error); // Handle prepare error
+    }
+
+    $stmt->bind_param("i", $clientId); // "i" for integer client_id
+    $stmt->execute();
+
+    $result = $stmt->get_result(); // Get the result set
+
+    if ($result) {
+        $clientDetails = $result->fetch_assoc(); // Fetch a single row
+        $result->free_result(); // Free result set
+        $stmt->close();
+        $clientData = $clientDetails;
+    } else {
+        echo "Error retrieving client details: " . $conn->error;
+        $stmt->close();
+    }
+
+} catch (Exception $e) {
+    echo "Error retrieving client details: " . $e->getMessage();
+}
+
+
 if ($clientId) {
-    $clientData = getClientsPrimaryInfo($clientId);
+    // $clientData = getClientsPrimaryInfo($clientId);
     if ($clientData === false) { // Handle database error
         $clientData = []; // Treat as no data if there's an error
         echo "Error retrieving client data. Displaying empty form.";
@@ -26,7 +57,7 @@ if ($clientId) {
 
 
 <div class="client-container-outer-674pl">
-    <form style="width: 95%;" id="client_primary_info_form" >
+    <form style="width: 95%;" id="client_primary_info_form">
         <!-- <h1>Client Details</h1> -->
         <div class="primary-container-0989kl">
 
