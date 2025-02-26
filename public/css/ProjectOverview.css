@@ -1,12 +1,9 @@
 /* Main Container */
 .project-container {
-    max-width: 1200px;
-    background: #ffffff;
-    margin: 30px auto;
+    width: 93%;
+    margin: 10px auto;
     padding: 20px;
     border: 2px solid #0a4c60;
-    border-radius: 8px;
-    font-family: Arial, sans-serif;
 }
 
 /* Project Header */
@@ -76,4 +73,20 @@
 /* Assigned To & Dates */
 .project-manager, .project-client, .project-date {
     font-size: 16px;
+}
+
+.project-overview-head-09yu78 {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.project-overview-head-09yu78 .inner-container-09yu78 {
+    width: 95%;
+    display: flex;
+    gap: 1rem;
+    padding: 10px 10px;
+    border-bottom: 2px solid #007474;
+}
+.project-overview-head-09yu78 .inner-container-09yu78 label {
+    font-weight: bold;
 }

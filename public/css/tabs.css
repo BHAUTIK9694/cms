@@ -1,9 +1,16 @@
 .tabs-container-pl09 {
-  width: 100vw;
-  background-color: #f1f1ec;
+  width: 100%;
+}
+
+.tabs-outer-main-9056ty {
+  width: 100%;
   display: flex;
   justify-content: center;
-  align-items: center;
+}
+.tabs-outer-main-9056ty .tabs-inner-sub-9056ty {
+  width: 96%;
+  display: flex;
+  border-bottom: 2px solid #007474;
 }
 
 
@@ -26,23 +33,22 @@
   /* Add borders */
   border-bottom: none;
   /* Remove bottom border */
-  background-color: #f0f0f0;
+  /* background-color: #f0f0f0; */
   /* Light gray background */
   margin-right: -1px;
   /* Overlap borders slightly */
 }
 
 .tab.active {
-  background-color: #fff;
+  background-color: #f1f1ec;
   /* White background for active tab */
-  border-bottom: 2px solid #007474;
+  border-bottom: 4px solid #007474;
   /* White bottom border */
 }
 
 /* Style for the tab content */
 .tab-content {
-  border: 1px solid #ccc;
-  padding: 20px;
+  width: 100%;
 }
 
 .tab-pane {
@@ -51,7 +57,14 @@
 }
 
 .tab-pane.active {
+  width: 100%;
   display: block;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  /* padding: 10px; */
   /* Show content for the active tab */
 }
 
@@ -60,4 +73,18 @@
   font-size: 16px;
   color: black;
   font-weight: 600;
+}
+
+.tab-heading-container {
+  display: flex;
+  gap: 1rem;
+  padding: 10px 20px;
+}
+.back-arrow-btn {
+  background-color: white;
+  border: none;
+  cursor: pointer;
+  padding: 0 4px;
+  display: flex;
+  align-items: center;
 }

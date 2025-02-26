@@ -1,7 +1,7 @@
 <div class="project-container">
     <div class="project-header">
         <h2><span>PROJECT :</span> <?= strtoupper($rowdata['project_name'] ?? 'Unknown Project') ?></h2>
-        <a href="project.php" class="back-btn">Back To Project List</a>
+        <!-- <a href="project.php" class="back-btn">Back To Project List</a> -->
     </div>
 
     <div class="project-details-grid">

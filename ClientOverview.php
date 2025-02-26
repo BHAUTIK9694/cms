@@ -28,7 +28,7 @@ try {
 
 } catch (Exception $e) {
     echo "Error retrieving client details: " . $e->getMessage();
-    return false;
+
 }
 
 // Get the client hosting and domain information from client_domain_hosting table
@@ -50,7 +50,7 @@ try {
 
 } catch (Exception $e) {
     echo "Error getting domain/hosting info: " . $e->getMessage();
-    return null;
+
 }
 
 // Get the client images from client_uploads table
@@ -69,10 +69,62 @@ try {
         $gallery = json_decode($row['gallery'], true) ?? [];
     }
 
-    $conn->close();
+    // $conn->close();
 } catch (Exception $e) {
     echo "Error getting domain/hosting info: " . $e->getMessage();
-    return null;
+
+}
+
+try {
+    $stmt = $conn->prepare("SELECT
+                                        id,
+                                        project_name,
+                                        team_member,
+                                        date_created AS start_date,
+                                        due_date AS end_date,
+                                        status
+                                    FROM
+                                        project
+                                    WHERE
+                                        client_id = ?");
+    if (!$stmt) {
+        throw new Exception($conn->error);
+    }
+
+    $stmt->bind_param("i", $client_id);
+    $stmt->execute();
+
+    $result = $stmt->get_result();
+
+    $clientProjectDetails = $result;
+    $stmt->close();
+
+} catch (Exception $e) {
+    echo "Error getting domain/hosting info: " . $e->getMessage();
+
+}
+try {
+    $stmt = $conn->prepare("SELECT
+                                        *
+                                    FROM
+                                        client_subscriptions
+                                    WHERE
+                                        client_id = ?");
+    if (!$stmt) {
+        throw new Exception($conn->error);
+    }
+
+    $stmt->bind_param("i", $client_id);
+    $stmt->execute();
+
+    $result = $stmt->get_result();
+
+    $clientSubscriptionDetails = $result;
+    $stmt->close();
+
+} catch (Exception $e) {
+    echo "Error getting domain/hosting info: " . $e->getMessage();
+
 }
 
 // echo "<pre>";
@@ -89,140 +141,41 @@ try {
     <title>Client Overview</title>
     <link rel="stylesheet" href="public/css/navbar.css">
     <link rel="stylesheet" href="public/css/tabs.css">
-    <style>
-        .preview,
-        .preview-multiple {
-            margin-top: 10px;
-            min-height: 150px;
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            justify-content: center;
-            border: 2px dashed #ccc;
-            color: #999;
-            font-size: 14px;
-            padding: 10px;
-        }
-
-        .preview-img {
-            width: 100px;
-            height: 100px;
-            object-fit: cover;
-            margin: 5px;
-            border-radius: 5px;
-            border: 1px solid #ddd;
-        }
-
-        .client-details-09po {
-            position: relative;
-            background-color: #f1f1ec;
-            border: 2px solid #007474;
-            padding: 24px;
-            display: flex;
-            justify-content: start;
-            align-items: center;
-            gap: 4rem;
-        }
-
-        .client-details-label-890 {
-            position: absolute;
-            top: -12;
-            left: 20;
-            background-color: white;
-            color: #007474;
-            font-weight: 700;
-            padding: 2px 6px;
-
-        }
-
-        .client-09plio {}
-
-        .flex-center {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .flex-center h4 {
-            color: #007474;
-            font-weight: bold;
-        }
-
-        /* project_details.css */
-
-        .client-details-container {
-            max-width: 1200px;
-            background: #ffffff;
-            margin: 30px auto;
-            padding: 20px;
-            border: 2px solid #0a4c60;
-            border-radius: 8px;
-            font-family: Arial, sans-serif;
-        }
-
-        .client-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #0a4c60;
-            margin-bottom: 20px;
-        }
-
-        .client-title {
-            margin: 0;
-            font-size: 22px;
-            color: #0a4c60;
-            font-weight: bold;
-        }
-
-        .client-title-prefix {
-            color: #008080;
-        }
-
-        .client-details-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-        }
-
-        .client-detail-item {
-            padding: 10px;
-            border-bottom: 1px solid #ccc;
-        }
-
-        .client-detail-label {
-            font-weight: bold;
-            color: #0a4c60;
-        }
-
-        .client-detail-value {
-            color: #333;
-            font-size: 16px;
-        }
-
-        .client-status {
-            color: red;
-            /* Or whatever color you want for the status */
-        }
-    </style>
-
+    <link rel="stylesheet" href="public/css/table.css">
+    <link rel="stylesheet" href="public/css/clientoverview.css">
 </head>
 
 <body>
 
     <div class="container">
 
-        <!-- <div class="tabs-container-pl09">
-            <a href="Clients.php" class="back-btn">Back</a>
-            
-        </div> -->
-        <ul class="tabs">
-            <li class="tab active" data-tab="tab1">Overview</li>
-            <li class="tab" data-tab="tab2">Hosting & Domain</li>
-            <li class="tab" data-tab="tab3">Hours</li>
-            <li class="tab" data-tab="tab4">Images</li>
-            <li class="tab" data-tab="tab5">Social</li>
-        </ul>
+        <div class="client-overview-head-09yu78">
+            <div class="inner-container-09yu78">
+                <a href="Clients.php" class="back-arrow-btn">
+                    <img src="./public/assets/backarrow.svg" alt="">
+                </a>
+                <div>
+                    <label>Client Name : </label>
+                    <span><?php echo $clientData["client_name"]; ?></span>
+                </div>
+                <div>
+                    <label>Client Id :</label>
+                    <span><?php echo $client_id; ?></span>
+                </div>
+            </div>
+        </div>
+        <div class="tabs-outer-main-9056ty">
+            <div class="tabs-inner-sub-9056ty">
+                <ul class="tabs">
+                    <li class="tab active" data-tab="tab1">Overview</li>
+                    <li class="tab" data-tab="tab2">Hosting & Domain</li>
+                    <li class="tab" data-tab="tab3">Hours</li>
+                    <li class="tab" data-tab="tab4">Images</li>
+                    <li class="tab" data-tab="tab5">Social</li>
+                </ul>
+            </div>
+        </div>
+
 
         <div class="tab-content">
             <div id="tab1" class="tab-pane active">
@@ -230,32 +183,35 @@ try {
                 <div class="client-details-container">
                     <div class="client-header">
                         <h2 class="client-title">
-                            <span class="client-title-prefix">CLIENT DETAILS</span>
+                            <span class="client-title-prefix">BUSINESS DETAILS</span>
+                            <a href="AddClient.php?Id=<?php echo $client_id; ?>"><img src='./public/assets/edit.svg'
+                                    alt='edit'></a>
                         </h2>
+                        <div class="btn-container-popup">
+                            <button id="expandButton-8897ijk" class="save-btn-0po90">Expand</button>
+                        </div>
                     </div>
 
-                    <div class="client-details-grid">
-                        <div class='client-detail-item'>
-                            <label class='client-detail-label'>Client Id : </label>
-                            <span class="class='client-detail-value'"><?php echo $client_id; ?></span>
-                        </div>
-                        <div class='client-detail-item'>
-                            <label class='client-detail-label'>Client Name : </label>
-                            <span class="class='client-detail-value'"><?php echo $clientData["client_name"]; ?></span>
-                        </div>
+                    <div class="client-details-grid showDiv" id="client-business-div-88kijs7">
                         <div class='client-detail-item'>
                             <label class='client-detail-label'>Business Name : </label>
                             <span class="class='client-detail-value'"><?php echo $clientData["business_name"]; ?></span>
-                        </div>
-                        <div class='client-detail-item'>
-                            <label class='client-detail-label'>Website : </label>
-                            <span class="class='client-detail-value'"><?php echo $clientData["website"]; ?></span>
                         </div>
                         <div class='client-detail-item'>
                             <label class='client-detail-label'>Business Category : </label>
                             <span
                                 class="class='client-detail-value'"><?php echo $clientData["business_category"]; ?></span>
                         </div>
+                        <div class='client-detail-item'>
+                            <label class='client-detail-label'>Business Number : </label>
+                            <span
+                                class="class='client-detail-value'"><?php echo $clientData["business_number"]; ?></span>
+                        </div>
+                        <div class='client-detail-item'>
+                            <label class='client-detail-label'>Website : </label>
+                            <span class="class='client-detail-value'"><?php echo $clientData["website"]; ?></span>
+                        </div>
+
                         <div class='client-detail-item'>
                             <label class='client-detail-label'>Short Description : </label>
                             <span
@@ -267,36 +223,21 @@ try {
                                 class="class='client-detail-value'"><?php echo $clientData["long_description"]; ?></span>
                         </div>
 
-                        <div class='client-detail-item'>
-                            <label class='client-detail-label'>Business Number : </label>
-                            <span
-                                class="class='client-detail-value'"><?php echo $clientData["business_number"]; ?></span>
-                        </div>
+
                         <div class='client-detail-item'>
                             <label class='client-detail-label'>Other Business Number : </label>
                             <span
                                 class="class='client-detail-value'"><?php echo $clientData["other_business_number"]; ?></span>
                         </div>
                         <div class='client-detail-item'>
-                            <label class='client-detail-label'>Mobile : </label>
-                            <span class="class='client-detail-value'"><?php echo $clientData["mobile"]; ?></span>
-                        </div>
-                        <div class='client-detail-item'>
-                            <label class='client-detail-label'>Fax : </label>
-                            <span class="class='client-detail-value'"><?php echo $clientData["fax"]; ?></span>
-                        </div>
-                        <div class='client-detail-item'>
-                            <label class='client-detail-label'>Toll Free : </label>
-                            <span class="class='client-detail-value'"><?php echo $clientData["toll_free"]; ?></span>
+                            <label class='client-detail-label'>Address:</label>
+                            <span class='client-detail-value'><?php echo $clientData["address"]; ?></span>
                         </div>
                         <div class='client-detail-item'>
                             <label class='client-detail-label'>Country:</label>
                             <span class='client-detail-value'><?php echo $clientData["country"]; ?></span>
                         </div>
-                        <div class='client-detail-item'>
-                            <label class='client-detail-label'>Address:</label>
-                            <span class='client-detail-value'><?php echo $clientData["address"]; ?></span>
-                        </div>
+
                         <div class='client-detail-item'>
                             <label class='client-detail-label'>City:</label>
                             <span class='client-detail-value'><?php echo $clientData["city"]; ?></span>
@@ -312,6 +253,185 @@ try {
                         <div class='client-detail-item'>
                             <label class='client-detail-label'>Time Zone:</label>
                             <span class='client-detail-value'><?php echo $clientData["time_zone"]; ?></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="client-project-453pli">
+                    <div class="client-proj-inner-453pli">
+                        <div class="client-project-list-453pli">
+                            <div class="table-container">
+                                <div class="table-inner-container">
+                                    <div class="table-header-453pli">
+                                        <span>Projects</span>
+                                    </div>
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>Project Name</th>
+                                                <th>Team Member</th>
+                                                <th>Start Date</th>
+                                                <th>End Date</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php
+                                            $statuses = [
+                                                "Pending" => "status-pending",
+                                                "In Progress" => "status-in-progress",
+                                                "Completed" => "status-completed",
+                                                "On Hold" => "status-on-hold",
+                                            ];
+                                            if ($clientProjectDetails && $clientProjectDetails->num_rows > 0) {
+                                                while ($row = $clientProjectDetails->fetch_assoc()) {
+                                                    $statusClass = isset($statuses[$row['status']]) ? $statuses[$row['status']] : "status-default";
+                                                    echo "<tr>";
+                                                    echo "<td><a href='ProjectOverview.php?Id=" . $row['id'] . "'>" . htmlspecialchars($row['project_name']) . "</a></td>";
+                                                    echo "<td>" . htmlspecialchars($row['team_member']) . "</td>";
+                                                    echo "<td>" . htmlspecialchars($row['start_date']) . "</td>";
+                                                    echo "<td>" . htmlspecialchars($row['end_date']) . "</td>";
+                                                    echo "<td class='status'><span class='status-badge $statusClass'>" . htmlspecialchars($row['status']) . "</span></td>";
+                                                    // echo "<td>" . htmlspecialchars($row['status']) . "</td>";
+                                                    echo "</tr>";
+                                                }
+                                            } else {
+                                                echo "<tr><td colspan='5'>No projects found for this client.</td></tr>";
+                                            }
+                                            ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="client-project-list-453pli">
+                            <div class="table-container">
+                                <div class="table-inner-container">
+                                    <div class="table-header-453pli">
+                                        <span>Subscriptions</span>
+                                    </div>
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>Subscription</th>
+                                                <th>Status</th>
+                                                <th>Start Date</th>
+                                                <th>End Date</th>
+                                                <th>Price</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php
+                                            $statuses = [
+                                                "Pending" => "status-pending",
+                                                "In Progress" => "status-in-progress",
+                                                "Completed" => "status-completed",
+                                                "On Hold" => "status-on-hold",
+                                            ];
+                                            if ($clientSubscriptionDetails && $clientSubscriptionDetails->num_rows > 0) {
+                                                while ($row = $clientSubscriptionDetails->fetch_assoc()) {
+                                                    $statusClass = isset($statuses[$row['subscription_status']]) ? $statuses[$row['subscription_status']] : "status-default";
+                                                    echo "<tr>";
+                                                    echo "<td>" . htmlspecialchars($row['subscription_plan']) . "</td>";
+                                                    echo "<td>" . htmlspecialchars($row['subscription_status']) . "</td>";
+                                                    echo "<td>" . htmlspecialchars($row['subscription_start_date']) . "</td>";
+                                                    echo "<td>" . htmlspecialchars($row['subscription_end_date']) . "</td>";
+                                                    echo "<td>" . htmlspecialchars($row['subscription_price']) . "</td>";
+                                                    // echo "<td>" . htmlspecialchars($row['status']) . "</td>";
+                                                    echo "</tr>";
+                                                }
+                                            } else {
+                                                echo "<tr><td colspan='5'>No projects found for this client.</td></tr>";
+                                            }
+                                            ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="client-project-task-list-div-453pli">
+
+                        <div class="client-project-task-list-453pli">
+                            <div class="table-container">
+                                <div class="table-inner-container">
+                                    <div class="table-header-453pli">
+                                        <span>Tasks</span>
+                                        <?php
+                                        // Project Selection Dropdown
+                                        if ($clientProjectDetails && $clientProjectDetails->num_rows > 0) {
+                                            echo '<select id="projectSelect" onchange="updateTasks()">';
+                                            $clientProjectDetails->data_seek(0); // Reset result pointer
+                                            $firstProjectId = null;
+                                            while ($row = $clientProjectDetails->fetch_assoc()) {
+                                                if ($firstProjectId === null) {
+                                                    $firstProjectId = $row['id'];
+                                                }
+                                                echo '<option value="' . $row['id'] . '">' . htmlspecialchars($row['project_name']) . '</option>';
+                                            }
+                                            echo '</select>';
+                                        }
+                                        ?>
+                                    </div>
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>Task Name</th>
+                                                <th>Assignee</th>
+                                                <th>Start Date</th>
+                                                <th>End Date</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="taskTableBody">
+                                            <?php
+                                            $statuses = [
+                                                "Pending" => "status-pending",
+                                                "In Progress" => "status-in-progress",
+                                                "Completed" => "status-completed",
+                                                "On Hold" => "status-on-hold",
+                                                "Not Started" => "status-not-started",
+                                            ];
+                                            // Display tasks for the first project (or no tasks if no projects)
+                                            if ($clientProjectDetails && $clientProjectDetails->num_rows > 0) {
+                                                $selectedProjectId = $firstProjectId; // Use the first project's ID
+                                                try {
+                                                    $stmt = $conn->prepare("SELECT task_name, assigned_to, start_date, due_date, status FROM project_tasks WHERE project_id = ?");
+                                                    if (!$stmt) {
+                                                        throw new Exception($conn->error);
+                                                    }
+                                                    $stmt->bind_param("i", $selectedProjectId);
+                                                    $stmt->execute();
+                                                    $taskResult = $stmt->get_result();
+                                                    $stmt->close();
+
+                                                    if ($taskResult && $taskResult->num_rows > 0) {
+                                                        while ($taskRow = $taskResult->fetch_assoc()) {
+                                                            $statusClass = isset($statuses[$taskRow['status']]) ? $statuses[$taskRow['status']] : "status-default";
+                                                            echo "<tr>";
+                                                            echo "<td>" . htmlspecialchars($taskRow['task_name']) . "</td>";
+                                                            echo "<td>" . htmlspecialchars($taskRow['assigned_to']) . "</td>";
+                                                            echo "<td>" . htmlspecialchars($taskRow['start_date']) . "</td>";
+                                                            echo "<td>" . htmlspecialchars($taskRow['due_date']) . "</td>";
+                                                            echo "<td class='status'><span class='status-badge $statusClass'>" . htmlspecialchars($taskRow['status']) . "</span></td>";
+                                                            // echo "<td>" . htmlspecialchars($taskRow['status']) . "</td>";
+                                                            echo "</tr>";
+                                                        }
+                                                    } else {
+                                                        echo "<tr><td colspan='5'>No tasks found for this project.</td></tr>";
+                                                    }
+                                                } catch (Exception $e) {
+                                                    echo "Error getting tasks: " . $e->getMessage();
+                                                }
+                                            } else {
+                                                echo "<tr><td colspan='5'>No projects found.</td></tr>";
+                                            }
+                                            ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -452,7 +572,7 @@ try {
                         </div>
 
                         <div class="client-detail-item">
-                        <label class='client-detail-label'>Gallery: </label>
+                            <label class='client-detail-label'>Gallery: </label>
                             <div class="preview-multiple" id="gallery-preview">
                                 <?php
                                 if (!empty($gallery)) {
@@ -517,6 +637,42 @@ try {
 
 
     <script src="public/js/tabs.js"></script>
+    <script>
+        const clientBusinessDiv = document.getElementById('client-business-div-88kijs7');
+        console.log(clientBusinessDiv.style.display);
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const targetDiv = document.getElementById('client-business-div-88kijs7');
+            const expandButton = document.getElementById('expandButton-8897ijk'); // Assuming you have an expand button with this ID
+
+            if (clientBusinessDiv && expandButton) {
+                expandButton.addEventListener('click', function () {
+                    if (targetDiv.classList.contains('showDiv')) {
+                        targetDiv.classList.remove('showDiv');
+                        this.textContent = 'Collapse'; // Change button text if needed
+                    } else {
+                        targetDiv.classList.add('showDiv');
+                        this.textContent = 'Expand'; // Change button text if needed
+                    }
+                });
+            }
+        });
+
+        function updateTasks() {
+            var projectId = document.getElementById("projectSelect").value;
+            var taskTableBody = document.getElementById("taskTableBody");
+
+            // Use AJAX to fetch tasks for the selected project
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    taskTableBody.innerHTML = xhr.responseText;
+                }
+            };
+            xhr.open("GET", "get_tasks.php?project_id=" + projectId, true);
+            xhr.send();
+        }
+    </script>
 
 </body>
 

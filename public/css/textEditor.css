@@ -1,0 +1,67 @@
+/* Editor Css */
+#code-editor {
+    border: 1px solid #d1d1d1;
+    max-width: 700px;
+    margin: 0px auto;
+  }
+  
+  .editor-block-controls {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    padding: 5px;
+    background: #fff;
+  }
+  
+  .editor-block-controls > div > button.command {
+    outline: none;
+    background-color: none;
+    background: transparent;
+    color: black;
+    cursor: pointer;
+    border: 1px solid #e1e1e1;
+    transition: 0.2s;
+    border-radius: 3px;
+    padding: 5px 10px;
+  }
+  
+  .editor-block-controls > div > button.command:hover {
+    color: #007474;
+  }
+  
+  #editor-block-content {
+    max-width: 700px;
+    min-height: 150px;
+    /* width: 100%; */
+    height: auto;
+    padding: 12px;
+    resize: vertical;
+    overflow: auto;
+    font-family: Helvetica, sans-serif;
+    font-size: 12px;
+    border: 2px solid #e1e1e1;
+    border-radius: 0 0 3px 3px;
+    background: #f2f4f6;
+    outline: none;
+  }
+  
+  #editor-block-content > blockquote {
+    border-left: 2px solid black;
+    padding: 5px;
+    background: #1111;
+    font-style: italic;
+  }
+  
+  .wsy-command {
+    padding: 3px;
+    border-radius: 3px;
+    font-weight: bold;
+    outline: none;
+    cursor: pointer;
+    transition: 0.2s;
+  }
+  
+  .command:hover {
+    color: #007474 !important;
+  }
+  /* End of Editor css */

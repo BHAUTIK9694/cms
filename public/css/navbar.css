@@ -11,6 +11,17 @@
     --white-color: #2ecc71;
     --black-color: #333;
     --light_primary-color: #007474;
+
+    /* Color Codes */
+    --color-common-1: white;
+    --color-common-2: black;
+
+    --color-primary-1: #007474;
+    --color-primary-2: #4FA6A4;
+    --color-secondary-1: #FF8C2B;
+    --color-secondary-2: #FFAB68;
+    --color-other-1: #D9D6D1;
+    --color-other-2: #F1F1EC;
 }
 
 header button {

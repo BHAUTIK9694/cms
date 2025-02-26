@@ -44,10 +44,11 @@ include "core/clientFunctions.php";
     <?php
     include 'partials/navbar.php';
     ?>
-    <div style="width: 100%;">
-        <div class="">
-            <!-- <a href="Clients.php" class="back-btn">Back</a> -->
-            
+    <div class="tabs-container-pl09">
+        <div class="tab-heading-container">
+            <a href="Clients.php" class="back-arrow-btn">
+                <img src="./public/assets/backarrow.svg" alt="">
+            </a>
             <ul class="tabs">
                 <li class="tab active" data-tab="tab1">Primary Info</li>
                 <li class="tab" data-tab="tab2">Hours</li>
@@ -57,84 +58,88 @@ include "core/clientFunctions.php";
                 <li class="tab" data-tab="tab6">Images</li>
             </ul>
         </div>
+        <!-- <a href="Clients.php" class="back-btn">Back</a> -->
 
-        <div class="tab-content">
-            <div id="tab1" class="tab-pane active">
-                <?php include "primaryInfo.php"; ?>
-            </div>
 
-            <div id="tab2" class="tab-pane">
-                <?php include "Hours.php"; ?>
-            </div>
+    </div>
 
-            <div id="tab3" class="tab-pane">
-                <?php include "Social.php"; ?>
-            </div>
-
-            <div id="tab4" class="tab-pane">
-                <?php include "Hosting.php"; ?>
-            </div>
-
-            <div id="tab5" class="tab-pane">
-                <?php include "Subscription.php"; ?>
-            </div>
-            <div id="tab6" class="tab-pane">
-                <?php include "Images.php"; ?>
-            </div>
+    <div class="tab-content">
+        <div id="tab1" class="tab-pane active">
+            <?php include "primaryInfo.php"; ?>
         </div>
 
+        <div id="tab2" class="tab-pane">
+            <?php include "Hours.php"; ?>
+        </div>
 
-        <script src="public/js/tabs.js"></script>
-        <script src="public/js/tags.js"></script>
-        <script src="public/js/addClient.js"></script>
-        <script>
-            // Business Category:
+        <div id="tab3" class="tab-pane">
+            <?php include "Social.php"; ?>
+        </div>
+
+        <div id="tab4" class="tab-pane">
+            <?php include "Hosting.php"; ?>
+        </div>
+
+        <div id="tab5" class="tab-pane">
+            <?php include "Subscription.php"; ?>
+        </div>
+        <div id="tab6" class="tab-pane">
+            <?php include "Images.php"; ?>
+        </div>
+    </div>
 
 
-            // Business Phone:
-            document.getElementById("add-phone-btn").addEventListener("click", function () {
-                const additionalPhonesContainer = document.getElementById("additional-phones");
-                const phoneCount = additionalPhonesContainer.children.length + 1;
+    <script src="public/js/tabs.js"></script>
+    <script src="public/js/tags.js"></script>
+    <script src="public/js/addClient.js"></script>
+    <script>
+        // Business Category:
 
-                const newNumberContainer = document.createElement('div');
-                newNumberContainer.classList.add("phone-container");
 
-                const newPhoneInputDiv = document.createElement("div");
-                newPhoneInputDiv.classList.add("newBusinessNumber");
-                newPhoneInputDiv.classList.add("form-input");
+        // Business Phone:
+        document.getElementById("add-phone-btn").addEventListener("click", function () {
+            const additionalPhonesContainer = document.getElementById("additional-phones");
+            const phoneCount = additionalPhonesContainer.children.length + 1;
 
-                const newPhoneInput = document.createElement("div");
-                newPhoneInput.classList.add("form-input");
+            const newNumberContainer = document.createElement('div');
+            newNumberContainer.classList.add("phone-container");
 
-                const newPhoneLabel = document.createElement('label');
-                newPhoneLabel.htmlFor = `phone-${phoneCount}`;
-                newPhoneLabel.textContent = "Other Business Number";
+            const newPhoneInputDiv = document.createElement("div");
+            newPhoneInputDiv.classList.add("newBusinessNumber");
+            newPhoneInputDiv.classList.add("form-input");
 
-                const businessNumInput = document.createElement("input");
-                businessNumInput.type = "tel";
-                businessNumInput.id = `phone-${phoneCount}`;
-                businessNumInput.name = "phone[]";
-                businessNumInput.placeholder = "Enter Other Business number";
-                businessNumInput.required = true;
+            const newPhoneInput = document.createElement("div");
+            newPhoneInput.classList.add("form-input");
 
-                const inputRemoveBtn = document.createElement('button');
-                inputRemoveBtn.type = "button";
-                inputRemoveBtn.classList.add("remove-btn");
-                inputRemoveBtn.textContent = "Remove";
-                // Attach event listener properly
-                inputRemoveBtn.addEventListener("click", function () {
-                    newNumberContainer.remove(); // Removes the entire div
-                });
+            const newPhoneLabel = document.createElement('label');
+            newPhoneLabel.htmlFor = `phone-${phoneCount}`;
+            newPhoneLabel.textContent = "Other Business Number";
 
-                newPhoneInputDiv.appendChild(businessNumInput);
-                newPhoneInputDiv.appendChild(newPhoneLabel);
-                newNumberContainer.appendChild(newPhoneInputDiv);
-                newNumberContainer.appendChild(inputRemoveBtn);
-                additionalPhonesContainer.appendChild(newNumberContainer);
+            const businessNumInput = document.createElement("input");
+            businessNumInput.type = "tel";
+            businessNumInput.id = `phone-${phoneCount}`;
+            businessNumInput.name = "phone[]";
+            businessNumInput.placeholder = "Enter Other Business number";
+            businessNumInput.required = true;
 
+            const inputRemoveBtn = document.createElement('button');
+            inputRemoveBtn.type = "button";
+            inputRemoveBtn.classList.add("remove-btn");
+            inputRemoveBtn.textContent = "Remove";
+            // Attach event listener properly
+            inputRemoveBtn.addEventListener("click", function () {
+                newNumberContainer.remove(); // Removes the entire div
             });
 
-        </script>
+            newPhoneInputDiv.appendChild(businessNumInput);
+            newPhoneInputDiv.appendChild(newPhoneLabel);
+            newNumberContainer.appendChild(newPhoneInputDiv);
+            newNumberContainer.appendChild(inputRemoveBtn);
+            additionalPhonesContainer.appendChild(newNumberContainer);
+
+        });
+
+    </script>
 </body>
 
 </html>

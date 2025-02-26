@@ -26,8 +26,8 @@ function loadProjectTextEditor() {
     <button type="button" class="command" title="Redo" data-command='redo'><i class="fas fa-redo"></i></button>
   </div>
   <div>
+  <button type="button" class="command" title="Bold" data-command='bold'><i class="fas fa-bold"></i></button>
     <button type="button" class="command" title="Italic" data-command='italic'><i class="fas fa-italic"></i></button>
-    <button type="button" class="command" title="Bold" data-command='bold'><i class="fas fa-bold"></i></button>
     <button type="button" class="command" title="Horizontal Rule" data-command="insertHorizontalRule">Hr</button>
     <button type="button" class='command' title="Strike-Through" data-command='strikethrough'><strike>abc</strike></button>
     <button type="button" class="command" title="H1" data-command='h1'>H1</button>
@@ -35,25 +35,11 @@ function loadProjectTextEditor() {
     <button type="button" class="command" title="Underline" data-command='underline'>U</button>
     <button type="button" class="command" title="Paragraph" data-command="p"><i class="fas fa-paragraph"></i></button>
   </div>
-  <div>
-    <button type="button" class="command" title="Indent" data-command="indent"><i class="fas fa-indent"></i></button>
-    <button type="button" class="command" title="Outdent" data-command="outdent"><i class="fas fa-outdent"></i></button>
-  </div>
+  
   <div>
     <button type="button" class="command" title="Justify-Left" data-command='justifyleft'><i class="fas fa-align-left"></i></button>
     <button type="button" class="command" title="Justify-Center" data-command='justifycenter'><i class="fas fa-align-justify"></i></button>
     <button type="button" class="command" title="Justify-Right" data-command='justifyright'><i class="fas fa-align-right"></i></button>
-  </div>
-</div>
-<div class="editor-block-controls">
-  <div>
-    <button type="button" class="command" title="Blockquote" data-command='formatBlock'><i class="fas fa-quote-right"></i></button>
-    <button type="button" class="command" title="Superscript" data-command='superscript'>A<sup>abc</sup></button>
-    <button type="button" class="command" title="Subscript" data-command='subscript'>A<sub>abc</sub></button>
-  </div>
-  <div>
-    <button type="button" class="command" title="Decrease font" data-command='decreasefontsize'><sub>A</sub></button>
-    <button type="button" class="command" title="Increase font" data-command='increasefontsize'><i class="fas fa-font"></i></button>
   </div>
   <div>
     <select class="wsy-command" title="Font size">
@@ -67,6 +53,7 @@ function loadProjectTextEditor() {
     </select>
   </div>
 </div>
+
 <div id="editor-block-content" contenteditable></div>
 </div>`,
         };
@@ -193,26 +180,13 @@ function loadTaskTextEditor() {
                   <button type="button" class="command" title="Underline" data-command='underline'>U</button>
                   <button type="button" class="command" title="Paragraph" data-command="p"><i class="fas fa-paragraph"></i></button>
                 </div>
-                <div>
-                  <button type="button" class="command" title="Indent" data-command="indent"><i class="fas fa-indent"></i></button>
-                  <button type="button" class="command" title="Outdent" data-command="outdent"><i class="fas fa-outdent"></i></button>
-                </div>
+               
                 <div>
                   <button type="button" class="command" title="Justify-Left" data-command='justifyleft'><i class="fas fa-align-left"></i></button>
                   <button type="button" class="command" title="Justify-Center" data-command='justifycenter'><i class="fas fa-align-justify"></i></button>
                   <button type="button" class="command" title="Justify-Right" data-command='justifyright'><i class="fas fa-align-right"></i></button>
                 </div>
-              </div>
-              <div class="editor-block-controls">
-                <div>
-                  <button type="button" class="command" title="Blockquote" data-command='formatBlock'><i class="fas fa-quote-right"></i></button>
-                  <button type="button" class="command" title="Superscript" data-command='superscript'>A<sup>abc</sup></button>
-                  <button type="button" class="command" title="Subscript" data-command='subscript'>A<sub>abc</sub></button>
-                </div>
-                <div>
-                  <button type="button" class="command" title="Decrease font" data-command='decreasefontsize'><sub>A</sub></button>
-                  <button type="button" class="command" title="Increase font" data-command='increasefontsize'><i class="fas fa-font"></i></button>
-                </div>
+
                 <div>
                   <select class="wsy-command" title="Font size">
                     <option value="1">small</option>
@@ -225,6 +199,7 @@ function loadTaskTextEditor() {
                   </select>
                 </div>
               </div>
+              
               <div id="editor-block-content" contenteditable></div>
             </div>`,
         };

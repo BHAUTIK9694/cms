@@ -67,32 +67,6 @@
             b = document.createElement("DIV");
             b.setAttribute("class", "select-items select-hide");
 
-            // Add a search input to the dropdown
-            var searchInput = document.createElement("INPUT");
-            searchInput.setAttribute("type", "text");
-            searchInput.setAttribute("placeholder", "Search...");
-            searchInput.setAttribute("class", "search-input");
-            b.appendChild(searchInput);
-
-            // Event listener for filtering options
-            searchInput.addEventListener("input", function (e) {
-                var filter = e.target.value.toUpperCase();
-                var divs = this.parentNode.getElementsByTagName("DIV");
-                for (var k = 1; k < divs.length; k++) { // Skip the search input
-                    txtValue = divs[k].textContent || divs[k].innerText;
-                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                        divs[k].style.display = "";
-                    } else {
-                        divs[k].style.display = "none";
-                    }
-                }
-            });
-
-            // Prevent dropdown from closing when interacting with the search input
-            searchInput.addEventListener("click", function (e) {
-                e.stopPropagation(); // Prevent the dropdown from closing
-            });
-
             // Loop through all options in the original select element
             for (j = 0; j < ll; j++) {
                 c = document.createElement("DIV");

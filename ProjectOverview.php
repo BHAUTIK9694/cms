@@ -50,13 +50,34 @@
     }
     ?>
     <div>
-        <ul class="tabs">
-            <li class="tab active" data-tab="tab1">OverView</li>
-            <li class="tab" data-tab="tab2">Document</li>
-            <li class="tab" data-tab="tab3">Task</li>
-            <li class="tab" data-tab="tab4">Team</li>
-            <li class="tab" data-tab="tab5">Manage</li>
-        </ul>
+        <div class="project-overview-head-09yu78">
+            <div class="inner-container-09yu78">
+                <a href="project.php" class="back-arrow-btn">
+                    <img src="./public/assets/backarrow.svg" alt="">
+                </a>
+                <div>
+                    <label>Project Name : </label>
+                    <span><?php echo $rowdata["project_name"]; ?></span>
+                </div>
+                <div>
+                    <label>Project Id :</label>
+                    <span><?php echo $project_id; ?></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="tabs-outer-main-9056ty">
+            <div class="tabs-inner-sub-9056ty">
+                <ul class="tabs">
+                    <li class="tab active" data-tab="tab1">OverView</li>
+                    <li class="tab" data-tab="tab2">Document</li>
+                    <li class="tab" data-tab="tab3">Task</li>
+                    <li class="tab" data-tab="tab4">Team</li>
+                    <li class="tab" data-tab="tab5">Manage</li>
+                </ul>
+            </div>
+        </div>
+
 
         <div class="tab-content">
             <div id="tab1" class="tab-pane active">

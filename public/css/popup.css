@@ -22,12 +22,62 @@
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
   z-index: 1000;
+  overflow: auto;
 }
+
+.popup-form-project-template-12pl0 {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  max-height: 85vh; /* Ensure it doesn't exceed viewport */
+  overflow-y: auto;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 20px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  z-index: 1000;
+}
+
 .popup-form h2 {
   margin-bottom: 2rem;
 }
 
-.popup-form button {
+
+
+.btn-container-popup {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  gap: 1rem;
+}
+
+.btn-container-popup .cancle-btn-0po90{
+  color: #007474;
+  border: 2px solid #007474;
+  font-size: small;
+  font-weight: bold;
+  padding: 4px 12px;
+  cursor: pointer;
+}
+.btn-container-popup .cancle-btn-0po90:hover {
+  background-color: #f1f1ec;
+}
+
+.btn-container-popup .save-btn-0po90 {
+  color: white;
+  background-color: #007474;
+  font-size: small;
+  font-weight: bold;
+  padding: 4px 12px;
+  cursor: pointer;
+}
+.btn-container-popup .save-btn-0po90:hover {
+  color: var(--color-other-2);
+}
+
+/* .popup-form button {
   background-color: #007474;
   color: white;
   padding: 8px 12px;
@@ -39,4 +89,4 @@
 
 .popup-form button:hover {
   background-color: #005f5f;
-}
+} */

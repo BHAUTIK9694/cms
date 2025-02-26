@@ -1,0 +1,28 @@
+.table-container {
+    width: 100%;
+  }
+  .table-inner-container {
+      
+      padding: 12px;
+  }
+  .table-container table {
+    width: 100%;
+    text-align: center;
+    border-collapse: collapse;
+  }
+  .table-container table thead {
+    background-color: #007474;
+    color: white;
+    font-size: 0.9rem;
+  }
+  .table-container table th,
+  td {
+    padding: 8px;
+  }
+  .table-container table tbody {
+    font-size: medium;
+  }
+  .table-container table tbody tr:hover {
+    background-color: #f1f1ec;
+  }
+  

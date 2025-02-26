@@ -10,13 +10,13 @@
 
 .form-input input,
 .form-input textarea {
-  font-size: 14px;
+  font-size: 12px;
   box-sizing: border-box;
   width: 100%;
   padding: 5px 15px;
   display: block;
   border-radius: 4px;
-  height: 50px;
+  height: 40px;
   border: 1px solid #007474;
   box-sizing: border-box;
   transition: border-color 0.3s, box-shadow 0.3s;
@@ -54,16 +54,22 @@ textarea:focus {
   transition: 0.3s;
 }
 
+.form-input select {
+  width: 100%;
+  padding: 15px;
+  font-size: 12px;
+}
+
 .custom-select {
   position: relative;
   font-family: Arial;
-  font-size: 16px;
+  font-size: 12px;
   box-sizing: border-box;
   width: 100%;
   padding: 5px 15px;
   display: block;
   border-radius: 4px;
-  height: 50px;
+  height: 40px;
   border: 1px solid #007474;
   box-sizing: border-box;
   transition: border-color 0.3s, box-shadow 0.3s;

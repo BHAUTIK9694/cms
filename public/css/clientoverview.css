@@ -1,0 +1,204 @@
+.preview,
+.preview-multiple {
+  margin-top: 10px;
+  min-height: 150px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed #ccc;
+  color: #999;
+  font-size: 14px;
+  padding: 10px;
+}
+
+.preview-img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  margin: 5px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+}
+
+.client-details-09po {
+  position: relative;
+  background-color: #f1f1ec;
+  border: 2px solid #007474;
+  padding: 24px;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 4rem;
+}
+
+.client-details-label-890 {
+  position: absolute;
+  top: -12;
+  left: 20;
+  background-color: white;
+  color: #007474;
+  font-weight: 700;
+  padding: 2px 6px;
+}
+
+.client-09plio {
+}
+
+.flex-center {
+  display: flex;
+  gap: 1rem;
+}
+
+.flex-center h4 {
+  color: #007474;
+  font-weight: bold;
+}
+
+/* project_details.css */
+
+.client-details-container {
+  width: 95%;
+  background: #ffffff;
+  padding: 10px;
+  border: 2px solid #0a4c60;
+  margin-top: 10px;
+}
+
+.client-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #0a4c60;
+  margin-bottom: 20px;
+}
+
+.client-title {
+  margin: 0;
+  font-size: 22px;
+  color: #0a4c60;
+  font-weight: bold;
+}
+
+.client-title-prefix {
+  color: #008080;
+}
+
+.client-details-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+.showDiv {
+  display: none !important;
+}
+
+
+.client-detail-item {
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+.client-detail-label {
+  font-weight: bold;
+  color: #0a4c60;
+  display: block;
+}
+
+.client-detail-value {
+  color: #333;
+  font-size: 16px;
+}
+
+.client-status {
+  color: red;
+  /* Or whatever color you want for the status */
+}
+
+.client-overview-head-09yu78 {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.client-overview-head-09yu78 .inner-container-09yu78 {
+    width: 95%;
+    display: flex;
+    gap: 1rem;
+    padding: 10px 10px;
+    border-bottom: 2px solid #007474;
+}
+.client-overview-head-09yu78 .inner-container-09yu78 label {
+    font-weight: bold;
+}
+
+
+.client-project-453pli {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.client-project-453pli .client-proj-inner-453pli {
+    width: 100%;
+    display: flex;
+    gap: 1rem;
+}
+.client-proj-inner-453pli .client-project-list-453pli {
+    width: 50%;
+}
+.client-proj-inner-453pli .client-project-task-list-453pli {
+    width: 50%;
+}
+.client-project-task-list-div-453pli {
+  width: 100%;
+}
+.client-proj-inner-453pli .table-header-453pli {
+    padding: 10px;
+    border-bottom: 2px solid #007474;
+    margin-bottom: 4px;
+}
+
+.status-badge {
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+/* Status Colors */
+.status-pending {
+  background-color: #ffc107;
+  color: #000;
+} /* Yellow */
+.status-in-progress {
+  background-color: #17a2b8;
+  color: #fff;
+} /* Blue */
+.status-completed {
+  background-color: #28a745;
+  color: #fff;
+} /* Green */
+.status-on-hold {
+  background-color: #dc3545;
+  color: #fff;
+}
+.status-not-started {
+  background-color: #007474;
+  color: #fff;
+}
+
+
+.save-btn-0po90 {
+  color: white;
+  background-color: #007474;
+  font-size: small;
+  font-weight: bold;
+  padding: 4px 8px;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  gap: 2px;
+}

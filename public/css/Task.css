@@ -1,8 +1,4 @@
-.cms-task-sub-header {
-  display: flex;
-  justify-content: space-between;
-  margin: 1rem 2rem;
-}
+
 
 .search-bar {
   display: flex;
@@ -123,14 +119,14 @@
   transition: background 0.3s;
 }
 
-.table-container {
+/* .table-container {
   width: 100%;
   overflow-x: auto;
   background: white;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-}
+} */
 
 table {
   width: 100%;
@@ -297,12 +293,13 @@ th {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: rgba(0, 0, 0, 0.2);
   z-index: 1000;
   justify-content: center;
   align-items: center;
   overflow-y: auto; /* In case the popup content overflows */
 }
+
 
 /* Popup Content Box (Centered Popup) */
 .popup-content {
@@ -310,9 +307,11 @@ th {
   padding: 20px;
   border-radius: 8px;
   width: 60%;
-  max-height: 80vh; /* Limit height */
+  max-height: 85vh; /* Limit height */
   overflow-y: auto; /* Enable internal scrolling */
-  position: relative;
+  position: absolute;
+  bottom: 30px;
+  right: 20px;
   box-sizing: border-box;
 }
 
@@ -345,3 +344,84 @@ th {
 .popup-content::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+
+
+.cms-task-sub-header {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin: 1rem 2rem;
+}
+.btn-container-proj-task {
+  width: 96%;
+}
+.btn-container-task-88ikj {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  gap: 1rem;
+  /* padding: 12px; */
+  margin-top: 12px;
+}
+.btn-container-task-88ikj .save-btn-0po90 {
+  color: white;
+  background-color: #007474;
+  font-size: small;
+  font-weight: bold;
+  padding: 4px 8px;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  gap: 2px;
+}
+
+.btn-container-task-88ikj .save-btn-0po90:hover {
+  color: var(--color-other-2);
+}
+
+/* Project Tags */
+.tags-input {
+  margin-bottom: 20px;
+  border: 1px solid #f1f1ec;
+  border-radius: 10px;
+  background: #fff;
+}
+
+.tags-input ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.tags-input li {
+  padding: 6px 8px;
+  margin: 0 5px 5px 0;
+  background-color: #007474;
+  color: white;
+  border: 1px solid #007474;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.tags-input .remove {
+  width: 14px;
+
+  cursor: pointer;
+}
+
+.tags-input input {
+  width: 100%;
+  order: 1;
+  /* border: none; */
+  outline: none;
+  padding: 12px;
+  font-size: 14px;
+}
+/* End */

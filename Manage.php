@@ -74,13 +74,13 @@ if (mysqli_num_rows($result) > 0) {
 <head>
     <style>
         /* Global Styles */
-        body {
+        /* body {
             background-color: #f4f7fc;
             font-family: 'Poppins', sans-serif;
             margin: 0;
             padding: 0;
             color: #333;
-        }
+        } */
 
         /* Container Styling */
         .manage-container {

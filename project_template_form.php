@@ -34,7 +34,7 @@
         <h4 style="margin-bottom: 1rem;">Project Details</h4>
         <div class="form-input-des item6" style="margin-bottom: 20px;">
             <input type="hidden" name="texteditor" id="texteditor-hidden">
-            <div class="wsyig" id="wsyig" ></div>
+            <div class="wsyig" id="wsyig"></div>
         </div>
 
         <div class="task-form-header">
@@ -99,14 +99,17 @@
             <input type="hidden" name="texteditorTask" id="texteditor-hidden-Task">
             <div class="wsyigTask" id="wsyigTask"></div>
         </div>
-        <div>
-            <button type="button" id="taskSaveBtn">Save</button>
+        <div class="btn-container-popup">
+            <button type="button" class="save-btn-0po90" id="taskSaveBtn">Save</button>
         </div>
         <input type="hidden" name="project-tasks-list" id="project-tasks-list">
     </div>
 
-    
 
-    <button type="button" id="save-template-btn">Create Template</button>
-    <button type="button" onclick="closePopup()">Cancel</button>
+    <div class="btn-container-popup">
+        <button type="button" class="save-btn-0po90" id="save-template-btn">Save</button>
+        <button type="button" class="cancle-btn-0po90" onclick="closePopup()">Cancel</button>
+
+    </div>
+
 </form>

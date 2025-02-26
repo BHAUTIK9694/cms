@@ -59,28 +59,31 @@ document.addEventListener("DOMContentLoaded", function () {
   saveTaskBtn.addEventListener("click", function () {
     if (taskFormDiv) {
       const taskInputData = getInputDetails(); // Fetch user input
-      tasks_list.push(taskInputData);
-      updateTaskList(tasks_list);
-      taskFormDiv.style.display = "none"; // Hide form
+      if (taskInputData.taskName === "") {
+        alert("Please enter task name");
+      } else {
+        tasks_list.push(taskInputData);
+        updateTaskList(tasks_list);
+        taskFormDiv.style.display = "none"; // Hide form
 
-      // Create task item container
-      const taskItem = document.createElement("div");
-      taskItem.classList.add("task-item");
+        // Create task item container
+        const taskItem = document.createElement("div");
+        taskItem.classList.add("task-item");
 
-      // Create initial task info
-      const initialTaskInfo = document.createElement("div");
-      initialTaskInfo.classList.add("initial-task-info");
-      initialTaskInfo.innerHTML = `
+        // Create initial task info
+        const initialTaskInfo = document.createElement("div");
+        initialTaskInfo.classList.add("initial-task-info");
+        initialTaskInfo.innerHTML = `
       <h4 class="task-title-h none-mb">${taskInputData.taskName}</h4>
       <h4 class="task-due-h none-mb">${taskInputData.taskDue} days from creation</h4>
     `;
 
-      // Create detailed task info
-      const detailedTaskInfo = document.createElement("div");
-      detailedTaskInfo.classList.add("detailed-task-info");
+        // Create detailed task info
+        const detailedTaskInfo = document.createElement("div");
+        detailedTaskInfo.classList.add("detailed-task-info");
 
-      const taskDetailsList = document.createElement("ul");
-      taskDetailsList.innerHTML = `
+        const taskDetailsList = document.createElement("ul");
+        taskDetailsList.innerHTML = `
       <li><strong>Task Name:</strong> ${taskInputData.taskName}</li>
       <li><strong>Task Assignee:</strong> ${taskInputData.taskAssignee}</li>
       <li><strong>Due:</strong> ${taskInputData.taskDue}</li>
@@ -88,10 +91,11 @@ document.addEventListener("DOMContentLoaded", function () {
       <li><strong>Details:</strong> ${taskInputData.taskDetails}</li>
     `;
 
-      detailedTaskInfo.appendChild(taskDetailsList);
-      taskItem.appendChild(initialTaskInfo);
-      taskItem.appendChild(detailedTaskInfo);
-      taskList.appendChild(taskItem);
+        detailedTaskInfo.appendChild(taskDetailsList);
+        taskItem.appendChild(initialTaskInfo);
+        taskItem.appendChild(detailedTaskInfo);
+        taskList.appendChild(taskItem);
+      }
     }
   });
 });
@@ -149,18 +153,29 @@ function getAllInputData(taskl) {
     tasks: taskl,
   };
 
-  fetch("saveTemplate.php", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-  })
-    .then((response) => response.text()) // Get the response as text
-    .then((result) => {
-      console.log("Response from PHP:", result);
+  if (projectName === "") {
+    alert("Please enter project name");
+  } else {
+    fetch("saveTemplate.php", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
     })
-    .catch((error) => console.error("Error:", error));
+      .then((response) => response.text()) // Get the response as text
+      .then((result) => {
+        const res = JSON.parse(result);
+        if (res["status"] === "success") {
+          alert(res["message"]);
+          closePopup();
+        } else {
+          alert(res["message"])
+        }
+        console.log("Response from PHP:", result);
+      })
+      .catch((error) => console.error("Error:", error));
+  }
 
   console.log(data);
 }

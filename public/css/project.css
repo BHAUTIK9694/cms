@@ -1,7 +1,3 @@
-body {
-  background-color: #f1f1ec;
-}
-
 .cms-project-sub-header {
   display: flex;
   justify-content: space-between;
@@ -77,16 +73,6 @@ body {
 }
 
 /* Popup Overlay */
-.popup-overlay {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 999;
-}
 
 /* Popup Form */
 .popup-form {
@@ -103,73 +89,31 @@ body {
   width: 600px; /* Adjust width */
 }
 
-/* Form Buttons */
-.popup-form button {
-  background-color: #007474;
-  color: white;
-  padding: 10px 15px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.popup-form button:hover {
-  background-color: #005f5f;
-}
-.popup-overlay {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 999;
-}
-
 /* Close Button */
-
-.cms-proj-filter-btn {
-  width: 8rem;
-  padding: 6px 3px;
-  border-radius: 6px;
-  font-size: large;
-  background: #007474;
+.btn-container {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  gap: 1rem;
+  padding: 12px;
+  margin-top: 12px;
+}
+.btn-container .save-btn-0po90 {
   color: white;
-  font-size: 0.8rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.3s;
-}
-
-.table-container {
-  width: 97%;
-  overflow-x: auto;
-  background: white;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-th {
-  padding: 10px;
-  text-align: left;
-  border-bottom: 1px solid #ddd;
-  color: white;
-}
-
-td {
-  padding: 10px;
-  text-align: left;
-  border-bottom: 1px solid #ddd;
-}
-th {
   background-color: #007474;
+  font-size: small;
+  font-weight: bold;
+  padding: 4px 8px;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  gap: 2px;
+}
+
+.btn-container .save-btn-0po90:hover {
+  color: var(--color-other-2);
 }
 
 .status-badge {
@@ -257,3 +201,48 @@ th {
   background: #e0e0e0;
   font-weight: bold;
 }
+
+/* Project Tags */
+.tags-input {
+  margin-bottom: 20px;
+  border: 1px solid #f1f1ec;
+  border-radius: 10px;
+  background: #fff;
+}
+
+.tags-input ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.tags-input li {
+  padding: 6px 8px;
+  margin: 0 5px 5px 0;
+  background-color: #007474;
+  color: white;
+  border: 1px solid #007474;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.tags-input .remove {
+  width: 14px;
+
+  cursor: pointer;
+}
+
+.tags-input input {
+  width: 100%;
+  order: 1;
+  /* border: none; */
+  outline: none;
+  padding: 12px;
+  font-size: 14px;
+}
+/* End */
