@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 20, 2025 at 12:04 PM
+-- Generation Time: Feb 27, 2025 at 12:39 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -166,7 +166,8 @@ INSERT INTO `client_domain_hosting` (`id`, `client_id`, `hosting_provider`, `hos
 (1, 1, 'Go Daddy', '', '2025-02-13', '2025-02-15', 1000.00, '192.0.0.1', '', '0000-00-00', '0000-00-00', 0.00, '', '', '0000-00-00', '0000-00-00', '', '0000-00-00', '0000-00-00', 400.00, 'CARD', 'mksolution.com', '2025-02-03', '2025-02-04', 200.00, '', '0000-00-00', '0000-00-00', 0.00, '', '2025-02-12 08:55:24', '2025-02-12 10:44:38'),
 (2, 2, 'Hostinger', 'Standard', '0000-00-00', '0000-00-00', 200.00, '192.0.20.1', '', '0000-00-00', '0000-00-00', 0.00, '', '', '0000-00-00', '0000-00-00', 'Never', '0000-00-00', '0000-00-00', 0.00, '', '', '0000-00-00', '0000-00-00', 0.00, '', '0000-00-00', '0000-00-00', 0.00, '', '2025-02-12 13:19:16', '2025-02-12 15:28:17'),
 (3, 3, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-02-12 14:39:16', '2025-02-12 14:39:16'),
-(4, 4, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-02-20 09:23:06', '2025-02-20 09:23:06');
+(4, 4, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-02-20 09:23:06', '2025-02-20 09:23:06'),
+(5, 5, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-02-27 11:14:22', '2025-02-27 11:14:22');
 
 -- --------------------------------------------------------
 
@@ -214,7 +215,8 @@ INSERT INTO `client_primaryinfo` (`client_id`, `client_name`, `created_at`, `bus
 (1, 'Mike Rose', '2025-02-11 17:47:20', 'MK Solution', 'https://www.mksolution.com', 'Steel,IT,Media', 'This is the short desc', 'this is long', '9800789089', '7899098909', '', '', '', 'China', '203 Avanta complex', 'Surat', 'Gujarat', '890098', 'Channei', 'https://www.mkmap.com', 'https://www.mkbooking.com', 'Banking,Web', 'Zoho', 'https://www.mksolution.facebook.com', 'https://www.mksolution.twitter.com', 'https://www.mksolution.instagram.com', 'https://www.mksolution.linkedin.com', 'https://www.mksolution.youtube.com', ''),
 (2, 'Jack Sully', '2025-02-12 13:19:16', 'Hedge Fund', 'https://jk.fund.org', 'Finance', '', '', '0999998880', '0987890654', '', '', '', 'USA', '', 'New York', '', '', '', '', '', '', '', 'https://jk.fund.facebook.com', '', '', '', '', ''),
 (3, 'Client 3', '2025-02-12 14:39:16', 'Cl Cement', 'https://google.com', 'Steel Plant', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL),
-(4, 'Client 4', '2025-02-20 09:23:06', 'Media House', 'https://jk.fund.org', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+(4, 'Client 4', '2025-02-20 09:23:06', 'Media House', 'https://jk.fund.org', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(5, 'Ali Wafa', '2025-02-27 11:14:22', 'Gold Trading', 'https://www.mrsolution.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -279,7 +281,8 @@ INSERT INTO `client_uploads` (`id`, `client_id`, `logo`, `favicon`, `primary_ima
 (1, 1, '67ac9531af287.jpg', '67ac96c9c9343.png', NULL, '[\"67ac92eac96c2.jpg\",\"67ac92eac9821.jpg\"]', '2025-02-12 12:22:51'),
 (2, 2, NULL, '67aca08f72709.jpg', NULL, '[]', '2025-02-12 13:19:16'),
 (3, 3, NULL, '67b3325c2db2e.jpg', NULL, '[]', '2025-02-12 14:39:16'),
-(4, 4, NULL, NULL, NULL, NULL, '2025-02-20 09:23:06');
+(4, 4, NULL, '67b70eee341b7.jpg', NULL, '[]', '2025-02-20 09:23:06'),
+(5, 5, NULL, NULL, NULL, NULL, '2025-02-27 11:14:22');
 
 -- --------------------------------------------------------
 
@@ -315,30 +318,34 @@ INSERT INTO `documents` (`id`, `document_name`, `file_size`, `file_path`, `proje
 CREATE TABLE `project` (
   `id` int(11) NOT NULL,
   `project_name` varchar(255) NOT NULL,
-  `client_name` varchar(255) NOT NULL,
-  `tags` varchar(255) DEFAULT NULL,
-  `status` enum('Pending','In Progress','Completed','On Hold') NOT NULL DEFAULT 'Pending',
+  `project_description` text NOT NULL,
+  `tags` text DEFAULT NULL,
+  `status` enum('Todo','In Progress','On Hold','Waiting on Client','Canceled','Completed') NOT NULL DEFAULT 'Todo',
   `team_member` text DEFAULT NULL,
-  `date_created` date NOT NULL DEFAULT current_timestamp(),
+  `date_created` datetime NOT NULL DEFAULT current_timestamp(),
   `sales_person` varchar(255) DEFAULT NULL,
   `manager` varchar(255) DEFAULT NULL,
   `due_date` date DEFAULT NULL,
+  `project_due_days` int(11) DEFAULT NULL,
+  `project_recurrence` varchar(50) DEFAULT NULL,
   `project_price` decimal(10,2) NOT NULL DEFAULT 0.00,
   `billable_type` enum('Hourly','Fixed') NOT NULL DEFAULT 'Hourly',
   `billable_rate` decimal(10,2) NOT NULL DEFAULT 0.00,
   `budget_type` enum('Billable','Non-Billable') NOT NULL DEFAULT 'Billable',
-  `budget` decimal(10,2) NOT NULL DEFAULT 0.00
+  `budget` decimal(10,2) NOT NULL DEFAULT 0.00,
+  `client_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `project`
 --
 
-INSERT INTO `project` (`id`, `project_name`, `client_name`, `tags`, `status`, `team_member`, `date_created`, `sales_person`, `manager`, `due_date`, `project_price`, `billable_type`, `billable_rate`, `budget_type`, `budget`) VALUES
-(1, 'invoice', 'rushabh', 'fffk', 'Completed', '4', '2024-02-22', 'rushabh', 'rushabh', '2024-08-22', 0.00, 'Hourly', 0.00, 'Billable', 0.00),
-(2, 'invoice1', 'rushabh', 'fffk', 'In Progress', '4', '2024-06-05', 'rushabh', 'ssfjha', '2025-08-05', 0.00, 'Hourly', 0.00, 'Billable', 0.00),
-(11, 'invoice2', 'rushabh', 'fffk', 'Pending', '4', '0000-00-00', 'rushabh', 'ssfjha', '2222-02-22', 0.00, 'Hourly', 0.00, 'Billable', 0.00),
-(12, 'invoice', 'rushabh', 'fffk', 'In Progress', '4', '2025-02-11', 'rushabh', 'rushabh', '2222-02-22', 0.00, 'Hourly', 0.00, 'Billable', 0.00);
+INSERT INTO `project` (`id`, `project_name`, `project_description`, `tags`, `status`, `team_member`, `date_created`, `sales_person`, `manager`, `due_date`, `project_due_days`, `project_recurrence`, `project_price`, `billable_type`, `billable_rate`, `budget_type`, `budget`, `client_id`) VALUES
+(12, 'CMS', '', 'Project', 'In Progress', '2', '2025-02-24 00:00:00', 'Rushabh', 'Bhautik', '2025-02-28', NULL, NULL, 0.00, 'Hourly', 0.00, 'Billable', 0.00, 1),
+(18, 'Celaeno Booking', '', 'Booking', 'In Progress', '3', '2025-02-01 00:00:00', 'Rushabh', 'Bhautik', '2025-02-28', NULL, NULL, 0.00, 'Hourly', 0.00, 'Billable', 0.00, 1),
+(24, 'Celaeno CMS', '', 'CMS,Website', 'In Progress', 'Rushabh', '2025-02-26 00:53:53', 'Hardik', 'Bhautik', '2025-02-28', 3, 'Daily', 0.00, 'Hourly', 0.00, 'Billable', 0.00, 2),
+(25, 'Test Project', '\"This is the test project\"', '', 'Todo', 'Rushabh', '2025-02-26 12:40:56', 'Hardik', 'Bhautik', '2025-02-27', 1, 'Daily', 0.00, 'Hourly', 0.00, 'Billable', 0.00, 2),
+(26, 'Invoice Management', '<p>This is the invoice management project</p>\r\n', NULL, 'Todo', NULL, '2025-02-26 14:27:10', NULL, NULL, NULL, 9, 'Daily', 0.00, 'Hourly', 0.00, 'Billable', 0.00, 0);
 
 -- --------------------------------------------------------
 
@@ -362,7 +369,8 @@ INSERT INTO `project_tags` (`project_id`, `tag_id`) VALUES
 (8, 14),
 (8, 15),
 (9, 19),
-(9, 20);
+(9, 20),
+(20, 22);
 
 -- --------------------------------------------------------
 
@@ -375,15 +383,34 @@ CREATE TABLE `project_tasks` (
   `project_id` int(11) NOT NULL,
   `task_name` varchar(255) NOT NULL,
   `description` text NOT NULL,
-  `category` varchar(50) NOT NULL,
-  `status` varchar(50) NOT NULL,
-  `priority` varchar(50) NOT NULL,
-  `start_date` date NOT NULL DEFAULT current_timestamp(),
-  `due_date` date NOT NULL DEFAULT current_timestamp(),
-  `assigned_to` varchar(255) NOT NULL,
+  `task_tags` text DEFAULT NULL,
+  `category` varchar(50) DEFAULT NULL,
+  `status` varchar(50) DEFAULT NULL,
+  `priority` varchar(50) DEFAULT NULL,
+  `start_date` date DEFAULT current_timestamp(),
+  `due_date` date DEFAULT current_timestamp(),
+  `task_due_days` int(11) NOT NULL,
+  `assigned_to` varchar(255) DEFAULT NULL,
   `notes` text DEFAULT NULL,
   `attachment` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `project_tasks`
+--
+
+INSERT INTO `project_tasks` (`task_id`, `project_id`, `task_name`, `description`, `task_tags`, `category`, `status`, `priority`, `start_date`, `due_date`, `task_due_days`, `assigned_to`, `notes`, `attachment`) VALUES
+(48, 12, 'Add project Table', 'Add the ', NULL, 'Development', 'not-started', 'not-started', '2025-02-23', '2025-02-24', 0, 'Nikunj', 'This is the important task', ''),
+(49, 12, 'Fix Tamplate Page', 'Fix the bug in', NULL, 'Development', 'not-started', 'not-started', '2025-02-23', '2025-02-26', 0, 'Nikunj', 'This is a midium priority task', ''),
+(50, 18, 'Change the hero section', 'Change the hero section design for different screen sizes', NULL, 'Development', 'In Progress', 'Medium', '2025-02-23', '2025-02-26', 0, 'Nikunj', '', ''),
+(52, 20, 'Create home page', 'This is the demo project for testing', NULL, 'Default Category', 'To Do', 'Medium', '2025-02-25', '2025-03-01', 0, 'Rani joshi', NULL, NULL),
+(53, 21, 'Create a API', '<p>This is the invoice management project</p>\r\n', NULL, 'Development', 'Not Started', 'Medium', '2025-02-25', '2025-02-27', 0, 'Rutvik Jani', '', ''),
+(54, 22, 'Create Project page', 'This is the internal project', NULL, 'Default Category', 'To Do', 'Medium', '2025-02-25', '2025-02-27', 0, 'Nikunj', NULL, NULL),
+(55, 23, 'Book demo', 'This is the demo', NULL, 'Default Category', 'To Do', 'Medium', '2025-02-25', '2025-02-28', 0, 'Joshi kartik', NULL, NULL),
+(56, 23, 'Api creation', 'This is the demo', NULL, 'Default Category', 'To Do', 'Medium', '2025-02-25', '2025-02-27', 0, 'kavi', NULL, NULL),
+(57, 12, 'Test task', '\"This is the test task\"', '', 'Select Category', 'Todo', 'Low', '2025-02-26', '2025-02-27', 1, 'Jack', '\"this is the test note\"', 'Uploads/1.PNG'),
+(58, 25, 'Test Project task', '\"<h1>this is the task for testing</h1>\"', '', 'Development', 'In Progress', 'Low', '2025-02-26', '2025-02-27', 1, 'Nikunj', '\"<h2>this is the test note</h2>\"', 'Uploads/67ac92eac96c2.jpg'),
+(59, 26, 'Create a API', '<p>This is the invoice management project</p>\r\n', NULL, 'Default Category', 'To Do', 'Medium', '2025-02-26', '2025-02-28', 0, 'Rutvik Jani', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -409,9 +436,7 @@ INSERT INTO `project_template` (`id`, `name`, `assignee`, `due`, `recurrence`, `
 (7, 'Invoice Management', 'Rohit Joshi', 9, 'Daily', '<p>This is the invoice management project</p>\r\n', '2025-02-03 05:11:14'),
 (8, 'Booking Website', 'Kevin Thakur', 5, 'daily', 'This is the demo project for testing', '2025-02-05 12:00:04'),
 (9, 'Zoho Booking', 'Ronak Jain', 5, 'weekly', 'This is the demo', '2025-02-05 14:39:48'),
-(10, '', '', 0, 'none', '', '2025-02-10 07:32:40'),
-(11, '', '', 0, 'none', '', '2025-02-10 07:32:42'),
-(12, '', '', 0, 'none', '', '2025-02-10 07:32:44');
+(20, 'CMS Celaeno', 'Bhautik', 5, 'monthly', 'This is the internal project', '2025-02-25 11:17:12');
 
 -- --------------------------------------------------------
 
@@ -441,7 +466,8 @@ INSERT INTO `tags` (`id`, `tag_name`) VALUES
 (18, 'PHP'),
 (19, 'Booking'),
 (20, 'Zoho'),
-(21, 'Book');
+(21, 'Book'),
+(22, 'Client management');
 
 -- --------------------------------------------------------
 
@@ -469,7 +495,8 @@ INSERT INTO `tasks` (`id`, `project_id`, `name`, `assignee`, `due`, `created_at`
 (9, 9, 'Api creation', 'kavi', 2, '2025-02-05 14:39:48'),
 (10, 10, '', '', 0, '2025-02-10 07:32:40'),
 (11, 11, '', '', 0, '2025-02-10 07:32:42'),
-(12, 12, '', '', 0, '2025-02-10 07:32:44');
+(12, 12, '', '', 0, '2025-02-10 07:32:44'),
+(13, 20, 'Create Project page', 'Nikunj', 2, '2025-02-25 11:17:12');
 
 -- --------------------------------------------------------
 
@@ -494,7 +521,8 @@ INSERT INTO `task_tags` (`task_id`, `tag_id`) VALUES
 (7, 18),
 (8, 12),
 (8, 21),
-(9, 12);
+(9, 12),
+(13, 10);
 
 -- --------------------------------------------------------
 
@@ -556,6 +584,12 @@ ALTER TABLE `client_uploads`
   ADD KEY `client_id` (`client_id`);
 
 --
+-- Indexes for table `project`
+--
+ALTER TABLE `project`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `project_tags`
 --
 ALTER TABLE `project_tags`
@@ -611,13 +645,13 @@ ALTER TABLE `clients`
 -- AUTO_INCREMENT for table `client_domain_hosting`
 --
 ALTER TABLE `client_domain_hosting`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `client_primaryinfo`
 --
 ALTER TABLE `client_primaryinfo`
-  MODIFY `client_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `client_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `client_subscriptions`
@@ -629,31 +663,37 @@ ALTER TABLE `client_subscriptions`
 -- AUTO_INCREMENT for table `client_uploads`
 --
 ALTER TABLE `client_uploads`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `project`
+--
+ALTER TABLE `project`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `project_tasks`
 --
 ALTER TABLE `project_tasks`
-  MODIFY `task_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
+  MODIFY `task_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
 
 --
 -- AUTO_INCREMENT for table `project_template`
 --
 ALTER TABLE `project_template`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `tags`
 --
 ALTER TABLE `tags`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `tasks`
 --
 ALTER TABLE `tasks`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `tickets`
